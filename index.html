@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <title>SAKE D. BINKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Menú y Header Fijo */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 100;
+            mix-blend-mode: difference; /* Hace que el texto resalte sobre cualquier imagen */
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-links a, .user-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-left: 25px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover, .user-links a:hover {
+            opacity: 1;
+        }
+
+        /* Contenedor Deslizante Vertical (Full Snap) */
+        .slider-container {
+            height: 100vh;
+            overflow-y: mandatory;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none; /* Oculta scrollbar en Firefox */
+        }
+
+        .slider-container::-webkit-scrollbar {
+            display: none; /* Oculta scrollbar en Chrome/Safari */
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 60px 40px;
+        }
+
+        .slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.9);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide-title {
+            font-size: 3rem;
+            font-weight: 200;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .btn-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div>
+            <a href="#" class="logo">SAKE D. BINKS</a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="SeccionMujer.html">MUJER</a>
+            <a href="#hombre">HOMBRE</a>
+            <a href="#nino">NIÑO</a>
+            <a href="#accesorios">ACCESORIOS</a>
+        </nav>
+
+        <div class="user-links">
+            <a href="#">BUSCAR</a>
+            <a href="#">CESTA (0)</a>
+        </div>
+    </header>
+
+    <main class="slider-container">
+
+        <section id="mujer" class="slide">
+            <img src="img/woman-model-business-suit-wearing-hat.jpg" alt="Mujer">
+            <div class="slide-content">
+                <h2 class="slide-title">MUJER</h2>
+                <a href="SeccionMujer.html" class="btn-link">VER MÁS</a>
+            </div>
+        </section>
+
+        <section id="hombre" class="slide">
+            <img src="img/taylor-grote-rnH5ITofDAM-unsplash.jpg" alt="Hombre">
+            <div class="slide-content">
+                <h2 class="slide-title">HOMBRE</h2>
+                <a href="#" class="btn-link">VER MÁS</a>
+            </div>
+        </section>
+
+        <section id="nino" class="slide">
+            <img src="img//edi-libedinsky-1bhp9zBPHVE-unsplash.jpg" alt="Niño">
+            <div class="slide-content">
+                <h2 class="slide-title">NIÑOS</h2>
+                <a href="#" class="btn-link">VER MÁS</a>
+            </div>
+        </section>
+
+        <section id="accesorios" class="slide">
+            <img src="img//trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg" alt="Accesorios">
+            <div class="slide-content">
+                <h2 class="slide-title">ACCESORIOS</h2>
+                <a href="#" class="btn-link">VER MÁS</a>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
