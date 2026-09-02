@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKE D. BINKS | DETALLE PRODUCTO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* HEADER FIJO */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background-color: #fff;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .nav-links a, .user-links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-left: 20px;
+            opacity: 0.7;
+        }
+
+        /* CONTENEDOR PRINCIPAL DOS COLUMNAS */
+        .product-detail-container {
+            display: flex;
+            margin-top: 90px;
+        }
+
+        /* IZQUIERDA: GALERÍA DE IMÁGENES VERTICAL */
+        .product-gallery {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 40px;
+        }
+
+        .product-gallery img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* DERECHA: INFORMACIÓN FIJA */
+        .product-info-panel {
+            width: 40%;
+            position: fixed;
+            top: 110px;
+            right: 0;
+            padding: 0 50px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .color-label, .size-label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0.8;
+        }
+
+        .color-thumb {
+            width: 60px;
+            height: 75px;
+            border: 1px solid #000;
+            padding: 2px;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .color-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* GRID DE TALLAS Adaptable */
+        .size-selector {
+            display: flex;
+            border: 1px solid #e5e5e5;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            flex: 1;
+            min-width: 40px;
+            padding: 12px 0;
+            text-align: center;
+            background: none;
+            border: none;
+            border-right: 1px solid #e5e5e5;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-btn:last-child {
+            border-right: none;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .size-guide-link {
+            display: block;
+            text-align: right;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            color: #000;
+            text-decoration: underline;
+            margin-bottom: 30px;
+        }
+
+        /* BOTÓN AÑADIR AL CARRITO */
+        .btn-add-cart {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            opacity: 0.85;
+        }
+
+        .shipping-banner {
+            background-color: #f7f7f7;
+            padding: 12px 15px;
+            font-size: 0.68rem;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            border-left: 3px solid #000;
+        }
+
+        /* ACCORDIONS MINIMALISTAS */
+        .accordion-item {
+            border: none;
+            border-top: 1px solid #eee;
+            border-radius: 0 !important;
+        }
+
+        .accordion-button {
+            background: none !important;
+            box-shadow: none !important;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 15px 0;
+            color: #000;
+        }
+
+        .accordion-body {
+            padding: 0 0 15px 0;
+            font-size: 0.75rem;
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div>
+            <a href="Inicio.html" class="logo">SAKE D. BINKS</a>
+        </div>
+        <nav class="nav-links">
+            <a href="SeccionMujer.html">MUJER</a>
+            <a href="#hombre">HOMBRE</a>
+            <a href="#nino">NIÑO</a>
+            <a href="#accesorios">ACCESORIOS</a>
+        </nav>
+        <div class="user-links">
+            <a href="#">BUSCAR</a>
+            <a href="carrito.html">CESTA (<span id="cart-count">0</span>)</a>
+        </div>
+    </header>
+
+    <!-- DETALLE DEL PRODUCTO -->
+    <div class="product-detail-container">
+        
+        <!-- FOTOS DEL PRODUCTO (IZQUIERDA) -->
+        <div class="product-gallery" id="gallery-container">
+            <!-- Las imágenes se cargan dinámicamente con JS -->
+        </div>
+
+        <!-- PANEL DE COMPRA FIJO (DERECHA) -->
+        <div class="product-info-panel">
+            <h1 class="product-title" id="detail-title">CARGANDO...</h1>
+            <p class="product-price" id="detail-price">--</p>
+
+            <span class="color-label">COLOR: Estándar</span>
+            <div class="color-thumb">
+                <img id="detail-thumb" src="" alt="Vista Previa">
+            </div>
+
+            <span class="size-label" id="size-label">TALLA MUJER:</span>
+            <div class="size-selector" id="size-selector">
+                <!-- Se rellena con XS-XL o 35-42 por Javascript -->
+            </div>
+            <a href="#" class="size-guide-link">GUÍA DE TALLAS</a>
+
+            <button class="btn-add-cart" id="btn-add">AÑADIR</button>
+
+            <div class="shipping-banner">
+                ■ OPCIÓN "ENVÍO RÁPIDO": COMPRA ANTES DE LAS 12H Y RECIBE AL DÍA HÁBIL SIGUIENTE
+            </div>
+
+            <!-- DESPLEGABLES COMPLETOS -->
+            <div class="accordion accordion-flush" id="productDetailsAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#desc">
+                            DESCRIPCIÓN
+                        </button>
+                    </h2>
+                    <div id="desc" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordion">
+                        <div class="accordion-body">
+                            Prenda confeccionada con tejidos seleccionados de alta calidad. Diseño de la colección actual de SAKE D. BINKS.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mat">
+                            MATERIALES
+                        </button>
+                    </h2>
+                    <div id="mat" class="accordion-collapse collapse" data-bs-parent="#productDetailsAccordion">
+                        <div class="accordion-body">
+                            100% materiales de primera selección. Lavar a mano o ciclo delicado en agua fría.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        let selectedSize = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            
+            const name = params.get('name') || "PRODUCTO SAKE";
+            const price = params.get('price') || "-- CLP";
+            const type = params.get('type') || "";
+
+            document.getElementById('detail-title').textContent = name;
+            document.getElementById('detail-price').textContent = price;
+
+            // Galería de Imágenes
+            const gallery = document.getElementById('gallery-container');
+            let imgIndex = 1;
+            while (params.has(`img${imgIndex}`)) {
+                const imgUrl = params.get(`img${imgIndex}`);
+                const imgElement = document.createElement('img');
+                imgElement.src = imgUrl;
+                gallery.appendChild(imgElement);
+
+                if (imgIndex === 1) {
+                    document.getElementById('detail-thumb').src = imgUrl;
+                }
+                imgIndex++;
+            }
+
+            // Generador de Tallas según la categoría
+            const sizeSelector = document.getElementById('size-selector');
+            const sizeLabel = document.getElementById('size-label');
+            
+            let sizes = ['XS', 'S', 'M', 'L', 'XL'];
+            if (type.toLowerCase() === 'zapatos' || name.toLowerCase().includes('mocasines') || name.toLowerCase().includes('zapato')) {
+                sizes = ['35', '36', '37', '38', '39', '40', '41', '42'];
+                sizeLabel.textContent = 'TALLA CALZADO (EU):';
+            }
+
+            sizeSelector.innerHTML = '';
+            sizes.forEach(size => {
+                const btn = document.createElement('button');
+                btn.className = 'size-btn';
+                btn.textContent = size;
+                btn.onclick = () => {
+                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedSize = size;
+                };
+                sizeSelector.appendChild(btn);
+            });
+        });
+
+        document.getElementById('btn-add').addEventListener('click', () => {
+            if (!selectedSize) {
+                alert('Por favor selecciona una talla.');
+                return;
+            }
+            alert(`Añadido al carrito con talla: ${selectedSize}`);
+        });
+    </script>
+</body>
+</html>
