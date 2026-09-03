@@ -107,13 +107,24 @@
             opacity: 0.8;
         }
 
+        /* CONTENEDOR DE MINIATURAS */
+        .colors-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
         .color-thumb {
             width: 60px;
             height: 75px;
-            border: 1px solid #000;
+            border: 1px solid #e5e5e5;
             padding: 2px;
-            margin-bottom: 30px;
             cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .color-thumb.active, .color-thumb:hover {
+            border: 1.5px solid #000;
         }
 
         .color-thumb img {
@@ -225,9 +236,9 @@
         </div>
         <nav class="nav-links">
             <a href="SeccionMujer.html">MUJER</a>
-            <a href="#hombre">HOMBRE</a>
-            <a href="#nino">NIÑO</a>
-            <a href="#accesorios">ACCESORIOS</a>
+            <a href="SeccionHombre.html">HOMBRE</a>
+            <a href="SeccionNino.html">NIÑO</a>
+            <a href="SeccionAccesorios.html">ACCESORIOS</a>
         </nav>
         <div class="user-links">
             <a href="#">BUSCAR</a>
@@ -248,14 +259,23 @@
             <h1 class="product-title" id="detail-title">CARGANDO...</h1>
             <p class="product-price" id="detail-price">--</p>
 
-            <span class="color-label">COLOR: Estándar</span>
-            <div class="color-thumb">
-                <img id="detail-thumb" src="" alt="Vista Previa">
+            <span class="color-label" id="detail-color-label">COLOR: BLANCO</span>
+            
+            <!-- CONTENEDOR DE COLORES DINÁMICO -->
+            <div class="colors-container">
+                <!-- Color 1: Principal -->
+                <div class="color-thumb active" id="thumb-color1" onclick="changeProductColor('color1')">
+                    <img id="detail-thumb-img1" src="" alt="Color 1">
+                </div>
+                <!-- Color 2: Oculto por defecto (solo aparece si hay un 2do color en el enlace) -->
+                <div class="color-thumb" id="thumb-color2" onclick="changeProductColor('color2')" style="display: none;">
+                    <img id="detail-thumb-img2" src="" alt="Color 2">
+                </div>
             </div>
 
-            <span class="size-label" id="size-label">TALLA MUJER:</span>
+            <span class="size-label" id="size-label">TALLA:</span>
             <div class="size-selector" id="size-selector">
-                <!-- Se rellena con XS-XL o 35-42 por Javascript -->
+                <!-- Se rellena dinámicamente por JS -->
             </div>
             <a href="#" class="size-guide-link">GUÍA DE TALLAS</a>
 
@@ -299,6 +319,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script>
         let selectedSize = null;
+        let originalImages = [];
+        let extraColorImages = [];
+        let color1Name = "Blanco";
+        let color2Name = "";
 
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
@@ -306,23 +330,47 @@
             const name = params.get('name') || "PRODUCTO SAKE";
             const price = params.get('price') || "-- CLP";
             const type = params.get('type') || "";
+            
+            color1Name = params.get('color') || "Blanco";
+            color2Name = params.get('color2_name') || "Verde";
+
+            const thumb1 = params.get('thumb1');
+            const thumb2 = params.get('thumb2'); // Recibe la miniatura del 2do color
+            
+            // Recibe fotos de la galería del 2do color
+            const c2_img1 = params.get('c2_img1');
+            const c2_img2 = params.get('c2_img2');
 
             document.getElementById('detail-title').textContent = name;
             document.getElementById('detail-price').textContent = price;
+            document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
 
-            // Galería de Imágenes
-            const gallery = document.getElementById('gallery-container');
+            // 1. Cargar las imágenes del producto principal
             let imgIndex = 1;
             while (params.has(`img${imgIndex}`)) {
-                const imgUrl = params.get(`img${imgIndex}`);
-                const imgElement = document.createElement('img');
-                imgElement.src = imgUrl;
-                gallery.appendChild(imgElement);
-
-                if (imgIndex === 1) {
-                    document.getElementById('detail-thumb').src = imgUrl;
-                }
+                originalImages.push(params.get(`img${imgIndex}`));
                 imgIndex++;
+            }
+
+            // Renderizar la galería inicial
+            renderGallery(originalImages);
+
+            // Asignar miniatura al color 1
+            if (thumb1) {
+                document.getElementById('detail-thumb-img1').src = thumb1;
+            } else if (originalImages.length > 0) {
+                document.getElementById('detail-thumb-img1').src = originalImages[0];
+            }
+
+            // 2. Si existe un segundo color en la URL, se activa y muestra
+            if (thumb2) {
+                const thumb2Box = document.getElementById('thumb-color2');
+                document.getElementById('detail-thumb-img2').src = thumb2;
+                thumb2Box.style.display = 'block'; // Muestra el 2do recuadro
+
+                // Guardar imágenes de la variante verde/segunda
+                if (c2_img1) extraColorImages.push(c2_img1);
+                if (c2_img2) extraColorImages.push(c2_img2);
             }
 
             // Generador de Tallas según la categoría
@@ -333,6 +381,8 @@
             if (type.toLowerCase() === 'zapatos' || name.toLowerCase().includes('mocasines') || name.toLowerCase().includes('zapato')) {
                 sizes = ['35', '36', '37', '38', '39', '40', '41', '42'];
                 sizeLabel.textContent = 'TALLA CALZADO (EU):';
+            } else {
+                sizeLabel.textContent = 'TALLA:';
             }
 
             sizeSelector.innerHTML = '';
@@ -348,6 +398,36 @@
                 sizeSelector.appendChild(btn);
             });
         });
+
+        // Función para renderizar la galería a la izquierda
+        function renderGallery(imagesArray) {
+            const gallery = document.getElementById('gallery-container');
+            gallery.innerHTML = '';
+            imagesArray.forEach(url => {
+                const imgElement = document.createElement('img');
+                imgElement.src = url;
+                gallery.appendChild(imgElement);
+            });
+        }
+
+        // Función para alternar entre colores
+        function changeProductColor(selectedColor) {
+            const thumb1 = document.getElementById('thumb-color1');
+            const thumb2 = document.getElementById('thumb-color2');
+            const colorLabel = document.getElementById('detail-color-label');
+
+            if (selectedColor === 'color1') {
+                thumb1.classList.add('active');
+                thumb2.classList.remove('active');
+                colorLabel.textContent = `COLOR: ${color1Name}`;
+                renderGallery(originalImages);
+            } else if (selectedColor === 'color2') {
+                thumb2.classList.add('active');
+                thumb1.classList.remove('active');
+                colorLabel.textContent = `COLOR: ${color2Name}`;
+                renderGallery(extraColorImages);
+            }
+        }
 
         document.getElementById('btn-add').addEventListener('click', () => {
             if (!selectedSize) {
