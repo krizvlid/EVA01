@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #fff;
+    color: #000;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: #fff;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+}
+
+.nav-links a,
+.user-links a {
+    color: #000;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-left: 20px;
+    opacity: 0.7;
+}
+
+.product-detail-container {
+    display: flex;
+    margin-top: 90px;
+}
+
+.product-gallery {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 40px;
+}
+
+.product-gallery img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.product-info-panel {
+    width: 40%;
+    position: fixed;
+    top: 110px;
+    right: 0;
+    padding: 0 50px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.product-title {
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.color-label,
+.size-label {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+    opacity: 0.8;
+}
+
+.colors-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.color-thumb {
+    width: 60px;
+    height: 75px;
+    border: 1px solid #e5e5e5;
+    padding: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.color-thumb.active,
+.color-thumb:hover {
+    border: 1.5px solid #000;
+}
+
+.color-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.size-selector {
+    display: flex;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.size-btn {
+    flex: 1;
+    min-width: 40px;
+    padding: 12px 0;
+    text-align: center;
+    background: none;
+    border: none;
+    border-right: 1px solid #e5e5e5;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.size-btn:last-child {
+    border-right: none;
+}
+
+.size-btn:hover,
+.size-btn.active {
+    background-color: #000;
+    color: #fff;
+}
+
+.size-guide-link {
+    display: block;
+    text-align: right;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: #000;
+    text-decoration: underline;
+    margin-bottom: 30px;
+}
+
+.btn-add-cart {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: opacity 0.3s;
+}
+
+.btn-add-cart:hover {
+    opacity: 0.85;
+}
+
+.shipping-banner {
+    background-color: #f7f7f7;
+    padding: 12px 15px;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    border-left: 3px solid #000;
+}
+
+.accordion-item {
+    border: none;
+    border-top: 1px solid #eee;
+    border-radius: 0 !important;
+}
+
+.accordion-button {
+    background: none !important;
+    box-shadow: none !important;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 15px 0;
+    color: #000;
+}
+
+.accordion-body {
+    padding: 0 0 15px 0;
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.color-thumb-hidden {
+    display: none;
+}

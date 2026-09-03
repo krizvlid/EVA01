@@ -5,231 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAKE D. BINKS | DETALLE PRODUCTO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fff;
-            color: #000;
-        }
-
-        /* HEADER FIJO */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background-color: #fff;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #000;
-        }
-
-        .nav-links a, .user-links a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-left: 20px;
-            opacity: 0.7;
-        }
-
-        /* CONTENEDOR PRINCIPAL DOS COLUMNAS */
-        .product-detail-container {
-            display: flex;
-            margin-top: 90px;
-        }
-
-        /* IZQUIERDA: GALERÍA DE IMÁGENES VERTICAL */
-        .product-gallery {
-            width: 60%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 40px;
-        }
-
-        .product-gallery img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* DERECHA: INFORMACIÓN FIJA */
-        .product-info-panel {
-            width: 40%;
-            position: fixed;
-            top: 110px;
-            right: 0;
-            padding: 0 50px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-        }
-
-        .product-title {
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 400;
-            margin-bottom: 5px;
-        }
-
-        .product-price {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 30px;
-        }
-
-        .color-label, .size-label {
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-            opacity: 0.8;
-        }
-
-        /* CONTENEDOR DE MINIATURAS */
-        .colors-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .color-thumb {
-            width: 60px;
-            height: 75px;
-            border: 1px solid #e5e5e5;
-            padding: 2px;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
-
-        .color-thumb.active, .color-thumb:hover {
-            border: 1.5px solid #000;
-        }
-
-        .color-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* GRID DE TALLAS Adaptable */
-        .size-selector {
-            display: flex;
-            border: 1px solid #e5e5e5;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-
-        .size-btn {
-            flex: 1;
-            min-width: 40px;
-            padding: 12px 0;
-            text-align: center;
-            background: none;
-            border: none;
-            border-right: 1px solid #e5e5e5;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .size-btn:last-child {
-            border-right: none;
-        }
-
-        .size-btn:hover, .size-btn.active {
-            background-color: #000;
-            color: #fff;
-        }
-
-        .size-guide-link {
-            display: block;
-            text-align: right;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            color: #000;
-            text-decoration: underline;
-            margin-bottom: 30px;
-        }
-
-        /* BOTÓN AÑADIR AL CARRITO */
-        .btn-add-cart {
-            width: 100%;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            padding: 16px;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: opacity 0.3s;
-        }
-
-        .btn-add-cart:hover {
-            opacity: 0.85;
-        }
-
-        .shipping-banner {
-            background-color: #f7f7f7;
-            padding: 12px 15px;
-            font-size: 0.68rem;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            border-left: 3px solid #000;
-        }
-
-        /* ACCORDIONS MINIMALISTAS */
-        .accordion-item {
-            border: none;
-            border-top: 1px solid #eee;
-            border-radius: 0 !important;
-        }
-
-        .accordion-button {
-            background: none !important;
-            box-shadow: none !important;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 15px 0;
-            color: #000;
-        }
-
-        .accordion-body {
-            padding: 0 0 15px 0;
-            font-size: 0.75rem;
-            color: #666;
-            line-height: 1.6;
-        }
-    </style>
+    <link rel="stylesheet" href="css/detalle-producto.css">
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div>
             <a href="Inicio.html" class="logo">SAKE D. BINKS</a>
@@ -246,46 +25,40 @@
         </div>
     </header>
 
-    <!-- DETALLE DEL PRODUCTO -->
     <div class="product-detail-container">
         
-        <!-- FOTOS DEL PRODUCTO (IZQUIERDA) -->
         <div class="product-gallery" id="gallery-container">
-            <!-- Las imágenes se cargan dinámicamente con JS -->
-        </div>
+            </div>
 
-        <!-- PANEL DE COMPRA FIJO (DERECHA) -->
         <div class="product-info-panel">
             <h1 class="product-title" id="detail-title">CARGANDO...</h1>
             <p class="product-price" id="detail-price">--</p>
 
-            <span class="color-label" id="detail-color-label">COLOR: BLANCO</span>
+            <span class="color-label" id="detail-color-label">COLOR: --</span>
             
-            <!-- CONTENEDOR DE COLORES DINÁMICO -->
             <div class="colors-container">
-                <!-- Color 1: Principal -->
                 <div class="color-thumb active" id="thumb-color1" onclick="changeProductColor('color1')">
                     <img id="detail-thumb-img1" src="" alt="Color 1">
                 </div>
-                <!-- Color 2: Oculto por defecto (solo aparece si hay un 2do color en el enlace) -->
-                <div class="color-thumb" id="thumb-color2" onclick="changeProductColor('color2')" style="display: none;">
+                <div class="color-thumb color-thumb-hidden" id="thumb-color2" onclick="changeProductColor('color2')">
                     <img id="detail-thumb-img2" src="" alt="Color 2">
+                </div>
+                <div class="color-thumb color-thumb-hidden" id="thumb-color3" onclick="changeProductColor('color3')">
+                    <img id="detail-thumb-img3" src="" alt="Color 3">
                 </div>
             </div>
 
             <span class="size-label" id="size-label">TALLA:</span>
             <div class="size-selector" id="size-selector">
-                <!-- Se rellena dinámicamente por JS -->
-            </div>
-            <a href="#" class="size-guide-link">GUÍA DE TALLAS</a>
+                </div>
+            <a href="#" class="size-guide-link">GUIA DE TALLAS</a>
 
-            <button class="btn-add-cart" id="btn-add">AÑADIR</button>
+            <button class="btn-add-cart" id="btn-add">AÑADIR AL CARRITO</button>
 
             <div class="shipping-banner">
-                ■ OPCIÓN "ENVÍO RÁPIDO": COMPRA ANTES DE LAS 12H Y RECIBE AL DÍA HÁBIL SIGUIENTE
+                OPCION "ENVÍO RÁPIDO": COMPRA ANTES DE LAS 12H Y RECIBE AL DÍA HÁBIL SIGUIENTE
             </div>
 
-            <!-- DESPLEGABLES COMPLETOS -->
             <div class="accordion accordion-flush" id="productDetailsAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -317,125 +90,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script>
-        let selectedSize = null;
-        let originalImages = [];
-        let extraColorImages = [];
-        let color1Name = "Blanco";
-        let color2Name = "";
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            
-            const name = params.get('name') || "PRODUCTO SAKE";
-            const price = params.get('price') || "-- CLP";
-            const type = params.get('type') || "";
-            
-            color1Name = params.get('color') || "Blanco";
-            color2Name = params.get('color2_name') || "Verde";
-
-            const thumb1 = params.get('thumb1');
-            const thumb2 = params.get('thumb2'); // Recibe la miniatura del 2do color
-            
-            // Recibe fotos de la galería del 2do color
-            const c2_img1 = params.get('c2_img1');
-            const c2_img2 = params.get('c2_img2');
-
-            document.getElementById('detail-title').textContent = name;
-            document.getElementById('detail-price').textContent = price;
-            document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
-
-            // 1. Cargar las imágenes del producto principal
-            let imgIndex = 1;
-            while (params.has(`img${imgIndex}`)) {
-                originalImages.push(params.get(`img${imgIndex}`));
-                imgIndex++;
-            }
-
-            // Renderizar la galería inicial
-            renderGallery(originalImages);
-
-            // Asignar miniatura al color 1
-            if (thumb1) {
-                document.getElementById('detail-thumb-img1').src = thumb1;
-            } else if (originalImages.length > 0) {
-                document.getElementById('detail-thumb-img1').src = originalImages[0];
-            }
-
-            // 2. Si existe un segundo color en la URL, se activa y muestra
-            if (thumb2) {
-                const thumb2Box = document.getElementById('thumb-color2');
-                document.getElementById('detail-thumb-img2').src = thumb2;
-                thumb2Box.style.display = 'block'; // Muestra el 2do recuadro
-
-                // Guardar imágenes de la variante verde/segunda
-                if (c2_img1) extraColorImages.push(c2_img1);
-                if (c2_img2) extraColorImages.push(c2_img2);
-            }
-
-            // Generador de Tallas según la categoría
-            const sizeSelector = document.getElementById('size-selector');
-            const sizeLabel = document.getElementById('size-label');
-            
-            let sizes = ['XS', 'S', 'M', 'L', 'XL'];
-            if (type.toLowerCase() === 'zapatos' || name.toLowerCase().includes('mocasines') || name.toLowerCase().includes('zapato')) {
-                sizes = ['35', '36', '37', '38', '39', '40', '41', '42'];
-                sizeLabel.textContent = 'TALLA CALZADO (EU):';
-            } else {
-                sizeLabel.textContent = 'TALLA:';
-            }
-
-            sizeSelector.innerHTML = '';
-            sizes.forEach(size => {
-                const btn = document.createElement('button');
-                btn.className = 'size-btn';
-                btn.textContent = size;
-                btn.onclick = () => {
-                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedSize = size;
-                };
-                sizeSelector.appendChild(btn);
-            });
-        });
-
-        // Función para renderizar la galería a la izquierda
-        function renderGallery(imagesArray) {
-            const gallery = document.getElementById('gallery-container');
-            gallery.innerHTML = '';
-            imagesArray.forEach(url => {
-                const imgElement = document.createElement('img');
-                imgElement.src = url;
-                gallery.appendChild(imgElement);
-            });
-        }
-
-        // Función para alternar entre colores
-        function changeProductColor(selectedColor) {
-            const thumb1 = document.getElementById('thumb-color1');
-            const thumb2 = document.getElementById('thumb-color2');
-            const colorLabel = document.getElementById('detail-color-label');
-
-            if (selectedColor === 'color1') {
-                thumb1.classList.add('active');
-                thumb2.classList.remove('active');
-                colorLabel.textContent = `COLOR: ${color1Name}`;
-                renderGallery(originalImages);
-            } else if (selectedColor === 'color2') {
-                thumb2.classList.add('active');
-                thumb1.classList.remove('active');
-                colorLabel.textContent = `COLOR: ${color2Name}`;
-                renderGallery(extraColorImages);
-            }
-        }
-
-        document.getElementById('btn-add').addEventListener('click', () => {
-            if (!selectedSize) {
-                alert('Por favor selecciona una talla.');
-                return;
-            }
-            alert(`Añadido al carrito con talla: ${selectedSize}`);
-        });
-    </script>
+    <script src="js/detalle-producto.js"></script>
 </body>
 </html>

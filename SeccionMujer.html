@@ -5,341 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAKE D. BINKS | MUJER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fff;
-            color: #000;
-        }
-
-        /* Header Fijo Superior */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background-color: #fff;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #000;
-        }
-
-        .nav-links a, .user-links a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-left: 20px;
-            opacity: 0.7;
-        }
-
-        .nav-links a.active {
-            opacity: 1;
-            font-weight: 600;
-        }
-
-        /* Estructura Principal */
-        .layout-wrapper {
-            display: flex;
-            margin-top: 100px;
-        }
-
-        /* Menú Lateral Izquierdo Fijo */
-        .sidebar-menu {
-            width: 280px;
-            position: fixed;
-            top: 100px;
-            left: 40px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-            scrollbar-width: none;
-        }
-
-        .sidebar-menu::-webkit-scrollbar {
-            display: none;
-        }
-
-        .sidebar-menu ul {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 16px;
-        }
-
-        .sidebar-menu a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.4;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .sidebar-menu a:hover, .sidebar-menu a.active-category {
-            opacity: 1;
-            font-weight: 600;
-            transform: translateX(4px);
-        }
-
-        /* Área de Contenido */
-        .catalog-content {
-            margin-left: 300px;
-            padding: 10px 40px 100px 0;
-            width: 100%;
-        }
-
-        .category-section {
-            margin-bottom: 140px;
-            scroll-margin-top: 110px;
-        }
-
-        .editorial-container {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-        }
-
-        .editorial-product {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .product-link-group {
-            width: 100%;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        /* FORMATO 1: IMÁGENES DESFASADAS */
-        .editorial-staggered {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            width: 100%;
-        }
-
-        .staggered-item {
-            width: 65%;
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        .staggered-item.align-left {
-            align-self: flex-start;
-        }
-
-        .staggered-item.align-right {
-            align-self: flex-end;
-        }
-
-        /* AJUSTE FORZADO PARA LA SECCIÓN DE TOPS */
-        #tops .staggered-item {
-            height: 120vh !important;
-            min-height: 900px;
-        }
-
-        #tops .staggered-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: top center !important;
-        }
-
-        /* FORMATO 2: GRILLA 1 ARRIBA Y 2 ABAJO */
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .editorial-image-wrapper.full-width {
-            grid-column: span 2;
-            height: 85vh;
-        }
-
-        .editorial-image-wrapper.half-width {
-            height: 70vh;
-        }
-
-        .editorial-image-wrapper {
-            width: 100%;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 3: DISEÑO ASIMÉTRICO (1 IZQ + 2 APILADAS DER) */
-        .editorial-asymmetric {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .asymmetric-main {
-            height: 85vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        .asymmetric-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            height: 85vh;
-        }
-
-        .asymmetric-sub {
-            height: calc(50% - 7.5px);
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 4: TRÍPTICO DE 3 COLUMNAS */
-        .editorial-triptych {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            width: 100%;
-        }
-
-        .triptych-item {
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 5: DUO EN PARALELO */
-        .editorial-duo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .duo-item {
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* ESTILOS ESPECIALES PARA POLERAS */
-        #poleras .editorial-duo {
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-        }
-
-        #poleras .duo-item {
-            height: 120vh !important;
-            min-height: 900px;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        #poleras .duo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: top center !important;
-        }
-
-        /* ESTILOS ESPECIALES PARA ZAPATOS */
-        #zapatos .single-shoe-wrapper {
-            width: 80%;
-            margin: 0 auto;
-            height: 140vh !important;
-            min-height: 1000px;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        #zapatos .single-shoe-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: bottom center !important;
-        }
-
-        /* EFECTO HOVER PARA TODAS LAS IMÁGENES */
-        .editorial-image-wrapper img, 
-        .staggered-item img, 
-        .asymmetric-main img, 
-        .asymmetric-sub img,
-        .triptych-item img,
-        .duo-item img,
-        .single-shoe-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .editorial-image-wrapper:hover img, 
-        .staggered-item:hover img, 
-        .asymmetric-main:hover img, 
-        .asymmetric-sub:hover img,
-        .triptych-item:hover img,
-        .duo-item:hover img,
-        .single-shoe-wrapper:hover img {
-            transform: scale(1.02);
-        }
-
-        /* INFORMACIÓN Y PRECIO CENTRADOS */
-        .editorial-info {
-            margin-top: 25px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .product-name {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 6px;
-            opacity: 0.9;
-        }
-
-        .product-price {
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            opacity: 0.6;
-        }
-    </style>
+    <link rel="stylesheet" href="css/SeccionMujer.css">
 </head>
 <body>
 
@@ -351,13 +17,14 @@
         <nav class="nav-links">
             <a href="SeccionMujer.html" class="active">MUJER</a>
             <a href="SeccionHombre.html">HOMBRE</a>
-            <a href="SeccionNino.html">NIÑO</a>
+            <a href="SeccionNino.html">NIÑOS</a>
             <a href="SeccionAccesorios.html">ACCESORIOS</a>
         </nav>
 
         <div class="user-links">
             <a href="#">BUSCAR</a>
-            <a href="carrito.html">CESTA (0)</a>
+            <!-- Agregado el ID cart-link necesario para JS -->
+            <a href="carrito.html" id="cart-link">CESTA (0)</a>
         </div>
     </header>
 
@@ -581,48 +248,29 @@
             </section>
 
             <!-- ZAPATOS -->
-<section id="zapatos" class="category-section">
-    <div class="editorial-container">
+            <section id="zapatos" class="category-section">
+                <div class="editorial-container">
 
-        <article class="editorial-product">
-            <a href="detalle-producto.html?name=MOCASINES%20DE%20CUERO%20MINIMAL&price=65.990%20CLP&type=zapatos&img1=Imagenes/13595610709-p.jpg" class="product-link-group">
-                <div class="single-shoe-wrapper">
-                    <img src="Imagenes/13595610709-p.jpg" alt="Zapato Vista Lateral">
+                    <article class="editorial-product">
+                        <a href="detalle-producto.html?name=MOCASINES%20DE%20CUERO%20MINIMAL&price=65.990%20CLP&type=zapatos&img1=Imagenes/13595610709-p.jpg" class="product-link-group">
+                            <div class="single-shoe-wrapper">
+                                <img src="Imagenes/13595610709-p.jpg" alt="Zapato Vista Lateral">
+                            </div>
+
+                            <div class="editorial-info">
+                                <span class="product-name">MOCASINES DE CUERO MINIMAL</span>
+                                <span class="product-price">65.990 CLP</span>
+                            </div>
+                        </a>
+                    </article>
+
                 </div>
-
-                <div class="editorial-info">
-                    <span class="product-name">MOCASINES DE CUERO MINIMAL</span>
-                    <span class="product-price">65.990 CLP</span>
-                </div>
-            </a>
-        </article>
-
-    </div>
-</section>
+            </section>
 
         </main>
     </div>
 
-    <script>
-        const sections = document.querySelectorAll('.category-section');
-        const navLinks = document.querySelectorAll('.menu-item');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active-category');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active-category');
-                }
-            });
-        });
-    </script>
+    <!-- Enlace al JS externo en la carpeta js/ con coincidencia exacta de nombre -->
+    <script src="js/SeccionMujer.js"></script>
 </body>
 </html>

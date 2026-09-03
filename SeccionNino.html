@@ -3,343 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAKE D. BINKS | MUJER</title>
+    <title>SAKE D. BINKS | NIÑOS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fff;
-            color: #000;
-        }
-
-        /* Header Fijo Superior */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background-color: #fff;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #000;
-        }
-
-        .nav-links a, .user-links a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-left: 20px;
-            opacity: 0.7;
-        }
-
-        .nav-links a.active {
-            opacity: 1;
-            font-weight: 600;
-        }
-
-        /* Estructura Principal */
-        .layout-wrapper {
-            display: flex;
-            margin-top: 100px;
-        }
-
-        /* Menú Lateral Izquierdo Fijo */
-        .sidebar-menu {
-            width: 280px;
-            position: fixed;
-            top: 100px;
-            left: 40px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-            scrollbar-width: none;
-        }
-
-        .sidebar-menu::-webkit-scrollbar {
-            display: none;
-        }
-
-        .sidebar-menu ul {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 16px;
-        }
-
-        .sidebar-menu a {
-            color: #000;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.4;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .sidebar-menu a:hover, .sidebar-menu a.active-category {
-            opacity: 1;
-            font-weight: 600;
-            transform: translateX(4px);
-        }
-
-        /* Área de Contenido */
-        .catalog-content {
-            margin-left: 300px;
-            padding: 10px 40px 100px 0;
-            width: 100%;
-        }
-
-        .category-section {
-            margin-bottom: 140px;
-            scroll-margin-top: 110px;
-        }
-
-        .editorial-container {
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-        }
-
-        .editorial-product {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .product-link-group {
-            width: 100%;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        /* FORMATO 1: IMÁGENES DESFASADAS */
-        .editorial-staggered {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            width: 100%;
-        }
-
-        .staggered-item {
-            width: 65%;
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        .staggered-item.align-left {
-            align-self: flex-start;
-        }
-
-        .staggered-item.align-right {
-            align-self: flex-end;
-        }
-
-        /* AJUSTE FORZADO PARA LA SECCIÓN DE TOPS */
-        #tops .staggered-item {
-            height: 120vh !important;
-            min-height: 900px;
-        }
-
-        #tops .staggered-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: top center !important;
-        }
-
-        /* FORMATO 2: GRILLA 1 ARRIBA Y 2 ABAJO */
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .editorial-image-wrapper.full-width {
-            grid-column: span 2;
-            height: 85vh;
-        }
-
-        .editorial-image-wrapper.half-width {
-            height: 70vh;
-        }
-
-        .editorial-image-wrapper {
-            width: 100%;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 3: DISEÑO ASIMÉTRICO (1 IZQ + 2 APILADAS DER) */
-        .editorial-asymmetric {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .asymmetric-main {
-            height: 85vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        .asymmetric-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            height: 85vh;
-        }
-
-        .asymmetric-sub {
-            height: calc(50% - 7.5px);
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 4: TRÍPTICO DE 3 COLUMNAS */
-        .editorial-triptych {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            width: 100%;
-        }
-
-        .triptych-item {
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* FORMATO 5: DUO EN PARALELO */
-        .editorial-duo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .duo-item {
-            height: 75vh;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* ESTILOS ESPECIALES PARA POLERAS */
-        #poleras .editorial-duo {
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 100%;
-        }
-
-        #poleras .duo-item {
-            height: 120vh !important;
-            min-height: 900px;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        #poleras .duo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: top center !important;
-        }
-
-        /* ESTILOS ESPECIALES PARA ZAPATOS */
-        #zapatos .single-shoe-wrapper {
-            width: 80%;
-            margin: 0 auto;
-            height: 140vh !important;
-            min-height: 1000px;
-            overflow: hidden;
-            background-color: #f4f4f4;
-        }
-
-        #zapatos .single-shoe-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: bottom center !important;
-        }
-
-        /* EFECTO HOVER PARA TODAS LAS IMÁGENES */
-        .editorial-image-wrapper img, 
-        .staggered-item img, 
-        .asymmetric-main img, 
-        .asymmetric-sub img,
-        .triptych-item img,
-        .duo-item img,
-        .single-shoe-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .editorial-image-wrapper:hover img, 
-        .staggered-item:hover img, 
-        .asymmetric-main:hover img, 
-        .asymmetric-sub:hover img,
-        .triptych-item:hover img,
-        .duo-item:hover img,
-        .single-shoe-wrapper:hover img {
-            transform: scale(1.02);
-        }
-
-        /* INFORMACIÓN Y PRECIO CENTRADOS */
-        .editorial-info {
-            margin-top: 25px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .product-name {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 6px;
-            opacity: 0.9;
-        }
-
-        .product-price {
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            opacity: 0.6;
-        }
-    </style>
+    <link rel="stylesheet" href="css/SeccionNino.css">
 </head>
 <body>
 
@@ -349,15 +15,15 @@
         </div>
 
         <nav class="nav-links">
-            <a href="SeccionMujer.html" class="active">MUJER</a>
+            <a href="SeccionMujer.html">MUJER</a>
             <a href="SeccionHombre.html">HOMBRE</a>
-            <a href="SeccionNino.html" class="active">NIÑO</a>
+            <a href="SeccionNino.html" class="active">NIÑOS</a>
             <a href="SeccionAccesorios.html">ACCESORIOS</a>
         </nav>
 
         <div class="user-links">
             <a href="#">BUSCAR</a>
-            <a href="carrito.html">CESTA (0)</a>
+            <a href="carrito.html" id="cart-link">CESTA (0)</a>
         </div>
     </header>
 
@@ -365,264 +31,96 @@
         
         <aside class="sidebar-menu">
             <ul>
-                <li><a href="#vestidos" class="menu-item active-category">VESTIDOS</a></li>
-                <li><a href="#camisas" class="menu-item">CAMISAS | BLUSAS</a></li>
-                <li><a href="#tops" class="menu-item">TOPS | BODIES</a></li>
-                <li><a href="#poleras" class="menu-item">POLERAS</a></li>
-                <li><a href="#chaquetas" class="menu-item">CHAQUETAS</a></li>
-                <li><a href="#jeans" class="menu-item">JEANS</a></li>
-                <li><a href="#zapatos" class="menu-item">ZAPATOS</a></li>
+                <li><a href="#nino-poleras" class="menu-item active-category">POLERAS</a></li>
+                <li><a href="#nino-pantalones" class="menu-item">PANTALONES</a></li>
+                <li><a href="#nino-chaquetas" class="menu-item">CHAQUETAS</a></li>
+                <li><a href="#nino-calzado" class="menu-item">CALZADO</a></li>
             </ul>
         </aside>
 
         <main class="catalog-content">
             
-            <!-- VESTIDOS -->
-            <section id="vestidos" class="category-section">
+            <!-- POLERAS NIÑOS -->
+            <section id="nino-poleras" class="category-section">
                 <div class="editorial-container">
-
                     <article class="editorial-product">
-                        <a href="detalle-producto.html?name=VESTIDO%20BOHO%20CHIC%20BORLAS&price=79.990%20CLP&img1=Imagenes/VestidoBlanco1.jpg&img2=Imagenes/VestidoBlanco2.jpg" class="product-link-group">
-                            <div class="editorial-staggered">
-                                <div class="staggered-item align-left">
-                                    <img src="Imagenes/VestidoBlanco1.jpg" alt="Vestido Blanco Vista Izquierda">
+                        <a href="detalle-producto.html?name=POLERA%20ALGODON%20ESTAMPADA&price=19.990%20CLP&img1=Imagenes/NinoPolera1.jpg&img2=Imagenes/NinoPolera2.jpg" class="product-link-group">
+                            <div class="editorial-duo">
+                                <div class="duo-item">
+                                    <img src="Imagenes/NinoPolera1.jpg" alt="Polera Niño Frontal">
                                 </div>
-                                <div class="staggered-item align-right">
-                                    <img src="Imagenes/VestidoBlanco2.jpg" alt="Vestido Blanco Vista Derecha">
+                                <div class="duo-item">
+                                    <img src="Imagenes/NinoPolera2.jpg" alt="Polera Niño Detalle">
                                 </div>
                             </div>
-
                             <div class="editorial-info">
-                                <span class="product-name">VESTIDO BOHO CHIC BORLAS</span>
-                                <span class="product-price">79.990 CLP</span>
+                                <span class="product-name">POLERA ALGODÓN ESTAMPADA</span>
+                                <span class="product-price">19.990 CLP</span>
                             </div>
                         </a>
                     </article>
-
-                    <article class="editorial-product">
-                        <a href="detalle-producto.html?name=VESTIDO%20LARGO%20SATINADO&price=69.990%20CLP&img1=Imagenes/mcpeter-5FdfBNJXo3k-unsplash.jpg&img2=Imagenes/mcpeter-lnmN-UMWYWw-unsplash.jpg&img3=Imagenes/mcpeter-Qw750RKolU0-unsplash.jpg" class="product-link-group">
-                            <div class="editorial-grid">
-                                <div class="editorial-image-wrapper full-width">
-                                    <img src="Imagenes/mcpeter-5FdfBNJXo3k-unsplash.jpg" alt="Vestido 2 Vista Principal">
-                                </div>
-                                
-                                <div class="editorial-image-wrapper half-width">
-                                    <img src="Imagenes/mcpeter-lnmN-UMWYWw-unsplash.jpg" alt="Vestido 2 Vista Izquierda">
-                                </div>
-
-                                <div class="editorial-image-wrapper half-width">
-                                    <img src="Imagenes/mcpeter-Qw750RKolU0-unsplash.jpg" alt="Vestido 2 Vista Derecha">
-                                </div>
-                            </div>
-
-                            <div class="editorial-info">
-                                <span class="product-name">VESTIDO LARGO SATINADO</span>
-                                <span class="product-price">69.990 CLP</span>
-                            </div>
-                        </a>
-                    </article>
-
                 </div>
             </section>
 
-            <!-- CAMISAS Y BLUSAS -->
-            <section id="camisas" class="category-section">
+            <!-- PANTALONES NIÑOS -->
+            <section id="nino-pantalones" class="category-section">
                 <div class="editorial-container">
-
                     <article class="editorial-product">
-                        <a href="detalle-producto.html?name=CAMISA%20OVERSIZED%20LINO&price=49.990%20CLP&img1=Imagenes/amin-naderloei-Mg2chTCMzhk-unsplash.jpg&img2=Imagenes/amin-naderloei-aLHw5V2HTUo-unsplash.jpg&img3=Imagenes/amin-naderloei-hoczaAFmSf4-unsplash.jpg" class="product-link-group">
-                            <div class="editorial-asymmetric">
-                                <div class="asymmetric-main">
-                                    <img src="Imagenes/amin-naderloei-Mg2chTCMzhk-unsplash.jpg" alt="Camisa Vista Principal">
+                        <a href="detalle-producto.html?name=JEANS%20KIDS%20RELAXED%20FIT&price=29.990%20CLP&img1=Imagenes/NinoPantalon1.jpg&img2=Imagenes/NinoPantalon2.jpg" class="product-link-group">
+                            <div class="editorial-staggered">
+                                <div class="staggered-item align-left">
+                                    <img src="Imagenes/NinoPantalon1.jpg" alt="Pantalón Niño Frontal">
                                 </div>
-                                
-                                <div class="asymmetric-stack">
-                                    <div class="asymmetric-sub">
-                                        <img src="Imagenes/amin-naderloei-aLHw5V2HTUo-unsplash.jpg" alt="Camisa Detalle Izquierda">
-                                    </div>
-                                    <div class="asymmetric-sub">
-                                        <img src="Imagenes/amin-naderloei-hoczaAFmSf4-unsplash.jpg" alt="Camisa Detalle Derecha">
-                                    </div>
+                                <div class="staggered-item align-right">
+                                    <img src="Imagenes/NinoPantalon2.jpg" alt="Pantalón Niño Detalle">
                                 </div>
                             </div>
-
                             <div class="editorial-info">
-                                <span class="product-name">CAMISA OVERSIZED LINO</span>
-                                <span class="product-price">49.990 CLP</span>
+                                <span class="product-name">JEANS KIDS RELAXED FIT</span>
+                                <span class="product-price">29.990 CLP</span>
                             </div>
                         </a>
                     </article>
-
-                    <article class="editorial-product">
-                        <a href="detalle-producto.html?name=BLUSA%20CUELLO%20BOBO%20BORDADO&price=45.990%20CLP&img1=Imagenes/praja-nugraha-v9A8fYRhrHA-unsplash.jpg&img2=Imagenes/praja-nugraha-KHM8scc5Aac-unsplash.jpg&img3=Imagenes/praja-nugraha-1cwH_HnvdWA-unsplash.jpg" class="product-link-group">
-                            <div class="editorial-triptych">
-                                <div class="triptych-item">
-                                    <img src="Imagenes/praja-nugraha-v9A8fYRhrHA-unsplash.jpg" alt="Blusa Vista Frontal">
-                                </div>
-                                <div class="triptych-item">
-                                    <img src="Imagenes/praja-nugraha-KHM8scc5Aac-unsplash.jpg" alt="Blusa Detalle">
-                                </div>
-                                <div class="triptych-item">
-                                    <img src="Imagenes/praja-nugraha-1cwH_HnvdWA-unsplash.jpg" alt="Blusa Vista Espalda">
-                                </div>
-                            </div>
-
-                            <div class="editorial-info">
-                                <span class="product-name">BLUSA CUELLO BOBO BORDADO</span>
-                                <span class="product-price">45.990 CLP</span>
-                            </div>
-                        </a>
-                    </article>
-
                 </div>
             </section>
 
-            <!-- TOPS Y BODIES -->
-            <section id="tops" class="category-section">
+            <!-- CHAQUETAS NIÑOS -->
+            <section id="nino-chaquetas" class="category-section">
                 <div class="editorial-container">
-
                     <article class="editorial-product">
-                        <a href="detalle-producto.html?name=TOP%20ESTRUCTURADO%20BLANCO&price=34.990%20CLP&img1=Imagenes/dwayne-joe-_6W3BYh6jGc-unsplash.jpg&img2=Imagenes/dwayne-joe-oP-WElX8jhU-unsplash.jpg" class="product-link-group">
-                            <div class="editorial-staggered">
-                                <div class="staggered-item align-right">
-                                    <img src="Imagenes/dwayne-joe-_6W3BYh6jGc-unsplash.jpg" alt="Top Blanco Corto con Lazos">
-                                </div>
-                                <div class="staggered-item align-left">
-                                    <img src="Imagenes/dwayne-joe-oP-WElX8jhU-unsplash.jpg" alt="Top Blanco con Botones Cruzados">
-                                </div>
+                        <a href="detalle-producto.html?name=CHAQUETA%20DENIM%20MINI&price=39.990%20CLP&img1=Imagenes/NinoChaqueta1.jpg" class="product-link-group">
+                            <div class="single-shoe-wrapper">
+                                <img src="Imagenes/NinoChaqueta1.jpg" alt="Chaqueta Niño">
                             </div>
-
                             <div class="editorial-info">
-                                <span class="product-name">TOP ESTRUCTURADO BLANCO</span>
+                                <span class="product-name">CHAQUETA DENIM MINI</span>
+                                <span class="product-price">39.990 CLP</span>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- CALZADO NIÑOS -->
+            <section id="nino-calzado" class="category-section">
+                <div class="editorial-container">
+                    <article class="editorial-product">
+                        <a href="detalle-producto.html?name=ZAPATILLAS%20URBANAS%20KIDS&price=34.990%20CLP&type=zapatos&img1=Imagenes/NinoZapato1.jpg" class="product-link-group">
+                            <div class="single-shoe-wrapper">
+                                <img src="Imagenes/NinoZapato1.jpg" alt="Zapatillas Niño">
+                            </div>
+                            <div class="editorial-info">
+                                <span class="product-name">ZAPATILLAS URBANAS KIDS</span>
                                 <span class="product-price">34.990 CLP</span>
                             </div>
                         </a>
                     </article>
-
                 </div>
             </section>
-
-            <!-- POLERAS -->
-            <section id="poleras" class="category-section">
-                <div class="editorial-container">
-
-                    <article class="editorial-product">
-                        <a href="detalle-producto.html?name=POLERA%20COTTON%20GRAPHIC&price=25.990%20CLP&img1=Imagenes/04424819250-p.jpg&img2=Imagenes/04424819250-a2.jpg" class="product-link-group">
-                            <div class="editorial-duo">
-                                <div class="duo-item">
-                                    <img src="Imagenes/04424819250-p.jpg" alt="Polera Vista Frontal">
-                                </div>
-                                <div class="duo-item">
-                                    <img src="Imagenes/04424819250-a2.jpg" alt="Polera Vista Detalle">
-                                </div>
-                            </div>
-
-                            <div class="editorial-info">
-                                <span class="product-name">POLERA COTTON GRAPHIC</span>
-                                <span class="product-price">25.990 CLP</span>
-                            </div>
-                        </a>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- CHAQUETAS -->
-            <section id="chaquetas" class="category-section">
-                <div class="editorial-container">
-
-                    <article class="editorial-product">
-                        <a href="detalle-producto.html?name=CHAQUETA%20OVERSIZED%20STRUCTURAL&price=89.990%20CLP&img1=Imagenes/04391810800-a1.jpg&img2=Imagenes/04391810800-p.jpg" class="product-link-group">
-                            <div class="editorial-staggered">
-                                <div class="staggered-item align-left">
-                                    <img src="Imagenes/04391810800-a1.jpg" alt="Chaqueta Vista Frontal">
-                                </div>
-                                <div class="staggered-item align-right">
-                                    <img src="Imagenes/04391810800-p.jpg" alt="Chaqueta Perfil">
-                                </div>
-                            </div>
-
-                            <div class="editorial-info">
-                                <span class="product-name">CHAQUETA OVERSIZED STRUCTURAL</span>
-                                <span class="product-price">89.990 CLP</span>
-                            </div>
-                        </a>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- JEANS -->
-            <section id="jeans" class="category-section">
-                <div class="editorial-container">
-
-                    <article class="editorial-product">
-                        <a href="detalle-producto.html?name=JEANS%20HIGH%20WAIST%20STRAIGHT&price=54.990%20CLP&img1=Imagenes/02569210400-p.jpg&img2=Imagenes/02569210400-a1.jpg&img3=Imagenes/02569210400-a5.jpg" class="product-link-group">
-                            <div class="editorial-triptych">
-                                <div class="triptych-item">
-                                    <img src="Imagenes/02569210400-p.jpg" alt="Jeans Vista Frente">
-                                </div>
-                                <div class="triptych-item">
-                                    <img src="Imagenes/02569210400-a1.jpg" alt="Jeans Vista Trasera">
-                                </div>
-                                <div class="triptych-item">
-                                    <img src="Imagenes/02569210400-a5.jpg" alt="Jeans Detalle">
-                                </div>
-                            </div>
-
-                            <div class="editorial-info">
-                                <span class="product-name">JEANS HIGH WAIST STRAIGHT</span>
-                                <span class="product-price">54.990 CLP</span>
-                            </div>
-                        </a>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- ZAPATOS -->
-<section id="zapatos" class="category-section">
-    <div class="editorial-container">
-
-        <article class="editorial-product">
-            <a href="detalle-producto.html?name=MOCASINES%20DE%20CUERO%20MINIMAL&price=65.990%20CLP&type=zapatos&img1=Imagenes/13595610709-p.jpg" class="product-link-group">
-                <div class="single-shoe-wrapper">
-                    <img src="Imagenes/13595610709-p.jpg" alt="Zapato Vista Lateral">
-                </div>
-
-                <div class="editorial-info">
-                    <span class="product-name">MOCASINES DE CUERO MINIMAL</span>
-                    <span class="product-price">65.990 CLP</span>
-                </div>
-            </a>
-        </article>
-
-    </div>
-</section>
 
         </main>
     </div>
 
-    <script>
-        const sections = document.querySelectorAll('.category-section');
-        const navLinks = document.querySelectorAll('.menu-item');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active-category');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active-category');
-                }
-            });
-        });
-    </script>
+    <script src="js/SeccionNino.js"></script>
 </body>
 </html>
