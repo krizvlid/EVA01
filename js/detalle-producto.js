@@ -83,7 +83,10 @@ window.addEventListener('DOMContentLoaded', () => {
     } else if (type.toLowerCase() === 'zapatos' || normalizedName.includes('mocasines') || normalizedName.includes('zapato')) {
         sizes = ['35', '36', '37', '38', '39', '40', '41', '42'];
         sizeLabel.textContent = 'TALLA CALZADO (EU):';
-    } else {
+    }else if (type.toLowerCase() === 'zapatillas' || normalizedName.includes('zapatilla') || normalizedName.includes('zapato')) {
+        sizes = ['24', '26', '28', '30', '32', '34'];
+        sizeLabel.textContent = 'TALLA CALZADO (EU):'; 
+    }else {
         sizeLabel.textContent = 'TALLA:';
     }
 
