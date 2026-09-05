@@ -164,11 +164,11 @@ body {
     margin-bottom: 30px;
 }
 
-.stock-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-bottom: 22px; }
-.stock-panel label { font-size: .68rem; letter-spacing: 1px; }
-.stock-panel input { border: 1px solid #ddd; padding: 10px; width: 100%; }
+.stock-panel { margin-bottom: 22px; }
+.stock-row { align-items: center; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; padding: 10px 0; }
+.stock-label { font-size: .68rem; letter-spacing: 1px; }
+.stock-value { font-size: .8rem; text-align: right; }
 .stock-error { color: #a22e22; font-size: .68rem; min-height: 15px; }
-.low-stock-alert { background: #fff2df; border-left: 3px solid #b85d18; color: #7c3c0e; display: none; font-size: .7rem; grid-column: span 2; padding: 10px; }
 .quantity-selector { align-items: center; border: 1px solid #e5e5e5; display: flex; justify-content: space-between; margin-bottom: 15px; }
 .quantity-selector span { font-size: .68rem; letter-spacing: 1px; padding-left: 12px; }
 .quantity-selector button { background: none; border: 0; cursor: pointer; font-size: 1.3rem; padding: 8px 14px; }

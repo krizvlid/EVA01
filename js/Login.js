@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         correo: correoInput,
                         logueado: true
                     }));
-
                     alert('✅ ' + resultado.mensaje);
 
                     if (document.referrer && !document.referrer.includes('Login.html')) {

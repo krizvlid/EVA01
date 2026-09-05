@@ -26,38 +26,40 @@
         <div class="form-layout">
             
             <!-- SECCIÓN DE INTRODUCCIÓN -->
-            <section>
+            <section class="contact-intro">
                 <span class="eyebrow">Hablemos</span>
                 <h1>Estamos para ayudarte.</h1>
                 <p class="lead">Escríbenos y responderemos a la brevedad. Cuéntanos qué necesitas con el mayor detalle posible.</p>
             </section>
 
-            <!-- FORMULARIO DE CONTACTO -->
-            <form class="form-panel" id="contact-form" novalidate>
-                
-                <div class="form-field">
-                    <label for="contact-name">Nombre</label>
-                    <input id="contact-name" name="nombre" type="text" maxlength="100" required autocomplete="name">
-                    <span class="field-error" id="contact-name-error"></span>
-                </div>
+            <!-- CONTENEDOR CREMA CON FORMULARIO -->
+            <div class="contact-box">
+                <form id="contact-form" novalidate>
+                    
+                    <div class="form-group">
+                        <label for="contact-name">Nombre</label>
+                        <input id="contact-name" name="nombre" type="text" maxlength="100" required autocomplete="name">
+                        <span class="field-error" id="contact-name-error"></span>
+                    </div>
 
-                <div class="form-field">
-                    <label for="contact-email">Correo</label>
-                    <input id="contact-email" name="correo" type="email" maxlength="100" required autocomplete="email">
-                    <span class="field-error" id="contact-email-error"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="contact-email">Correo</label>
+                        <input id="contact-email" name="correo" type="email" maxlength="100" required autocomplete="email">
+                        <span class="field-error" id="contact-email-error"></span>
+                    </div>
 
-                <div class="form-field">
-                    <label for="contact-comment">Comentario</label>
-                    <textarea id="contact-comment" name="comentario" maxlength="500" required></textarea>
-                    <span class="counter"><span id="comment-count">0</span>/500</span>
-                    <span class="field-error" id="contact-comment-error"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="contact-comment">Comentario</label>
+                        <textarea id="contact-comment" name="comentario" maxlength="500" required></textarea>
+                        <div class="char-counter"><span id="comment-count">0</span>/500</div>
+                        <span class="field-error" id="contact-comment-error"></span>
+                    </div>
 
-                <button class="form-button" type="submit">Enviar mensaje</button>
-                <p class="form-success" id="contact-success" role="status"></p>
+                    <button class="btn-submit" type="submit">Enviar mensaje</button>
+                    <p class="form-success" id="contact-success" role="status" style="color: green; margin-top: 15px; font-size: 0.85rem;"></p>
 
-            </form>
+                </form>
+            </div>
 
         </div>
     </main>

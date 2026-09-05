@@ -201,7 +201,6 @@ h2 {
     object-fit: cover; 
 }
 
-/* AJUSTE ESPECÍFICO PARA NOTICIA 2 EN LA GRILLA */
 .blog-card img.img-subida {
     height: auto !important;
     min-height: 380px !important; 
@@ -236,7 +235,6 @@ h2 {
     margin: 22px 0 40px; 
 }
 
-/* AJUSTE ESPECÍFICO PARA NOTICIA 2 EN DETALLE */
 .article img.img-subida {
     max-height: none !important;
     height: auto !important;
@@ -401,6 +399,9 @@ h2 {
 /* ==========================================================================
    CARRUSEL Y BOTÓN VER DESFILE
    ========================================================================== */
+/* ==========================================================================
+   CARRUSEL Y BOTÓN VER DESFILE (CENTRADOS)
+   ========================================================================== */
 .carousel-container {
     width: 100%;
     overflow-x: auto;
@@ -408,20 +409,18 @@ h2 {
     margin: 35px 0;
     padding-bottom: 20px;
     -webkit-overflow-scrolling: touch;
-}
-
-.carousel-container::-webkit-scrollbar {
-    height: 4px;
-}
-
-.carousel-container::-webkit-scrollbar-thumb {
-    background: var(--muted);
+    
+    /* Centra la barra de desplazamiento y el contenido en el contenedor */
+    display: flex;
+    justify-content: center;
 }
 
 .carousel-track {
     display: flex;
     gap: 20px;
     align-items: flex-start;
+    justify-content: center; /* Centra las imágenes internamente */
+    margin: 0 auto;
 }
 
 .carousel-item {
@@ -430,6 +429,16 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.carousel-item img {
+    height: 480px !important;
+    width: auto !important;
+    max-width: 80vw;
+    object-fit: contain !important;
+    display: block;
+    margin: 0 auto !important; /* Centrado automático de la imagen */
 }
 
 .carousel-item img {
@@ -441,7 +450,6 @@ h2 {
     margin: 0 !important;
 }
 
-/* Estilo estilizado del botón */
 .btn-ver-desfile {
     position: absolute;
     bottom: 15px;
@@ -465,8 +473,34 @@ h2 {
     border-color: #ffffff;
 }
 
+/* Oculta imágenes secundarias en el artículo (quedan reservadas para el modal) */
+.carousel-track .carousel-item:not(:first-child) {
+    display: none;
+}
+
 /* ==========================================================================
-   VENTANA EMERGENTE (MODAL)
+   IMÁGENES APILADAS (UNA ENCIMA DE OTRA)
+   ========================================================================== */
+.stacked-images {
+    display: flex;
+    flex-direction: column; /* Alineación vertical */
+    align-items: center;    /* Centrado horizontal */
+    gap: 25px;              /* Espacio entre las dos fotos */
+    margin: 35px 0;
+    width: 100%;
+}
+
+.stacked-images img {
+    width: 100%;
+    max-width: 700px;       /* Ancho máximo cómodo para la lectura */
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto !important;
+}
+
+/* ==========================================================================
+   VENTANA EMERGENTE (MODAL Y FLECHAS)
    ========================================================================== */
 .image-modal {
     display: none;
@@ -498,6 +532,33 @@ h2 {
     font-weight: 300;
     cursor: pointer;
     z-index: 10000;
+}
+
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 2rem;
+    padding: 15px 20px;
+    cursor: pointer;
+    z-index: 10001;
+    transition: background 0.2s ease;
+    user-select: none;
+}
+
+.modal-arrow:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.prev-arrow {
+    left: 20px;
+}
+
+.next-arrow {
+    right: 20px;
 }
 
 /* ==========================================================================
@@ -542,35 +603,73 @@ h2 {
         gap: 42px; 
     }
 }
-    /* FLECHAS DE NAVEGACIÓN DEL MODAL */
-    .modal-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        font-size: 2rem;
-        padding: 15px 20px;
-        cursor: pointer;
-        z-index: 10001;
-        transition: background 0.2s ease;
-        user-select: none;
-    }
 
-    .modal-arrow:hover {
-        background: rgba(0, 0, 0, 0.9);
-    }
+/* FORMULARIOS DE REGISTRO Y CONTACTO */
+.form-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 40px;
+}
 
-    .prev-arrow {
-        left: 20px;
-    }
+.form-field {
+    margin-bottom: 22px;
+}
 
-    .next-arrow {
-        right: 20px;
-    }
+.form-field label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: .72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
-    /* Oculta las imágenes secundarias en el artículo (quedan reservadas para el modal) */
-    .carousel-track .carousel-item:not(:first-child) {
-    display: none;
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #bdbdbd;
+    border-radius: 0;
+    color: var(--ink);
+    background: #fff;
+    font: inherit;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+    border-color: var(--ink);
+    outline: none;
+}
+
+.form-field textarea {
+    min-height: 155px;
+    resize: vertical;
+}
+
+.form-button {
+    border: 0;
+    padding: 15px 22px;
+    color: #fff;
+    background: #000;
+    font: inherit;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    opacity: .8;
+}
+
+.field-error {
+    display: block;
+    min-height: 18px;
+    margin-top: 5px;
+    color: #a22e22;
+    font-size: .78rem;
+}
+
+@media (max-width: 800px) {
+    .form-panel {
+        padding: 25px;
     }
+}

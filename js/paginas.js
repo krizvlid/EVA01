@@ -11,6 +11,9 @@ const galleryImages = [
 
 let currentImageIndex = 0;
 
+
+
+
 /* ==========================================================================
    FUNCIONES GLOBALES DEL MODAL Y CARRUSEL
    ========================================================================== */
@@ -59,10 +62,10 @@ function validateEmail(value) {
 
 function validarRUN(run) {
     const runLimpio = run.trim().toUpperCase();
-    const regexRun = /^[0-9]{6,8}[0-9K]$/;
+    const regexRun = /^[0-9]{6,8}-[0-9K]$/;
     if (!regexRun.test(runLimpio)) return false;
 
-    const cuerpo = runLimpio.slice(0, -1);
+    const cuerpo = runLimpio.slice(0, -2);
     const dvIngresado = runLimpio.slice(-1);
 
     let suma = 0;
@@ -98,12 +101,12 @@ const articles = {
         title: 'Adidas presenta un adelanto de su colaboración con la estrella del K-pop Jennie', 
         image: 'Imagenes/Noticia1.avif', 
         content: [
-            'Adidas ha presentado un primer vistazo de su nueva colaboración con la estrella del K-pop Jennie...',
-            'Tras protagonizar campañas de Adidas...',
-            'La colección incluye las "Superstar SQ Ballet"...',
-            '"Con esta colaboración, quería reinterpretar la identidad clásica..."',
-            '"Me centré en crear un ambiente general que resultara atemporal..."',
-            'En su última actualización de resultados...'
+            'Tras protagonizar campañas de Adidas y ejercer como embajadora de la marca alemana, Jennie asume ahora el papel de codiseñadora con el lanzamiento de la colección "Adidas Originals by Jennie".',
+            'Con lanzamiento el 1 de septiembre, la colección reimagina la funcionalidad de inspiración deportiva de Adidas a través de la estética distintiva de la cantante, en particular la del ballet, cuyos códigos se dejan ver a lo largo de toda la colección.',
+            'La colección incluye las "Superstar SQ Ballet", inspiradas en las zapatillas de punta, junto con chaquetas y pantalones de chándal reinterpretados, camisetas, faldas cruzadas, chaquetas de punto cruzadas, bodies sin mangas transparentes, leggings transparentes y sudaderas de forro polar con media cremallera y capucha; y, en cuanto a los complementos, calentadores altos de punto y calcetines con aberturas.',
+            '"Con esta colaboración, quería reinterpretar la identidad clásica de Adidas Originals desde mi propia perspectiva y energía. Mi objetivo era aunar la suavidad y la contención propias del ballet, así como la fuerza que hay detrás de él, con la sensación de un espacio infinito y desconocido", afirmó Jennie, quien alcanzó la fama mundial como miembro del grupo de pop coreano Blackpink antes de iniciar en paralelo una carrera en solitario. ',
+            '"Me centré en crear un ambiente general que resultara atemporal y, al mismo tiempo, con visión de futuro —cinematográfico y surrealista—, con una presencia discreta pero poderosa", indicó la artista.',
+            'En su última actualización de resultados, publicada en julio, la empresa con sede en Herzogenaurach señaló que los ingresos aumentaron un 13 % en el segundo trimestre, hasta alrededor de 6700 millones de euros, impulsados por la Copa Mundial de la FIFA.'
         ] 
     },
     texturas: { 
@@ -111,9 +114,14 @@ const articles = {
         title: 'La Semana de la Moda de Nueva York abraza el renacimiento de las marcas emblemáticas estadounidenses', 
         image: 'Imagenes/Noticia2.avif',  
         content: [
-            'Esta “fashion week”, muy seguida, dará comienzo el miércoles —la víspera del inicio oficial— con los desfiles de Ralph Lauren y Coach...',
-            'Los jóvenes consumidores de Asia y Norteamérica...',
-            'Tommy Hilfiger, también asociado al legado estadounidense...',
+            'Esta “fashion week”, muy seguida, dará comienzo el miércoles —la víspera del inicio oficial— con los desfiles de Ralph Lauren y Coach, marcas que han registrado un sólido crecimiento en los últimos meses.',
+            'Los jóvenes consumidores de Asia y Norteamérica han mostrado preferencia tanto por los renovados jerséis de punto trenzado y los polos de Ralph Lauren como por los bolsos Tabby de Coach.',
+            'Tommy Hilfiger, también asociado al legado estadounidense, pone fin a su ausencia en el evento y regresa a la pasarela tras lanzar una colaboración con la estrella de la NFL Travis Kelce.',
+            '“El regreso de Tommy Hilfiger es una gran incorporación a las marcas de legado estadounidense que están presentes y siguen vigentes”, afirmó Tori López, editora de moda de la revista W. “Vuelve a encajar muy bien en esa familia”, valoró.',
+            'No obstante, la demanda de prendas de gama alta en Estados Unidos ha sido desigual. Michael Kors, que también celebrará un desfile, se ha enfrentado a unas ventas estancadas en los últimos años.',
+            'La guerra en Oriente Medio ha afectado al turismo en Europa, lastrando al sector del lujo en su conjunto. El crecimiento en EE. UU., impulsado por marcas nacionales y el gasto de los consumidores más jóvenes, está compensando en parte la desaceleración en Oriente Medio y Europa, según señaló este verano la consultora Bain & Company.',
+            'El diseñador Henry Zankov inaugurará oficialmente la Semana de la Moda de Nueva York el jueves con su primera colección para Diane von Furstenberg, mientras que Thom Browne clausurará el evento, que se prolongará hasta el 15 de septiembre.',
+            'En la lista de unos 70 desfiles y presentaciones de diseñadores también figuran marcas consolidadas como Carolina Herrera, Christian Siriano y Calvin Klein. Además, Conner Ives, diseñador afincado en Londres y natural de Nueva York, que ha vestido a celebridades para la Gala del Met, hará su debut en la Semana de la Moda de Nueva York.',
             `<div class="carousel-container">
                 <div class="carousel-track">
                     <div class="carousel-item">
@@ -129,25 +137,28 @@ const articles = {
                     <div class="carousel-item">
                         <img src="Imagenes/Desfile4.jpg" alt="Desfile foto 4">
                     </div>
-                    <div class="carousel-item">
-                        <img src="Imagenes/Desfile5.jpg" alt="Desfile foto 5">
-                    </div>
                 </div>
-            </div>`,
-            '“El regreso de Tommy Hilfiger es una gran incorporación...”',
-            'No obstante, la demanda de prendas de gama alta...',
-            'La guerra en Oriente Medio ha afectado al turismo...',
-            'El diseñador Henry Zankov inaugurará oficialmente...',
-            'En la lista de unos 70 desfiles y presentaciones...'
+            </div>`
         ] 
     },
     armario: { 
-        category: 'Guía', 
-        title: 'El armario que sí funciona', 
-        image: 'Imagenes/taylor-grote-rnH5ITofDAM-unsplash.jpg', 
+        category: 'Moda', 
+        title: 'Donna Karan New York elige a Kendall Jenner', 
+        image: 'Imagenes/NoticiaK1.jpg', 
         content: [
-            'Un armario funcional comienza con prendas que conversan entre sí...',
-            'La mejor combinación es la que te permite moverte...'
+            'Donna Karan New York ha fichado a Kendall Jenner para su campaña de otoño 2026. Fotografiada por Mert Alas, Jenner debuta como imagen de la marca en enclaves emblemáticos de Nueva York. El concepto recupera la idea de una campaña de finales de los años ochenta de Donna Karan, firmada por Dennis Piel y protagonizada por la modelo Rosemary McGrotha, que daba voz a sus pensamientos mientras llegaba a Nueva York en una limusina.',
+            'Para otoño 2026, esa premisa se reinterpreta a través de Jenner, que imagina tener Nueva York por completo para ella sola. La campaña transcurre dentro y fuera de un coche, con Jenner recorriendo la ciudad en una serie de escenas cinematográficas que contraponen glamour y actitud.',
+            '"Donna Karan siempre ha encarnado la confianza y una sofisticación sin esfuerzo, cualidades con las que conecto de verdad. Formar parte de la campaña de otoño 2026 fue como celebrar la energía de Nueva York y a una mujer que conoce su estilo y acepta abiertamente quien es", afirmó Jenner.',
+            'Entre las piezas clave de la colección que aparecen en la campaña figura el ya clásico body de Donna Karan, rescatado de los archivos de la marca y reimaginado para otoño 2026. Jenner luce también una chaqueta y una falda de punto de lana drapeadas, superpuestas bajo un abrigo de cuero, un traje de terciopelo a medida y una chaqueta y falda de inspiración aviador en un profundo marrón espresso.',
+            `<div class="stacked-images">
+                <img src="Imagenes/NoticiaK2.jpg" alt="Desfile foto 1">
+            </div>`,
+            'La campaña también pone el foco en un vestido largo de lentejuelas, además de accesorios como el bolso "Cashmere Tote" en ante color chocolate y el bolso "Black Cherry Leno", joyería escultórica en oro y gafas.',
+            'La campaña se ha lanzado en las redes sociales de la marca y se extiende a la publicidad digital, impresa y exterior. El año pasado, Kate Moss protagonizó la campaña de Donna Karan New York para la temporada primavera-verano 2025.',
+            `<div class="stacked-images">
+                <img src="Imagenes/NoticiaK3.jpg" alt="Desfile foto 2">
+            </div>`
+
         ] 
     }
 };
@@ -220,8 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (!name) setError('register-name-error', 'El nombre completo es obligatorio.');
             if (!run) setError('register-run-error', 'El RUN es obligatorio.');
-            else if (/[.-]/.test(run)) setError('register-run-error', 'El RUN debe ser sin puntos ni guión.');
-            else if (run.length < 7 || run.length > 9) setError('register-run-error', 'El RUN debe tener entre 7 y 9 caracteres.');
+            else if (run.includes('.')) setError('register-run-error', 'El RUN debe escribirse sin puntos.');
+            else if (!run.includes('-')) setError('register-run-error', 'El RUN debe incluir un guión, por ejemplo 12456789-0.');
+            else if (run.length < 8 || run.length > 10) setError('register-run-error', 'El RUN debe tener entre 8 y 10 caracteres.');
             else if (!validarRUN(run)) setError('register-run-error', 'El RUN ingresado no es válido.');
 
             if (!email) setError('register-email-error', 'El correo es obligatorio.'); else if (validateEmail(email)) setError('register-email-error', validateEmail(email));
@@ -232,4 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
             registerForm.reset();
         });
     }
+
+    
 });

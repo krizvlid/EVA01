@@ -7,6 +7,66 @@ let color1Name = "Negro";
 let color2Name = "";
 let color3Name = "";
 
+const stockPorProducto = {
+    'BOLSO DE CUERO MINIMALIST': 12,
+    'COLLAR PLATED GOLD': 18,
+    'GAFAS DE SOL RETRO BLACK': 7,
+    'BUCKET HAT COTTON': 15,
+    'CAMISA REGULAR FIT': 8,
+    'CAMISA ESTRUCTURADA OXFORD': 11,
+    'POLERA HEAVY COTTON OVERSIZED': 6,
+    'CHAQUETA CAZADORA OXFORD': 9,
+    'PANTALON CHINO TAPERED': 13,
+    'ABRIGO MEZCLA LANA': 4,
+    'MOCASINES DE CUERO DERBY': 5,
+    'VESTIDO BOHO CHIC BORLAS': 10,
+    'VESTIDO LARGO SATINADO': 14,
+    'CAMISA OVERSIZED LINO': 16,
+    'BLUSA CUELLO BOBO BORDADO': 17,
+    'TOP ESTRUCTURADO BLANCO': 19,
+    'POLERA COTTON GRAPHIC': 20,
+    'CHAQUETA OVERSIZED STRUCTURAL': 3,
+    'JEANS HIGH WAIST STRAIGHT': 8,
+    'MOCASINES DE CUERO MINIMAL': 6,
+    'POLERA ALGODON ESTAMPADA': 21,
+    'PANTALON FELPA RELAXED FIT': 22,
+    'CHAQUETA DENIM MINI': 23,
+    'ZAPATILLAS URBANAS KIDS': 24
+};
+
+const skuPorProducto = {
+    'BOLSO DE CUERO MINIMALIST': 'SKU-025',
+    'COLLAR PLATED GOLD': 'SKU-026',
+    'GAFAS DE SOL RETRO BLACK': 'SKU-027',
+    'BUCKET HAT COTTON': 'SKU-028',
+    'CAMISA REGULAR FIT': 'SKU-001',
+    'CAMISA ESTRUCTURADA OXFORD': 'SKU-002',
+    'POLERA HEAVY COTTON OVERSIZED': 'SKU-003',
+    'CHAQUETA CAZADORA OXFORD': 'SKU-004',
+    'PANTALON CHINO TAPERED': 'SKU-005',
+    'ABRIGO MEZCLA LANA': 'SKU-006',
+    'MOCASINES DE CUERO DERBY': 'SKU-007',
+    'VESTIDO BOHO CHIC BORLAS': 'SKU-008',
+    'VESTIDO LARGO SATINADO': 'SKU-009',
+    'CAMISA OVERSIZED LINO': 'SKU-010',
+    'BLUSA CUELLO BOBO BORDADO': 'SKU-011',
+    'TOP ESTRUCTURADO BLANCO': 'SKU-012',
+    'POLERA COTTON GRAPHIC': 'SKU-013',
+    'CHAQUETA OVERSIZED STRUCTURAL': 'SKU-014',
+    'JEANS HIGH WAIST STRAIGHT': 'SKU-015',
+    'MOCASINES DE CUERO MINIMAL': 'SKU-016',
+    'POLERA ALGODON ESTAMPADA': 'SKU-017',
+    'PANTALON FELPA RELAXED FIT': 'SKU-018',
+    'CHAQUETA DENIM MINI': 'SKU-019',
+    'ZAPATILLAS URBANAS KIDS': 'SKU-020'
+};
+
+function generarSku(nombre) {
+    let hash = 0;
+    for (let i = 0; i < nombre.length; i++) hash = (hash * 31 + nombre.charCodeAt(i)) % 900;
+    return `SKU-${String(hash + 100).padStart(3, '0')}`;
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     
@@ -15,7 +75,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const type = params.get('type') || "";
     const productCode = document.getElementById('product-code');
     const productStock = document.getElementById('product-stock');
-    const criticalStock = document.getElementById('critical-stock');
     const quantity = document.getElementById('product-quantity');
     
     color1Name = params.get('color') || "Negro";
@@ -35,14 +94,12 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detail-title').textContent = name;
     document.getElementById('detail-price').textContent = price;
     document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
-    productCode.value = params.get('code') || 'SKU-001';
-    productStock.value = params.has('stock') ? params.get('stock') : '8';
-    criticalStock.value = params.has('critical') ? params.get('critical') : '2';
-    updateStockState();
+    productCode.textContent = params.get('code') || skuPorProducto[name] || generarSku(name);
+    productStock.textContent = params.has('stock') ? params.get('stock') : (stockPorProducto[name] || 8);
+    updateQuantity(Number(quantity.value));
     document.getElementById('quantity-decrease').onclick = () => updateQuantity(Number(quantity.value) - 1);
     document.getElementById('quantity-increase').onclick = () => updateQuantity(Number(quantity.value) + 1);
     quantity.addEventListener('input', () => updateQuantity(Number(quantity.value)));
-    productStock.addEventListener('input', updateStockState);
 
     // 1. Cargar las imágenes del producto principal (Color 1)
     let imgIndex = 1;
@@ -153,41 +210,62 @@ function changeProductColor(selectedColor) {
     }
 }
 
-document.getElementById('btn-add').addEventListener('click', () => {
+function ejecutarAgregarAlCarrito() {
     if (!selectedSize) {
         alert('Por favor selecciona una talla.');
         return;
     }
     const code = document.getElementById('product-code');
     const stock = document.getElementById('product-stock');
-    const criticalStock = document.getElementById('critical-stock');
     const requested = Number(document.getElementById('product-quantity').value);
     let valid = true;
     document.getElementById('product-code-error').textContent = '';
     document.getElementById('product-stock-error').textContent = '';
-    document.getElementById('critical-stock-error').textContent = '';
-    if (code.value.trim().length < 3) { document.getElementById('product-code-error').textContent = 'Mínimo 3 caracteres.'; valid = false; }
-    if (!Number.isInteger(Number(stock.value)) || Number(stock.value) < 0) { document.getElementById('product-stock-error').textContent = 'Debe ser un entero igual o mayor a 0.'; valid = false; }
-    if (criticalStock.value !== '' && (!Number.isInteger(Number(criticalStock.value)) || Number(criticalStock.value) < 0)) { document.getElementById('critical-stock-error').textContent = 'Debe ser un entero igual o mayor a 0.'; valid = false; }
-    if (requested > Number(stock.value)) { document.getElementById('product-stock-error').textContent = 'La cantidad supera el stock disponible.'; valid = false; }
-    if (Number(stock.value) === 0) { document.getElementById('product-stock-error').textContent = 'Producto sin stock disponible.'; valid = false; }
-    if (valid) alert(`Añadido al carrito: ${requested} unidad(es), talla ${selectedSize}.`);
-});
+    if (code.textContent.trim().length < 3) { document.getElementById('product-code-error').textContent = 'Mínimo 3 caracteres.'; valid = false; }
+    if (!Number.isInteger(Number(stock.textContent)) || Number(stock.textContent) < 0) { document.getElementById('product-stock-error').textContent = 'Debe ser un entero igual o mayor a 0.'; valid = false; }
+    if (requested > Number(stock.textContent)) { document.getElementById('product-stock-error').textContent = 'La cantidad supera el stock disponible.'; valid = false; }
+    if (Number(stock.textContent) === 0) { document.getElementById('product-stock-error').textContent = 'Producto sin stock disponible.'; valid = false; }
+    if (!valid) return;
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const product = {
+        code: code.textContent.trim(),
+        name: document.getElementById('detail-title').textContent,
+        price: document.getElementById('detail-price').textContent,
+        image: originalImages[0] || '',
+        size: selectedSize,
+        quantity: requested,
+        stock: Number(stock.textContent)
+    };
+    const existingProduct = cart.find(item => item.code === product.code && item.name === product.name && item.size === product.size);
+    if (existingProduct) {
+        if (existingProduct.quantity + requested > Number(stock.textContent)) {
+            document.getElementById('product-stock-error').textContent = 'La cantidad total supera el stock disponible.';
+            return;
+        }
+        existingProduct.quantity += requested;
+        existingProduct.stock = Number(stock.textContent);
+    } else {
+        cart.push(product);
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    actualizarContadorLocal();
+    alert(`Añadido al carrito: ${requested} unidad(es), talla ${selectedSize}.`);
+}
+
+document.getElementById('btn-add').addEventListener('click', ejecutarAgregarAlCarrito);
+
+function actualizarContadorLocal() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const total = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) cartCount.textContent = total;
+}
 
 function updateQuantity(value) {
     const quantity = document.getElementById('product-quantity');
-    const stock = Number(document.getElementById('product-stock').value);
+    const stock = Number(document.getElementById('product-stock').textContent);
     const maximum = Number.isInteger(stock) && stock >= 0 ? stock : 0;
     quantity.value = maximum === 0 ? 0 : Math.max(1, Math.min(maximum, Number.isFinite(value) ? value : 1));
 }
 
-function updateStockState() {
-    const stock = document.getElementById('product-stock');
-    const alertBox = document.getElementById('low-stock-alert');
-    const critical = Number(document.getElementById('critical-stock').value);
-    const value = Number(stock.value);
-    const hasCriticalStock = Number.isInteger(critical) && critical >= 0;
-    alertBox.textContent = hasCriticalStock && value <= critical ? `Stock bajo: quedan ${value} unidad(es) disponibles.` : '';
-    alertBox.style.display = hasCriticalStock && value <= critical && value >= 0 ? 'block' : 'none';
-    updateQuantity(Number(document.getElementById('product-quantity').value));
-}

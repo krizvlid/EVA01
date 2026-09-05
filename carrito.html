@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKE D. BINKS | CESTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/catalogo-base.css">
+    <style>
+        .cart-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .cart-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .cart-item img { width: 80px; height: 100px; object-fit: cover; }
+        .btn-qty { border: 1px solid #ccc; background: none; padding: 2px 8px; cursor: pointer; }
+        .quantity-controls { display: flex; align-items: center; gap: 8px; }
+        .quantity-controls .btn-qty { min-width: 28px; }
+        .quantity-controls .btn-qty:disabled { cursor: not-allowed; opacity: .35; }
+        .quantity-controls span { min-width: 24px; text-align: center; }
+        .cart-summary { margin-top: 30px; text-align: right; }
+        .btn-checkout { background: #000; color: #fff; border: none; padding: 12px 30px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div><a href="Inicio.html" class="logo">SAKE D. BINKS</a></div>
+        <nav class="nav-links">
+            <a href="SeccionMujer.html">MUJER</a>
+            <a href="SeccionHombre.html">HOMBRE</a>
+            <a href="SeccionNino.html">NIÑOS</a>
+            <a href="SeccionAccesorios.html">ACCESORIOS</a>
+        </nav>
+        <div class="user-links">
+            <a href="carrito.html" id="cart-link">CESTA (0)</a>
+        </div>
+    </header>
+
+    <div class="cart-container">
+        <h2>TU CESTA</h2>
+        <div id="lista-carrito"></div>
+
+        <div class="cart-summary">
+            <h4>TOTAL: <span id="total-carrito">0 CLP</span></h4>
+            <br>
+            <button class="btn-checkout" onclick="alert('¡Gracias por tu compra!')">PROCEDER AL PAGO</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api/carrito';
+
+        // Obtener correo del usuario autenticado (con respaldo por defecto)
+        function obtenerCorreo() {
+            return localStorage.getItem('usuarioCorreo') || 'usuario@ejemplo.com';
+        }
+
+        async function renderizarCarrito() {
+            const contenedor = document.getElementById('lista-carrito');
+            const totalEl = document.getElementById('total-carrito');
+            const correo = obtenerCorreo();
+
+            try {
+                const respuesta = await fetch(`${API_URL}/${correo}`);
+                
+                if (!respuesta.ok) {
+                    throw new Error('Error al consultar el servidor');
+                }
+
+                const data = await respuesta.json();
+                const items = data.items || [];
+
+                if (items.length === 0) {
+                    const productosLocales = JSON.parse(localStorage.getItem('cart')) || [];
+                    if (productosLocales.length > 0) {
+                        renderizarCarritoLocal(productosLocales, contenedor, totalEl);
+                        return;
+                    }
+                }
+
+                if (items.length === 0) {
+                    contenedor.innerHTML = '<p>Tu cesta está vacía.</p>';
+                    totalEl.innerText = '0 CLP';
+                    return;
+                }
+
+                let html = '';
+
+                items.forEach(item => {
+                    const prod = item.producto || {};
+                    const precio = prod.precio || 0;
+                    const cantidad = item.cantidad || 1;
+                    const subtotal = precio * cantidad;
+
+                    html += `
+                        <div class="cart-item">
+                            <img src="${prod.imagenUrl || ''}" alt="${prod.nombre || 'Producto'}">
+                            <div>
+                                <strong>${prod.nombre || 'Producto'}</strong><br>
+                                <small>${Number(precio).toLocaleString('es-CL')} CLP</small>
+                            </div>
+                            <div>
+                                <span style="margin: 0 10px;">Cantidad: ${cantidad}</span>
+                            </div>
+                            <div>
+                                <strong>${subtotal.toLocaleString('es-CL')} CLP</strong>
+                            </div>
+                            <button class="btn-qty" onclick="eliminarProducto(${item.id})">X</button>
+                        </div>
+                    `;
+                });
+
+                contenedor.innerHTML = html;
+                totalEl.innerText = `${Number(data.total || 0).toLocaleString('es-CL')} CLP`;
+                document.getElementById('cart-link').innerText = `CESTA (${data.cantidadTotal || items.reduce((sum, item) => sum + (item.cantidad || 1), 0)})`;
+
+            } catch (error) {
+                console.error('Error:', error);
+                const productosLocales = JSON.parse(localStorage.getItem('cart')) || [];
+                if (productosLocales.length > 0) {
+                    renderizarCarritoLocal(productosLocales, contenedor, totalEl);
+                } else {
+                    contenedor.innerHTML = '<p>No se pudo conectar con la base de datos.</p>';
+                }
+            }
+        }
+
+        function renderizarCarritoLocal(productos, contenedor, totalEl) {
+            let total = 0;
+            contenedor.innerHTML = productos.map((producto, indice) => {
+                const precio = Number(String(producto.price || 0).replace(/[^0-9]/g, ''));
+                const cantidad = Number(producto.quantity) || 1;
+                const stock = Number.isInteger(Number(producto.stock)) ? Number(producto.stock) : 8;
+                total += precio * cantidad;
+                return `
+                    <div class="cart-item">
+                        <img src="${producto.image || ''}" alt="${producto.name || 'Producto'}">
+                        <div>
+                            <strong>${producto.name || 'Producto'}</strong><br>
+                            <small>${precio.toLocaleString('es-CL')} CLP</small>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="btn-qty" onclick="cambiarCantidadLocal(${indice}, -1)" aria-label="Disminuir cantidad">-</button>
+                            <span>${cantidad}</span>
+                            <button class="btn-qty" onclick="cambiarCantidadLocal(${indice}, 1)" aria-label="Aumentar cantidad" ${cantidad >= stock ? 'disabled' : ''}>+</button>
+                        </div>
+                        <div><strong>${(precio * cantidad).toLocaleString('es-CL')} CLP</strong></div>
+                        <button class="btn-qty" onclick="eliminarProductoLocal(${indice})">X</button>
+                    </div>
+                `;
+            }).join('');
+            totalEl.innerText = `${total.toLocaleString('es-CL')} CLP`;
+            document.getElementById('cart-link').innerText = `CESTA (${productos.reduce((sum, producto) => sum + (Number(producto.quantity) || 1), 0)})`;
+        }
+
+        function eliminarProductoLocal(indice) {
+            const productos = JSON.parse(localStorage.getItem('cart')) || [];
+            productos.splice(indice, 1);
+            localStorage.setItem('cart', JSON.stringify(productos));
+            renderizarCarritoLocal(productos, document.getElementById('lista-carrito'), document.getElementById('total-carrito'));
+        }
+
+        function cambiarCantidadLocal(indice, cambio) {
+            const productos = JSON.parse(localStorage.getItem('cart')) || [];
+            const producto = productos[indice];
+            if (!producto) return;
+            const cantidadActual = Number(producto.quantity) || 1;
+            const stock = Number.isInteger(Number(producto.stock)) ? Number(producto.stock) : 8;
+            const nuevaCantidad = cantidadActual + cambio;
+            if (nuevaCantidad > stock) {
+                alert(`No puedes superar el stock disponible (${stock}).`);
+                return;
+            }
+            producto.quantity = Math.max(1, nuevaCantidad);
+            localStorage.setItem('cart', JSON.stringify(productos));
+            renderizarCarritoLocal(productos, document.getElementById('lista-carrito'), document.getElementById('total-carrito'));
+        }
+
+        async function eliminarProducto(itemId) {
+            try {
+                const respuesta = await fetch(`${API_URL}/eliminar/${itemId}`, {
+                    method: 'DELETE'
+                });
+
+                if (respuesta.ok) {
+                    renderizarCarrito();
+                    if (typeof actualizarContadorCarrito === 'function') {
+                        actualizarContadorCarrito();
+                    }
+                } else {
+                    alert('No se pudo eliminar el producto.');
+                }
+            } catch (error) {
+                console.error('Error al eliminar ítem:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarCarrito();
+            if (typeof actualizarContadorCarrito === 'function') {
+                actualizarContadorCarrito();
+            }
+        });
+    </script>
+</body>
+</html>
