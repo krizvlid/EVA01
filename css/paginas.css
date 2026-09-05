@@ -254,6 +254,150 @@ h2 {
     margin-bottom: 1.5rem; 
 }
 
+    /* ==========================================================================
+    ESTILOS PARA EL FORMULARIO DE CONTACTO (SPLIT GRID)
+    ========================================================================== */
+    .contact-container {
+        background-color: #f8f6f0; /* Fondo crema suave de fondo */
+        padding: 60px 40px;
+        border-radius: 4px;
+    }
+
+    .form-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 Columnas lado a lado */
+        gap: 50px;
+        align-items: start;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    /* Columna Izquierda: Textos */
+    .contact-intro h1 {
+        font-size: clamp(2.5rem, 4vw, 3.8rem);
+        text-transform: none; /* Tipografía en minúsculas tipo Serif */
+        font-weight: 300;
+        line-height: 1.1;
+        margin: 15px 0 25px 0;
+    }
+
+    .contact-intro .lead {
+        font-size: 0.95rem;
+        color: #666666;
+        line-height: 1.6;
+    }
+
+    /* Columna Derecha: Tarjeta Blanca */
+    .form-panel {
+        background: #ffffff;
+        padding: 40px;
+        border: 1px solid #eaeaea;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        color: #444;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #e0e0e0;
+        background: #ffffff;
+        font-size: 0.9rem;
+        font-family: inherit;
+        color: var(--ink);
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #000000;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 140px;
+    }
+
+    .char-counter {
+        font-size: 0.72rem;
+        color: #888888;
+        text-align: right;
+        margin-top: 6px;
+    }
+
+    .field-error {
+        color: #d93025;
+        font-size: 0.75rem;
+        margin-top: 6px;
+    }
+
+    .btn-submit {
+        background: #0d0d0d;
+        color: #ffffff;
+        border: none;
+        padding: 16px 32px;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: fit-content;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-submit:hover {
+        background: #222222;
+    }
+
+    /* Adaptación para pantallas móviles */
+    @media (max-width: 800px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .form-panel {
+            padding: 25px;
+        }
+    }
+
+    /* Layout en 2 columnas */
+    .form-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    /* Recuadro crema estilizado */
+    .contact-box {
+        background-color: #f9f8f6;
+        border: 1px solid #eae8e1;
+        padding: 40px;
+        border-radius: 4px;
+    }
+
+    @media (max-width: 800px) {
+        .form-layout {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+    }
+
 /* ==========================================================================
    CARRUSEL Y BOTÓN VER DESFILE
    ========================================================================== */
