@@ -2,6 +2,8 @@ let selectedSize = null;
 let originalImages = [];
 let extraColorImages = [];
 let thirdColorImages = [];
+let selectedProductImage = '';
+let selectedProductColor = '';
 
 let color1Name = "Negro";
 let color2Name = "";
@@ -94,6 +96,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detail-title').textContent = name;
     document.getElementById('detail-price').textContent = price;
     document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
+    selectedProductColor = color1Name;
     productCode.textContent = params.get('code') || skuPorProducto[name] || generarSku(name);
     productStock.textContent = params.has('stock') ? params.get('stock') : (stockPorProducto[name] || 8);
     updateQuantity(Number(quantity.value));
@@ -113,8 +116,10 @@ window.addEventListener('DOMContentLoaded', () => {
     // Asignar miniatura al color 1
     if (thumb1) {
         document.getElementById('detail-thumb-img1').src = thumb1;
+        selectedProductImage = thumb1;
     } else if (originalImages.length > 0) {
         document.getElementById('detail-thumb-img1').src = originalImages[0];
+        selectedProductImage = originalImages[0];
     }
 
     // 2. Si existe un segundo color, mostrarlo y guardar sus imágenes
@@ -198,16 +203,26 @@ function changeProductColor(selectedColor) {
     if (selectedColor === 'color1') {
         thumb1.classList.add('active');
         colorLabel.textContent = `COLOR: ${color1Name}`;
+        selectedProductColor = color1Name;
+        selectedProductImage = document.getElementById('detail-thumb-img1').src;
         renderGallery(originalImages);
     } else if (selectedColor === 'color2') {
         thumb2.classList.add('active');
         colorLabel.textContent = `COLOR: ${color2Name}`;
+        selectedProductColor = color2Name;
+        selectedProductImage = document.getElementById('detail-thumb-img2').src;
         renderGallery(extraColorImages);
     } else if (selectedColor === 'color3') {
         thumb3.classList.add('active');
         colorLabel.textContent = `COLOR: ${color3Name}`;
+        selectedProductColor = color3Name;
+        selectedProductImage = document.getElementById('detail-thumb-img3').src;
         renderGallery(thirdColorImages);
     }
+}
+
+function normalizarDatoCarrito(valor) {
+    return String(valor || '').trim().toLocaleUpperCase('es-CL');
 }
 
 function ejecutarAgregarAlCarrito() {
@@ -232,12 +247,18 @@ function ejecutarAgregarAlCarrito() {
         code: code.textContent.trim(),
         name: document.getElementById('detail-title').textContent,
         price: document.getElementById('detail-price').textContent,
-        image: originalImages[0] || '',
+        image: selectedProductImage || originalImages[0] || '',
+        color: selectedProductColor,
         size: selectedSize,
         quantity: requested,
         stock: Number(stock.textContent)
     };
-    const existingProduct = cart.find(item => item.code === product.code && item.name === product.name && item.size === product.size);
+    const existingProduct = cart.find(item =>
+        normalizarDatoCarrito(item.code) === normalizarDatoCarrito(product.code)
+        && normalizarDatoCarrito(item.name) === normalizarDatoCarrito(product.name)
+        && normalizarDatoCarrito(item.size) === normalizarDatoCarrito(product.size)
+        && normalizarDatoCarrito(item.color) === normalizarDatoCarrito(product.color)
+    );
     if (existingProduct) {
         if (existingProduct.quantity + requested > Number(stock.textContent)) {
             document.getElementById('product-stock-error').textContent = 'La cantidad total supera el stock disponible.';
@@ -245,6 +266,7 @@ function ejecutarAgregarAlCarrito() {
         }
         existingProduct.quantity += requested;
         existingProduct.stock = Number(stock.textContent);
+        existingProduct.image = product.image;
     } else {
         cart.push(product);
     }

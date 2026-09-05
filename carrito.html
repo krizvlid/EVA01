@@ -135,7 +135,9 @@
                         <img src="${producto.image || ''}" alt="${producto.name || 'Producto'}">
                         <div>
                             <strong>${producto.name || 'Producto'}</strong><br>
-                            <small>${precio.toLocaleString('es-CL')} CLP</small>
+                            <small>Color: ${producto.color || 'Único'}</small><br>
+                            <small>${precio.toLocaleString('es-CL')} CLP</small><br>
+                            <small>Talla: ${producto.size || 'Única'}</small>
                         </div>
                         <div class="quantity-controls">
                             <button class="btn-qty" onclick="cambiarCantidadLocal(${indice}, -1)" aria-label="Disminuir cantidad">-</button>
