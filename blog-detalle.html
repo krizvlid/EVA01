@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artículo | SAKE D. BINKS</title>
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <a class="site-logo" href="Inicio.html">SAKE D. BINKS</a>
+        <nav class="site-nav">
+            <a href="nosotros.html">Nosotros</a>
+            <a href="blogs.html">Journal</a>
+            <a href="contacto.html">Contacto</a>
+        </nav>
+        <div class="site-account">
+            <a href="Login.html">Cuenta</a>
+        </div>
+    </header>
+
+    <!-- CONTENIDO DEL ARTÍCULO -->
+    <main class="page-shell">
+        <article class="article">
+            <span class="eyebrow" id="article-category">Journal</span>
+            <h1 id="article-title">Cargando artículo...</h1>
+            <img id="article-image" src="Imagenes/Loading_icon.gif" alt="">
+            
+            <div class="article-body" id="article-content"></div>
+            
+            <p>
+                <a class="text-link" href="blogs.html">Volver al Journal</a>
+            </p>
+        </article>
+    </main>
+
+    <!-- SCRIPT DE CARGA DINÁMICA -->
+    <script src="js/paginas.js"></script>
+
+    <!-- MODAL PARA VER LA FOTO AGRANDADA CON NAVEGACIÓN -->
+<div id="image-modal" class="image-modal" onclick="closeModal()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <button class="modal-arrow prev-arrow" onclick="changeModalImage(event, -1)">&#10094;</button>
+    <img id="modal-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+    <button class="modal-arrow next-arrow" onclick="changeModalImage(event, 1)">&#10095;</button>
+</div>
+</body>
+</html>

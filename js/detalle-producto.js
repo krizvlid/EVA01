@@ -13,6 +13,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const name = params.get('name') || "PRODUCTO SAKE";
     const price = params.get('price') || "-- CLP";
     const type = params.get('type') || "";
+    const productCode = document.getElementById('product-code');
+    const productStock = document.getElementById('product-stock');
+    const criticalStock = document.getElementById('critical-stock');
+    const quantity = document.getElementById('product-quantity');
     
     color1Name = params.get('color') || "Negro";
     color2Name = params.get('color2_name') || "";
@@ -31,6 +35,14 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detail-title').textContent = name;
     document.getElementById('detail-price').textContent = price;
     document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
+    productCode.value = params.get('code') || 'SKU-001';
+    productStock.value = params.has('stock') ? params.get('stock') : '8';
+    criticalStock.value = params.has('critical') ? params.get('critical') : '2';
+    updateStockState();
+    document.getElementById('quantity-decrease').onclick = () => updateQuantity(Number(quantity.value) - 1);
+    document.getElementById('quantity-increase').onclick = () => updateQuantity(Number(quantity.value) + 1);
+    quantity.addEventListener('input', () => updateQuantity(Number(quantity.value)));
+    productStock.addEventListener('input', updateStockState);
 
     // 1. Cargar las imágenes del producto principal (Color 1)
     let imgIndex = 1;
@@ -146,5 +158,36 @@ document.getElementById('btn-add').addEventListener('click', () => {
         alert('Por favor selecciona una talla.');
         return;
     }
-    alert(`Añadido al carrito con talla: ${selectedSize}`);
+    const code = document.getElementById('product-code');
+    const stock = document.getElementById('product-stock');
+    const criticalStock = document.getElementById('critical-stock');
+    const requested = Number(document.getElementById('product-quantity').value);
+    let valid = true;
+    document.getElementById('product-code-error').textContent = '';
+    document.getElementById('product-stock-error').textContent = '';
+    document.getElementById('critical-stock-error').textContent = '';
+    if (code.value.trim().length < 3) { document.getElementById('product-code-error').textContent = 'Mínimo 3 caracteres.'; valid = false; }
+    if (!Number.isInteger(Number(stock.value)) || Number(stock.value) < 0) { document.getElementById('product-stock-error').textContent = 'Debe ser un entero igual o mayor a 0.'; valid = false; }
+    if (criticalStock.value !== '' && (!Number.isInteger(Number(criticalStock.value)) || Number(criticalStock.value) < 0)) { document.getElementById('critical-stock-error').textContent = 'Debe ser un entero igual o mayor a 0.'; valid = false; }
+    if (requested > Number(stock.value)) { document.getElementById('product-stock-error').textContent = 'La cantidad supera el stock disponible.'; valid = false; }
+    if (Number(stock.value) === 0) { document.getElementById('product-stock-error').textContent = 'Producto sin stock disponible.'; valid = false; }
+    if (valid) alert(`Añadido al carrito: ${requested} unidad(es), talla ${selectedSize}.`);
 });
+
+function updateQuantity(value) {
+    const quantity = document.getElementById('product-quantity');
+    const stock = Number(document.getElementById('product-stock').value);
+    const maximum = Number.isInteger(stock) && stock >= 0 ? stock : 0;
+    quantity.value = maximum === 0 ? 0 : Math.max(1, Math.min(maximum, Number.isFinite(value) ? value : 1));
+}
+
+function updateStockState() {
+    const stock = document.getElementById('product-stock');
+    const alertBox = document.getElementById('low-stock-alert');
+    const critical = Number(document.getElementById('critical-stock').value);
+    const value = Number(stock.value);
+    const hasCriticalStock = Number.isInteger(critical) && critical >= 0;
+    alertBox.textContent = hasCriticalStock && value <= critical ? `Stock bajo: quedan ${value} unidad(es) disponibles.` : '';
+    alertBox.style.display = hasCriticalStock && value <= critical && value >= 0 ? 'block' : 'none';
+    updateQuantity(Number(document.getElementById('product-quantity').value));
+}

@@ -18,9 +18,13 @@
             <a href="SeccionHombre.html">HOMBRE</a>
             <a href="SeccionNino.html">NIÑO</a>
             <a href="SeccionAccesorios.html">ACCESORIOS</a>
+            <a href="nosotros.html">NOSOTROS</a>
+            <a href="blogs.html">JOURNAL</a>
+            <a href="contacto.html">CONTACTO</a>
         </nav>
         <div class="user-links">
             <a href="#">BUSCAR</a>
+            <a href="registro.html">REGISTRO</a>
             <a href="carrito.html">CESTA (<span id="cart-count">0</span>)</a>
         </div>
     </header>
@@ -52,6 +56,26 @@
             <div class="size-selector" id="size-selector">
                 </div>
             <a href="#" class="size-guide-link">GUIA DE TALLAS</a>
+
+            <div class="stock-panel">
+                <label for="product-code">CÓDIGO</label>
+                <input id="product-code" type="text" minlength="3" required>
+                <span class="stock-error" id="product-code-error"></span>
+                <label for="product-stock">STOCK DISPONIBLE</label>
+                <input id="product-stock" type="number" min="0" step="1" required>
+                <span class="stock-error" id="product-stock-error"></span>
+                <label for="critical-stock">STOCK CRÍTICO (OPCIONAL)</label>
+                <input id="critical-stock" type="number" min="0" step="1" placeholder="Sin alerta">
+                <span class="stock-error" id="critical-stock-error"></span>
+                <div class="low-stock-alert" id="low-stock-alert" role="alert"></div>
+            </div>
+
+            <div class="quantity-selector">
+                <span>CANTIDAD</span>
+                <button type="button" id="quantity-decrease" aria-label="Disminuir cantidad">-</button>
+                <input id="product-quantity" type="number" min="1" value="1" aria-label="Cantidad">
+                <button type="button" id="quantity-increase" aria-label="Aumentar cantidad">+</button>
+            </div>
 
             <button class="btn-add-cart" id="btn-add">AÑADIR AL CARRITO</button>
 

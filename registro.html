@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | SAKE D. BINKS</title>
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <a class="site-logo" href="Inicio.html">SAKE D. BINKS</a>
+        <nav class="site-nav">
+            <a href="nosotros.html">Nosotros</a>
+            <a href="blogs.html">Journal</a>
+            <a href="contacto.html">Contacto</a>
+        </nav>
+        <div class="site-account">
+            <a href="Login.html">Iniciar sesión</a>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="page-shell">
+        <div class="form-layout">
+            
+            <!-- SECCIÓN DE INTRODUCCIÓN -->
+            <section>
+                <span class="eyebrow">Tu cuenta</span>
+                <h1>Hazlo tuyo.</h1>
+                <p class="lead">Regístrate para guardar tus datos y seguir de cerca tus próximas compras.</p>
+            </section>
+
+            <!-- FORMULARIO DE REGISTRO -->
+            <form class="form-panel" id="register-form" novalidate>
+                
+                <div class="form-field">
+                    <label for="register-name">Nombre completo</label>
+                    <input id="register-name" type="text" required autocomplete="name">
+                    <span class="field-error" id="register-name-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-run">RUN (sin puntos ni guión)</label>
+                    <input 
+                        id="register-run" 
+                        type="text" 
+                        maxlength="9" 
+                        placeholder="ej: 12345678" 
+                        required 
+                        autocomplete="off"
+                    >
+                    <span class="field-error" id="register-run-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-email">Correo electrónico</label>
+                    <input id="register-email" type="email" maxlength="100" required autocomplete="email">
+                    <span class="field-error" id="register-email-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-password">Contraseña</label>
+                    <input id="register-password" type="password" required autocomplete="new-password">
+                    <span class="field-error" id="register-password-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-confirm">Confirmación de contraseña</label>
+                    <input id="register-confirm" type="password" required autocomplete="new-password">
+                    <span class="field-error" id="register-confirm-error"></span>
+                </div>
+
+                <button class="form-button" type="submit">Crear cuenta</button>
+                <p class="form-success" id="register-success" role="status"></p>
+
+            </form>
+
+        </div>
+    </main>
+
+    <!-- SCRIPT -->
+    <script src="js/paginas.js"></script>
+
+</body>
+</html>

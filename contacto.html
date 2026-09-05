@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | SAKE D. BINKS</title>
+    <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <a class="site-logo" href="Inicio.html">SAKE D. BINKS</a>
+        <nav class="site-nav">
+            <a href="nosotros.html">Nosotros</a>
+            <a href="blogs.html">Journal</a>
+            <a href="SeccionMujer.html">Tienda</a>
+        </nav>
+        <div class="site-account">
+            <a href="Login.html">Cuenta</a>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="page-shell">
+        <div class="form-layout">
+            
+            <!-- SECCIÓN DE INTRODUCCIÓN -->
+            <section>
+                <span class="eyebrow">Hablemos</span>
+                <h1>Estamos para ayudarte.</h1>
+                <p class="lead">Escríbenos y responderemos a la brevedad. Cuéntanos qué necesitas con el mayor detalle posible.</p>
+            </section>
+
+            <!-- FORMULARIO DE CONTACTO -->
+            <form class="form-panel" id="contact-form" novalidate>
+                
+                <div class="form-field">
+                    <label for="contact-name">Nombre</label>
+                    <input id="contact-name" name="nombre" type="text" maxlength="100" required autocomplete="name">
+                    <span class="field-error" id="contact-name-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="contact-email">Correo</label>
+                    <input id="contact-email" name="correo" type="email" maxlength="100" required autocomplete="email">
+                    <span class="field-error" id="contact-email-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="contact-comment">Comentario</label>
+                    <textarea id="contact-comment" name="comentario" maxlength="500" required></textarea>
+                    <span class="counter"><span id="comment-count">0</span>/500</span>
+                    <span class="field-error" id="contact-comment-error"></span>
+                </div>
+
+                <button class="form-button" type="submit">Enviar mensaje</button>
+                <p class="form-success" id="contact-success" role="status"></p>
+
+            </form>
+
+        </div>
+    </main>
+
+    <!-- SCRIPT -->
+    <script src="js/paginas.js"></script>
+
+</body>
+</html>
