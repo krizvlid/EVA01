@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil | SAKE D. BINKS</title>
+    <link rel="stylesheet" href="css/paginas.css">
+    <style>
+        .profile-panel { max-width: 620px; border-top: 1px solid #000; padding-top: 24px; }
+        .profile-row { display: flex; justify-content: space-between; gap: 24px; border-bottom: 1px solid #e5e5e5; padding: 18px 0; }
+        .profile-label { color: #666; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; }
+        .profile-value { text-align: right; overflow-wrap: anywhere; }
+        .profile-action { display: inline-block; margin-top: 28px; color: #000; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; }
+        .profile-message { color: #666; line-height: 1.6; }
+        @media (max-width: 600px) { .profile-row { display: block; } .profile-value { margin-top: 8px; text-align: left; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="site-logo" href="Inicio.html">SAKE D. BINKS</a>
+        <nav class="site-nav"><a href="carrito.html">Cesta</a></nav>
+    </header>
+    <main class="page-shell">
+        <span class="eyebrow">Tu cuenta</span>
+        <h1>Mi perfil.</h1>
+        <section class="profile-panel" id="profile-panel">
+            <p class="profile-message">Cargando tus datos...</p>
+        </section>
+    </main>
+    <script src="js/perfil.js"></script>
+</body>
+</html>

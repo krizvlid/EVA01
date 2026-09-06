@@ -9,25 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const contrasenaInput = document.getElementById('login-password').value;
 
             try {
-                const respuesta = await fetch('http://localhost:8080/api/aut/login', {
+                const respuesta = await fetch('http://localhost:8081/api/usuarios/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        correo: correoInput,
-                        contrasena: contrasenaInput
+                        email: correoInput,
+                        password: contrasenaInput
                     })
                 });
 
                 const resultado = await respuesta.json();
 
-                if (respuesta.ok && resultado.exito) {
+                if (respuesta.ok && resultado.email) {
                     localStorage.setItem('sake_sesion', JSON.stringify({
+                        id: resultado.id,
                         correo: correoInput,
+                        nombre: resultado.nombre,
+                        direccion: resultado.direccion || '',
                         logueado: true
                     }));
-                    alert('✅ ' + resultado.mensaje);
+                    localStorage.setItem('usuarioCorreo', resultado.email);
+                    alert('✅ Inicio de sesión correcto.');
 
                     if (document.referrer && !document.referrer.includes('Login.html')) {
                         window.location.href = document.referrer;
@@ -36,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                 } else {
-                    alert('❌ Error: ' + resultado.mensaje);
+                    alert('❌ Error: ' + (resultado.mensaje || resultado || 'Credenciales inválidas.'));
                 }
 
             } catch (error) {
                 console.error('Error de conexión:', error);
-                alert('⚠️ No se pudo conectar con el microservicio. Revisa que IntelliJ esté en ejecución.');
+                alert('⚠️ No se pudo conectar con el servidor. Revisa que la aplicación esté en ejecución.');
             }
         });
     }

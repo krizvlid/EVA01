@@ -1,0 +1,207 @@
+@media (max-width: 900px) {
+    .header {
+        position: sticky;
+        padding: 18px 24px;
+        flex-wrap: wrap;
+        gap: 14px 20px;
+    }
+
+    .logo {
+        font-size: 1.05rem;
+        letter-spacing: 3px;
+    }
+
+    .nav-links,
+    .user-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        align-items: center;
+    }
+
+    .nav-links a,
+    .user-links a {
+        margin-left: 0;
+        font-size: .68rem;
+        letter-spacing: 1.5px;
+    }
+
+    .layout-wrapper {
+        display: block;
+        margin-top: 0;
+    }
+
+    .sidebar-menu {
+        position: sticky;
+        top: 0;
+        left: auto;
+        z-index: 20;
+        width: 100%;
+        height: auto;
+        padding: 14px 24px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        scrollbar-width: thin;
+        scrollbar-color: #999 #eee;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        display: block;
+        height: 4px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-track {
+        background: #eee;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb {
+        background: #999;
+        border-radius: 2px;
+    }
+
+    .sidebar-menu ul {
+        display: flex;
+        gap: 18px;
+        width: max-content;
+        align-items: center;
+    }
+
+    .sidebar-menu li {
+        margin-bottom: 0;
+        flex: 0 0 auto;
+    }
+
+    .sidebar-menu a {
+        font-size: .68rem;
+        letter-spacing: 1.5px;
+        white-space: nowrap;
+    }
+
+    .catalog-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 28px 24px 70px;
+    }
+
+    .category-section {
+        margin-bottom: 72px;
+        scroll-margin-top: 70px;
+    }
+
+    .editorial-container {
+        gap: 72px;
+    }
+
+    .staggered-item,
+    .triptych-item,
+    .duo-item,
+    .asymmetric-main,
+    .asymmetric-sub {
+        height: clamp(280px, 65vw, 560px);
+        min-height: 0;
+    }
+
+    .staggered-item {
+        width: 82%;
+    }
+
+    .editorial-image-wrapper.full-width,
+    .editorial-image-wrapper.half-width {
+        height: clamp(260px, 68vw, 520px);
+    }
+
+    .asymmetric-stack {
+        height: clamp(560px, 130vw, 900px);
+    }
+
+    .editorial-triptych,
+    .editorial-asymmetric {
+        gap: 10px;
+    }
+
+    #poleras .duo-item {
+        height: clamp(340px, 90vw, 680px) !important;
+        min-height: 0;
+    }
+
+    #zapatos .single-shoe-wrapper,
+    #calzado .single-shoe-wrapper {
+        width: 100%;
+        height: clamp(360px, 100vw, 700px) !important;
+        min-height: 0;
+    }
+
+    .product-name {
+        font-size: .72rem;
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        align-items: flex-start;
+    }
+
+    .header > div:first-child {
+        width: 100%;
+    }
+
+    .nav-links,
+    .user-links {
+        width: 100%;
+    }
+
+    .nav-links a,
+    .user-links a {
+        font-size: .62rem;
+    }
+
+    .sidebar-menu {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .catalog-content {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .editorial-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editorial-image-wrapper.full-width,
+    .editorial-image-wrapper.half-width {
+        grid-column: auto;
+        height: min(110vw, 460px);
+    }
+
+    .editorial-asymmetric {
+        grid-template-columns: 1fr;
+    }
+
+    .asymmetric-stack {
+        height: auto;
+    }
+
+    .asymmetric-sub {
+        height: min(80vw, 360px);
+    }
+
+    .editorial-triptych,
+    .editorial-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .triptych-item,
+    .duo-item {
+        height: min(110vw, 460px);
+    }
+
+    #poleras .editorial-duo {
+        grid-template-columns: 1fr;
+    }
+}

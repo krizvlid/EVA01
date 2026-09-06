@@ -42,47 +42,22 @@ const obtenerCorreoUsuario = () => localStorage.getItem('usuarioCorreo') || 'usu
 
 // 2. FUNCIÓN PARA AGREGAR AL CARRITO VÍA API
 async function agregarAlCarrito(idProducto) {
-    const payload = {
-        correo: obtenerCorreoUsuario(),
-        productoId: idProducto
-    };
-
-    try {
-        const respuesta = await fetch('http://localhost:8080/api/carrito/agregar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await respuesta.json();
-
-        if (respuesta.ok && data.exito) {
-            alert('¡Producto añadido a la cesta!');
-            actualizarContadorCarrito();
-        } else {
-            alert(data.mensaje || 'Error al agregar el producto.');
-        }
-    } catch (error) {
-        console.error('Error al conectar con la API:', error);
-        alert('No se pudo conectar con el servidor.');
-    }
+    const producto = productosGlobales.find(item => item.id === idProducto);
+    const carrito = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!producto) return;
+    const existente = carrito.find(item => item.id === producto.id);
+    if (existente) existente.quantity = (Number(existente.quantity) || 1) + 1;
+    else carrito.push({ id: producto.id, name: producto.nombre, price: producto.precio, image: producto.imagen, quantity: 1 });
+    localStorage.setItem('cart', JSON.stringify(carrito));
+    alert('¡Producto añadido a la cesta!');
+    actualizarContadorCarrito();
 }
 
 // 3. ACTUALIZAR EL CONTADOR "CESTA (X)" DESDE LA API
 async function actualizarContadorCarrito() {
-    const correo = obtenerCorreoUsuario();
-    try {
-        const respuesta = await fetch(`http://localhost:8080/api/carrito/${correo}`);
-        if (respuesta.ok) {
-            const data = await respuesta.json();
-            const cartLink = document.getElementById('cart-link');
-            if (cartLink) {
-                cartLink.innerText = `CESTA (${data.cantidadTotal || 0})`;
-            }
-        }
-    } catch (error) {
-        console.error('Error consultando el carrito:', error);
-    }
+    const carrito = JSON.parse(localStorage.getItem('cart') || '[]');
+    const cartLink = document.getElementById('cart-link');
+    if (cartLink) cartLink.innerText = `CESTA (${carrito.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0)})`;
 }
 
 // 4. SCROLL DEL MENÚ LATERAL

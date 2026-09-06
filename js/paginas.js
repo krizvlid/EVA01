@@ -61,30 +61,7 @@ function validateEmail(value) {
 }
 
 function validarRUN(run) {
-    const runLimpio = run.trim().toUpperCase();
-    const regexRun = /^[0-9]{6,8}-[0-9K]$/;
-    if (!regexRun.test(runLimpio)) return false;
-
-    const cuerpo = runLimpio.slice(0, -2);
-    const dvIngresado = runLimpio.slice(-1);
-
-    let suma = 0;
-    let multiplicador = 2;
-
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-        suma += parseInt(cuerpo.charAt(i), 10) * multiplicador;
-        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
-    }
-
-    const resto = suma % 11;
-    const resultado = 11 - resto;
-
-    let dvEsperado = '';
-    if (resultado === 11) dvEsperado = '0';
-    else if (resultado === 10) dvEsperado = 'K';
-    else dvEsperado = resultado.toString();
-
-    return dvIngresado === dvEsperado;
+    return /^[0-9]{8}-[0-9]$/.test(run.trim());
 }
 
 function setError(id, message) { 
@@ -144,7 +121,7 @@ const articles = {
     armario: { 
         category: 'Moda', 
         title: 'Donna Karan New York elige a Kendall Jenner', 
-        image: 'Imagenes/NoticiaK1.jpg', 
+        image: 'Imagenes/NoticiaK1.png', 
         content: [
             'Donna Karan New York ha fichado a Kendall Jenner para su campaña de otoño 2026. Fotografiada por Mert Alas, Jenner debuta como imagen de la marca en enclaves emblemáticos de Nueva York. El concepto recupera la idea de una campaña de finales de los años ochenta de Donna Karan, firmada por Dennis Piel y protagonizada por la modelo Rosemary McGrotha, que daba voz a sus pensamientos mientras llegaba a Nueva York en una limusina.',
             'Para otoño 2026, esa premisa se reinterpreta a través de Jenner, que imagina tener Nueva York por completo para ella sola. La campaña transcurre dentro y fuera de un coche, con Jenner recorriendo la ciudad en una serie de escenas cinematográficas que contraponen glamour y actitud.',
@@ -219,13 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Formulario de registro
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
-        registerForm.addEventListener('submit', event => {
+        registerForm.addEventListener('submit', async event => {
             event.preventDefault();
-            ['name', 'run', 'email', 'password', 'confirm'].forEach(field => setError(`register-${field}-error`, ''));
+            ['name', 'run', 'email', 'address', 'password', 'confirm'].forEach(field => setError(`register-${field}-error`, ''));
             const name = document.getElementById('register-name').value.trim();
             const runInput = document.getElementById('register-run');
             const run = runInput ? runInput.value.trim() : '';
             const email = document.getElementById('register-email').value.trim();
+            const address = document.getElementById('register-address').value.trim();
             const password = document.getElementById('register-password').value;
             const confirm = document.getElementById('register-confirm').value;
             
@@ -233,15 +211,34 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!run) setError('register-run-error', 'El RUN es obligatorio.');
             else if (run.includes('.')) setError('register-run-error', 'El RUN debe escribirse sin puntos.');
             else if (!run.includes('-')) setError('register-run-error', 'El RUN debe incluir un guión, por ejemplo 12456789-0.');
-            else if (run.length < 8 || run.length > 10) setError('register-run-error', 'El RUN debe tener entre 8 y 10 caracteres.');
-            else if (!validarRUN(run)) setError('register-run-error', 'El RUN ingresado no es válido.');
+            else if (!validarRUN(run)) setError('register-run-error', 'Usa exactamente 8 números, un guión y 1 número. Ejemplo: 12345678-9.');
 
             if (!email) setError('register-email-error', 'El correo es obligatorio.'); else if (validateEmail(email)) setError('register-email-error', validateEmail(email));
+            if (!address) setError('register-address-error', 'La dirección es obligatoria.');
             if (!password) setError('register-password-error', 'La contraseña es obligatoria.');
             if (!confirm) setError('register-confirm-error', 'Confirma tu contraseña.'); else if (password !== confirm) setError('register-confirm-error', 'Las contraseñas no coinciden.');
             if (document.querySelector('#register-form .field-error:not(:empty)')) return;
-            document.getElementById('register-success').textContent = 'Cuenta creada correctamente.';
-            registerForm.reset();
+            const success = document.getElementById('register-success');
+            success.textContent = 'Creando cuenta...';
+            try {
+                const response = await fetch('http://localhost:8081/api/usuarios/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre: name, email, password, direccion: address })
+                });
+                const responseText = await response.text();
+                let result = {};
+                try {
+                    result = responseText ? JSON.parse(responseText) : {};
+                } catch {
+                    result.mensaje = responseText;
+                }
+                if (!response.ok) throw new Error(result.mensaje || `Error del servidor (${response.status}).`);
+                success.textContent = result.mensaje;
+                registerForm.reset();
+            } catch (error) {
+                success.textContent = error.message === 'Failed to fetch' ? 'No se pudo conectar con el servidor.' : error.message;
+            }
         });
     }
 

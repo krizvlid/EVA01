@@ -227,3 +227,132 @@ body {
 .color-thumb-hidden {
     display: none;
 }
+
+@media (max-width: 900px) {
+    .header {
+        position: sticky;
+        top: 0;
+        padding: 18px 24px;
+        flex-wrap: wrap;
+        gap: 14px 20px;
+    }
+
+    .logo {
+        font-size: 1.05rem;
+        letter-spacing: 3px;
+    }
+
+    .nav-links,
+    .user-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        align-items: center;
+    }
+
+    .nav-links a,
+    .user-links a {
+        margin-left: 0;
+        font-size: .68rem;
+        letter-spacing: 1.5px;
+    }
+
+    .product-detail-container {
+        display: block;
+        margin-top: 0;
+    }
+
+    .product-gallery {
+        width: 100%;
+        padding: 0 24px;
+        gap: 12px;
+    }
+
+    .product-gallery img {
+        width: 100%;
+        height: min(115vw, 560px);
+        object-fit: cover;
+    }
+
+    .product-info-panel {
+        width: 100%;
+        position: static;
+        padding: 32px 24px 80px;
+        height: auto;
+        overflow: visible;
+    }
+
+    .product-title {
+        font-size: 1.05rem;
+    }
+
+    .product-price {
+        margin-bottom: 26px;
+    }
+
+    .colors-container {
+        margin-bottom: 26px;
+    }
+
+    .size-selector {
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+
+    .size-btn {
+        min-width: 0;
+        padding: 14px 8px;
+    }
+
+    .size-guide-link {
+        margin-bottom: 28px;
+    }
+
+    .shipping-banner {
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        display: grid;
+        grid-template-columns: 82px minmax(0, 1fr);
+        align-items: start;
+        gap: 12px 18px;
+        padding: 18px 24px;
+    }
+
+    .header > div:first-child {
+        grid-row: span 2;
+        width: auto;
+    }
+
+    .nav-links,
+    .user-links {
+        width: 100%;
+        gap: 7px 14px;
+    }
+
+    .nav-links a,
+    .user-links a {
+        font-size: .62rem;
+        letter-spacing: 1.2px;
+    }
+
+    .product-gallery {
+        padding: 0 12px;
+    }
+
+    .product-gallery img {
+        height: min(125vw, 500px);
+    }
+
+    .product-info-panel {
+        padding: 28px 24px 64px;
+    }
+
+    .color-thumb {
+        width: 58px;
+        height: 72px;
+    }
+}

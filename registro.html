@@ -13,7 +13,7 @@
         <a class="site-logo" href="Inicio.html">SAKE D. BINKS</a>
         <nav class="site-nav">
             <a href="nosotros.html">Nosotros</a>
-            <a href="blogs.html">Journal</a>
+            <a href="blogs.html">Blogs</a>
             <a href="contacto.html">Contacto</a>
         </nav>
         <div class="site-account">
@@ -42,12 +42,12 @@
                 </div>
 
                 <div class="form-field">
-                    <label for="register-run">RUN (sin puntos y con guión)</label>
+                    <label for="register-run">RUT</label>
                     <input 
                         id="register-run" 
                         type="text" 
                         maxlength="10" 
-                        placeholder="ej: 12456789-0" 
+                        placeholder="ej: 12345678-9" 
                         required 
                         autocomplete="off"
                     >
@@ -58,6 +58,12 @@
                     <label for="register-email">Correo electrónico</label>
                     <input id="register-email" type="email" maxlength="100" required autocomplete="email">
                     <span class="field-error" id="register-email-error"></span>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-address">Dirección</label>
+                    <input id="register-address" type="text" maxlength="200" required autocomplete="street-address">
+                    <span class="field-error" id="register-address-error"></span>
                 </div>
 
                 <div class="form-field">

@@ -41,7 +41,7 @@
         <div class="cart-summary">
             <h4>TOTAL: <span id="total-carrito">0 CLP</span></h4>
             <br>
-            <button class="btn-checkout" onclick="alert('¡Gracias por tu compra!')">PROCEDER AL PAGO</button>
+            <a class="btn-checkout" href="checkout.html" style="display:inline-block;text-decoration:none">PROCEDER AL PAGO</a>
         </div>
     </div>
 
@@ -56,7 +56,9 @@
         async function renderizarCarrito() {
             const contenedor = document.getElementById('lista-carrito');
             const totalEl = document.getElementById('total-carrito');
-            const correo = obtenerCorreo();
+            const productosLocales = JSON.parse(localStorage.getItem('cart')) || [];
+            renderizarCarritoLocal(productosLocales, contenedor, totalEl);
+            return;
 
             try {
                 const respuesta = await fetch(`${API_URL}/${correo}`);

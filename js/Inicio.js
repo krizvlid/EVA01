@@ -1,23 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. GESTIÓN DEL ENLACE DE AUTENTICACIÓN / MI CUENTA
     const linkAuth = document.getElementById('link-auth');
+    const linkRegister = document.getElementById('link-register');
+    const cartLink = document.getElementById('cart-link');
     const sesion = JSON.parse(localStorage.getItem('sake_sesion'));
+
+    if (cartLink) {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const totalCount = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+        cartLink.textContent = `CESTA (${totalCount})`;
+    }
+
+    if (linkRegister) {
+        linkRegister.hidden = Boolean(sesion && sesion.logueado);
+    }
 
     if (linkAuth) {
         if (sesion && sesion.logueado) {
-            // Usuario autenticado: cambia el texto a MI CUENTA
-            linkAuth.textContent = 'MI CUENTA';
-            linkAuth.href = '#';
-
-            // Asignación directa para sobrescribir cualquier evento previo
-            linkAuth.onclick = (e) => {
-                e.preventDefault();
-                const confirmar = confirm(`Sesión activa: ${sesion.correo}\n\n¿Deseas cerrar sesión?`);
-                if (confirmar) {
-                    localStorage.removeItem('sake_sesion');
-                    window.location.reload(); // Recarga la página ya deslogueado
-                }
-            };
+            linkAuth.textContent = 'MI PERFIL';
+            linkAuth.href = 'perfil.html';
+            linkAuth.onclick = null;
         } else {
             // Usuario no autenticado: enlace normal a Login.html
             linkAuth.textContent = 'INICIAR SESIÓN';

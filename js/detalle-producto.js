@@ -69,6 +69,26 @@ function generarSku(nombre) {
     return `SKU-${String(hash + 100).padStart(3, '0')}`;
 }
 
+function stockTallaKey(codigo, talla) {
+    return `sake_stock_${codigo}_${encodeURIComponent(talla)}`;
+}
+
+function stockInicialTalla(codigo, talla) {
+    const texto = `${codigo}-${talla}`;
+    let hash = 0;
+    for (let i = 0; i < texto.length; i++) hash = (hash * 31 + texto.charCodeAt(i)) % 15;
+    return hash + 1;
+}
+
+function obtenerStockTalla(codigo, talla) {
+    const key = stockTallaKey(codigo, talla);
+    const guardado = localStorage.getItem(key);
+    if (guardado !== null && Number.isInteger(Number(guardado))) return Number(guardado);
+    const inicial = stockInicialTalla(codigo, talla);
+    localStorage.setItem(key, String(inicial));
+    return inicial;
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     
@@ -98,8 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detail-color-label').textContent = `COLOR: ${color1Name}`;
     selectedProductColor = color1Name;
     productCode.textContent = params.get('code') || skuPorProducto[name] || generarSku(name);
-    productStock.textContent = params.has('stock') ? params.get('stock') : (stockPorProducto[name] || 8);
-    updateQuantity(Number(quantity.value));
+    productStock.textContent = '--';
     document.getElementById('quantity-decrease').onclick = () => updateQuantity(Number(quantity.value) - 1);
     document.getElementById('quantity-increase').onclick = () => updateQuantity(Number(quantity.value) + 1);
     quantity.addEventListener('input', () => updateQuantity(Number(quantity.value)));
@@ -173,9 +192,21 @@ window.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             selectedSize = size;
+            const stockTalla = obtenerStockTalla(productCode.textContent.trim(), size);
+            productStock.textContent = stockTalla;
+            updateQuantity(stockTalla > 0 ? Number(quantity.value) || 1 : 0);
         };
         sizeSelector.appendChild(btn);
     });
+
+    if (sizes.length > 0) {
+        const firstSizeButton = sizeSelector.querySelector('.size-btn');
+        selectedSize = sizes[0];
+        firstSizeButton.classList.add('active');
+        const firstSizeStock = obtenerStockTalla(productCode.textContent.trim(), selectedSize);
+        productStock.textContent = firstSizeStock;
+        updateQuantity(firstSizeStock > 0 ? 1 : 0);
+    }
 });
 
 // Función para renderizar la galería lateral
