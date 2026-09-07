@@ -35,7 +35,7 @@ function actualizarStockLocal(items) {
     quantitiesByCode.forEach((quantity, stockKey) => {
         const stockGuardado = localStorage.getItem(stockKey);
         const stockActual = stockGuardado === null ? null : Number(stockGuardado);
-        const stockBase = stockByCode.get(code);
+        const stockBase = stockByCode.get(stockKey);
         const stockDisponible = Number.isFinite(stockActual)
             ? stockActual
             : (Number.isFinite(stockBase) ? stockBase : null);

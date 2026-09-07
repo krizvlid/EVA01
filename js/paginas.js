@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!email) setError('register-email-error', 'El correo es obligatorio.'); else if (validateEmail(email)) setError('register-email-error', validateEmail(email));
             if (!address) setError('register-address-error', 'La dirección es obligatoria.');
             if (!password) setError('register-password-error', 'La contraseña es obligatoria.');
+            else if (password.length < 4 || password.length > 10) setError('register-password-error', 'La contraseña debe tener entre 4 y 10 caracteres.');
             if (!confirm) setError('register-confirm-error', 'Confirma tu contraseña.'); else if (password !== confirm) setError('register-confirm-error', 'Las contraseñas no coinciden.');
             if (document.querySelector('#register-form .field-error:not(:empty)')) return;
             const success = document.getElementById('register-success');
