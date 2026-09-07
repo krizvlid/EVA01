@@ -128,12 +128,12 @@ const articles = {
             '"Sake D Binks siempre ha encarnado la confianza y una sofisticación sin esfuerzo, cualidades con las que conecto de verdad. Formar parte de la campaña de otoño 2026 fue como celebrar la energía de Nueva York y a una mujer que conoce su estilo y acepta abiertamente quien es", afirmó Jenner.',
             'Entre las piezas clave de la colección que aparecen en la campaña figura el ya clásico body de Sake D Binks, rescatado de los archivos de la marca y reimaginado para otoño 2026. Jenner luce también una chaqueta y una falda de punto de lana drapeadas, superpuestas bajo un abrigo de cuero, un traje de terciopelo a medida y una chaqueta y falda de inspiración aviador en un profundo marrón espresso.',
             `<div class="stacked-images">
-                <img src="Imagenes/NoticiaK2.jpg" alt="Desfile foto 1">
+                <img src="Imagenes/NoticiaK2.png" alt="Desfile foto 1">
             </div>`,
             'La campaña también pone el foco en un vestido largo de lentejuelas, además de accesorios como el bolso "Cashmere Tote" en ante color chocolate y el bolso "Black Cherry Leno", joyería escultórica en oro y gafas.',
             'La campaña se ha lanzado en las redes sociales de la marca y se extiende a la publicidad digital, impresa y exterior. El año pasado, Kate Moss protagonizó la campaña de Donna Karan New York para la temporada primavera-verano 2025.',
             `<div class="stacked-images">
-                <img src="Imagenes/NoticiaK3.jpg" alt="Desfile foto 2">
+                <img src="Imagenes/NoticiaK3.png" alt="Desfile foto 2">
             </div>`
 
         ] 
