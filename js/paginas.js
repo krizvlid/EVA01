@@ -120,13 +120,13 @@ const articles = {
     },
     armario: { 
         category: 'Moda', 
-        title: 'Donna Karan New York elige a Kendall Jenner', 
+        title: 'Sake D Binks New York elige a Kendall Jenner', 
         image: 'Imagenes/NoticiaK1.png', 
         content: [
-            'Donna Karan New York ha fichado a Kendall Jenner para su campaña de otoño 2026. Fotografiada por Mert Alas, Jenner debuta como imagen de la marca en enclaves emblemáticos de Nueva York. El concepto recupera la idea de una campaña de finales de los años ochenta de Donna Karan, firmada por Dennis Piel y protagonizada por la modelo Rosemary McGrotha, que daba voz a sus pensamientos mientras llegaba a Nueva York en una limusina.',
+            'Sake D Binks New York ha fichado a Kendall Jenner para su campaña de otoño 2026. Fotografiada por Mert Alas, Jenner debuta como imagen de la marca en enclaves emblemáticos de Nueva York. El concepto recupera la idea de una campaña de finales de los años ochenta de Sake D Binks, firmada por Dennis Piel y protagonizada por la modelo Rosemary McGrotha, que daba voz a sus pensamientos mientras llegaba a Nueva York en una limusina.',
             'Para otoño 2026, esa premisa se reinterpreta a través de Jenner, que imagina tener Nueva York por completo para ella sola. La campaña transcurre dentro y fuera de un coche, con Jenner recorriendo la ciudad en una serie de escenas cinematográficas que contraponen glamour y actitud.',
-            '"Donna Karan siempre ha encarnado la confianza y una sofisticación sin esfuerzo, cualidades con las que conecto de verdad. Formar parte de la campaña de otoño 2026 fue como celebrar la energía de Nueva York y a una mujer que conoce su estilo y acepta abiertamente quien es", afirmó Jenner.',
-            'Entre las piezas clave de la colección que aparecen en la campaña figura el ya clásico body de Donna Karan, rescatado de los archivos de la marca y reimaginado para otoño 2026. Jenner luce también una chaqueta y una falda de punto de lana drapeadas, superpuestas bajo un abrigo de cuero, un traje de terciopelo a medida y una chaqueta y falda de inspiración aviador en un profundo marrón espresso.',
+            '"Sake D Binks siempre ha encarnado la confianza y una sofisticación sin esfuerzo, cualidades con las que conecto de verdad. Formar parte de la campaña de otoño 2026 fue como celebrar la energía de Nueva York y a una mujer que conoce su estilo y acepta abiertamente quien es", afirmó Jenner.',
+            'Entre las piezas clave de la colección que aparecen en la campaña figura el ya clásico body de Sake D Binks, rescatado de los archivos de la marca y reimaginado para otoño 2026. Jenner luce también una chaqueta y una falda de punto de lana drapeadas, superpuestas bajo un abrigo de cuero, un traje de terciopelo a medida y una chaqueta y falda de inspiración aviador en un profundo marrón espresso.',
             `<div class="stacked-images">
                 <img src="Imagenes/NoticiaK2.jpg" alt="Desfile foto 1">
             </div>`,
