@@ -102,19 +102,19 @@ body {
 /* Área de Contenido */
 .catalog-content {
     margin-left: 300px;
-    padding: 10px 40px 100px 0;
+    padding: 10px 50px 100px 0;
     width: 100%;
 }
 
 .category-section {
-    margin-bottom: 140px;
+    margin-bottom: 160px;
     scroll-margin-top: 110px;
 }
 
 .editorial-container {
     display: flex;
     flex-direction: column;
-    gap: 120px;
+    gap: 140px;
 }
 
 .editorial-product {
@@ -131,17 +131,20 @@ body {
     display: block;
 }
 
+/* --- FORMATOS LARGOS CON UN POCO MÁS DE ANCHO --- */
+
 /* FORMATO 1: IMÁGENES DESFASADAS */
 .editorial-staggered {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
     width: 100%;
 }
 
 .staggered-item {
-    width: 65%;
-    height: 75vh;
+    width: 68%; /* Subió de 50% a 68% para ganar presencia */
+    height: 130vh;
+    min-height: 950px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -154,25 +157,28 @@ body {
     align-self: flex-end;
 }
 
-/* FORMATO 2: GRILLA 1 ARRIBA Y 2 ABAJO */
+/* FORMATO 2: GRILLA */
 .editorial-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 25px;
     width: 100%;
 }
 
 .editorial-image-wrapper.full-width {
     grid-column: span 2;
-    height: 85vh;
+    width: 75%; /* Subió de 60% a 75% */
+    margin: 0 auto;
+    height: 140vh;
+    min-height: 1000px;
 }
 
 .editorial-image-wrapper.half-width {
-    height: 70vh;
+    height: 115vh;
+    min-height: 850px;
 }
 
 .editorial-image-wrapper {
-    width: 100%;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -180,13 +186,14 @@ body {
 /* FORMATO 3: DISEÑO ASIMÉTRICO */
 .editorial-asymmetric {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 15px;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 25px;
     width: 100%;
 }
 
 .asymmetric-main {
-    height: 85vh;
+    height: 130vh;
+    min-height: 950px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -194,12 +201,13 @@ body {
 .asymmetric-stack {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    height: 85vh;
+    gap: 25px;
+    height: 130vh;
+    min-height: 950px;
 }
 
 .asymmetric-sub {
-    height: calc(50% - 7.5px);
+    height: calc(50% - 12.5px);
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -208,63 +216,44 @@ body {
 .editorial-triptych {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 20px;
     width: 100%;
 }
 
 .triptych-item {
-    height: 75vh;
+    height: 110vh;
+    min-height: 800px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
 
-/* FORMATO 5: DUO EN PARALELO */
+/* FORMATO 5: DÚO EN PARALELO */
 .editorial-duo {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    width: 100%;
+    gap: 30px;
+    width: 95%; /* Subió de 85% a 95% para llenar mejor el espacio */
+    margin: 0 auto;
 }
 
 .duo-item {
-    height: 75vh;
+    height: 130vh;
+    min-height: 950px;
     overflow: hidden;
     background-color: #f4f4f4;
-}
-
-/* SECCIÓN POLERAS */
-#poleras .editorial-duo {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    width: 100%;
-}
-
-#poleras .duo-item {
-    height: 120vh !important;
-    min-height: 900px;
-    overflow: hidden;
-    background-color: #f4f4f4;
-}
-
-#poleras .duo-item img {
-    object-position: top center !important;
 }
 
 /* SECCIÓN ZAPATOS */
 #zapatos .single-shoe-wrapper {
-    width: 80%;
+    width: 65%; /* Subió de 50% a 65% */
     margin: 0 auto;
-    height: 140vh !important;
-    min-height: 1000px;
+    height: 120vh !important;
+    min-height: 850px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
 
-#zapatos .single-shoe-wrapper img {
-    object-position: bottom center !important;
-}
-
-/* REGLAS PARA IMÁGENES Y HOVER */
+/* ENCUADRE Y EFECTO HOVER */
 .editorial-image-wrapper img, 
 .staggered-item img, 
 .asymmetric-main img, 
@@ -275,6 +264,7 @@ body {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    object-position: top center !important;
     transition: transform 0.6s ease;
 }
 
@@ -290,7 +280,7 @@ body {
 
 /* INFORMACIÓN DE PRODUCTO */
 .editorial-info {
-    margin-top: 25px;
+    margin-top: 30px;
     text-align: center;
     text-decoration: none;
     color: inherit;

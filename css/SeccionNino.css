@@ -127,6 +127,7 @@ body {
     display: block;
 }
 
+/* FORMATO 1: IMÁGENES DESFASADAS (MÁS LARGAS) */
 .editorial-staggered {
     display: flex;
     flex-direction: column;
@@ -135,8 +136,9 @@ body {
 }
 
 .staggered-item {
-    width: 65%;
-    height: 75vh;
+    width: 55%;
+    height: 140vh;
+    min-height: 1100px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -149,6 +151,7 @@ body {
     align-self: flex-end;
 }
 
+/* FORMATO 2: DUO EN PARALELO (MÁS LARGO) */
 .editorial-duo {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -157,19 +160,23 @@ body {
 }
 
 .duo-item {
-    height: 75vh;
+    height: 130vh;
+    min-height: 1000px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
 
+/* FORMATO 3: ZAPATOS / DESTACADO INDIVIDUAL (MÁS LARGO) */
 .single-shoe-wrapper {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
-    height: 100vh;
+    height: 160vh;
+    min-height: 1300px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
 
+/* REGLAS PARA IMÁGENES Y HOVER */
 .staggered-item img, 
 .duo-item img,
 .single-shoe-wrapper img {

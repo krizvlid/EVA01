@@ -135,8 +135,9 @@ body {
 }
 
 .staggered-item {
-    width: 65%;
-    height: 75vh;
+    width: 55%; /* Se redujo el ancho para que la proporción vertical sea aún más alta */
+    height: 140vh;
+    min-height: 1100px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
@@ -157,15 +158,17 @@ body {
 }
 
 .duo-item {
-    height: 75vh;
+    height: 130vh;
+    min-height: 1000px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
 
 .single-shoe-wrapper {
-    width: 80%;
+    width: 70%; /* Se hizo un poco más angosto */
     margin: 0 auto;
-    height: 100vh;
+    height: 160vh;
+    min-height: 1300px;
     overflow: hidden;
     background-color: #f4f4f4;
 }
