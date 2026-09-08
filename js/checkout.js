@@ -140,13 +140,22 @@ loadCardChoices();
 document.getElementById('checkout-form').addEventListener('submit', async event => {
     event.preventDefault();
     if (!checkoutCart.length) { messageEl.textContent = 'Agrega productos antes de pagar.'; return; }
+    
+    // MAPEO ACTUALIZADO CON LA PROPIEDAD IMAGEN
     const payload = {
         nombre: nameInput.value.trim(),
         correo: emailInput.value.trim(),
         direccion: addressInput.value.trim(),
         tarjeta: cardInput.value.replace(/\s/g, ''),
-        items: checkoutCart.map(item => ({ id: item.id, nombre: item.name || item.nombre, precio: Number(String(item.price || item.precio || 0).replace(/[^0-9]/g, '')), cantidad: Number(item.quantity) || 1 }))
+        items: checkoutCart.map(item => ({ 
+            id: item.id, 
+            nombre: item.name || item.nombre, 
+            precio: Number(String(item.price || item.precio || 0).replace(/[^0-9]/g, '')), 
+            cantidad: Number(item.quantity) || 1,
+            imagen: item.image || item.imagen || item.img || 'img/placeholder.png' // <--- AQUÍ SE EXTRAE LA RUTA
+        }))
     };
+    
     if (payload.direccion) localStorage.setItem(addressStorageKey, payload.direccion);
     try {
         const response = await fetch('http://localhost:8082/api/pagos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });

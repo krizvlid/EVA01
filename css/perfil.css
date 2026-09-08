@@ -1,0 +1,178 @@
+.profile-panel {
+    max-width: 620px;
+    border-top: 1px solid #000;
+    padding-top: 24px;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 18px 0;
+}
+
+.profile-label {
+    color: #666;
+    font-size: .75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.profile-value {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.profile-actions-bar {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+/* Estilo minimalista a enlaces y botones */
+.profile-action,
+.profile-action-btn {
+    display: inline-block;
+    color: #000;
+    font-size: .75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    margin: 0;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.profile-action-btn:hover,
+.profile-action:hover {
+    opacity: 0.7;
+}
+
+.profile-message {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   ESTILOS HISTORIAL DE COMPRAS (REFINADO)
+   ========================================== */
+.history-section {
+    max-width: 720px; /* Ampliado ligeramente para dar respiro a las 5 columnas */
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #000;
+    display: none;
+}
+
+.history-title {
+    font-size: .85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .75rem;
+}
+
+.history-table th {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1.5px solid #000;
+    font-size: .65rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #555;
+    white-space: nowrap;
+}
+
+.history-table td {
+    padding: 16px 8px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Ajuste proporcional de columnas para evitar amontonamiento */
+.history-table th:nth-child(1), .history-table td:nth-child(1) { width: 10%; font-weight: 700; } /* N° PEDIDO */
+.history-table th:nth-child(2), .history-table td:nth-child(2) { width: 40%; } /* PRODUCTOS */
+.history-table th:nth-child(3), .history-table td:nth-child(3) { width: 25%; color: #555; } /* DIRECCIÓN */
+.history-table th:nth-child(4), .history-table td:nth-child(4) { width: 13%; white-space: nowrap; font-weight: 600; } /* TOTAL */
+.history-table th:nth-child(5), .history-table td:nth-child(5) { width: 12%; text-align: right; } /* ESTADO */
+
+/* ==========================================
+   ESTILOS PRODUCTOS E IMÁGENES HISTORIAL
+   ========================================== */
+.history-products-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-product-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.history-product-img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    background-color: #f7f7f7;
+}
+
+.history-product-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.history-product-name {
+    font-size: .72rem;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.25;
+    letter-spacing: 0.3px;
+}
+
+.history-product-qty {
+    font-size: .65rem;
+    color: #777;
+    margin-top: 3px;
+}
+
+/* Badge de Estado Elegante y Minimalista */
+.badge-estado {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .profile-row { display: block; }
+    .profile-value { margin-top: 8px; text-align: left; }
+    .history-table th, .history-table td { font-size: .7rem; padding: 10px 4px; }
+    .history-product-img { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+}
