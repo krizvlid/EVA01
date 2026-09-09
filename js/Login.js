@@ -20,32 +20,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 });
 
-                const resultado = await respuesta.json();
+                // Lectura segura: intenta convertir a JSON, si falla obtiene el texto plano
+                let resultado;
+                const textoRespuesta = await respuesta.text();
+                try {
+                    resultado = JSON.parse(textoRespuesta);
+                } catch (e) {
+                    resultado = textoRespuesta;
+                }
 
-                if (respuesta.ok && resultado.email) {
-                    localStorage.setItem('sake_sesion', JSON.stringify({
+                // Si las credenciales son válidas (HTTP 200/201)
+                if (respuesta.ok && (resultado.email || resultado.id)) {
+                    
+                    const datosUsuario = {
                         id: resultado.id,
-                        correo: correoInput,
-                        nombre: resultado.nombre,
+                        correo: resultado.email || correoInput,
+                        email: resultado.email || correoInput,
+                        nombre: resultado.nombre || 'Cliente',
                         direccion: resultado.direccion || '',
                         logueado: true
-                    }));
-                    localStorage.setItem('usuarioCorreo', resultado.email);
+                    };
+
+                    // Guardar compatibilidad para el perfil
+                    localStorage.setItem('sake_sesion', JSON.stringify(datosUsuario));
+                    localStorage.setItem('usuario_actual', JSON.stringify(datosUsuario));
+                    localStorage.setItem('usuarioCorreo', resultado.email || correoInput);
+
                     alert('✅ Inicio de sesión correcto.');
 
-                    if (document.referrer && !document.referrer.includes('Login.html')) {
-                        window.location.href = document.referrer;
-                    } else {
-                        window.location.href = 'Inicio.html';
-                    }
+                    // REDIRECCIÓN DIRECTA A TU PERFIL
+                    window.location.href = 'perfil.html';
 
                 } else {
-                    alert('❌ Error: ' + (resultado.mensaje || resultado || 'Credenciales inválidas.'));
+                    // Muestra el mensaje devuelto por el backend o un mensaje por defecto si falla el login
+                    const mensajeError = (typeof resultado === 'object' && resultado !== null)
+                        ? (resultado.mensaje || resultado.message || 'El correo o la contraseña son incorrectos.')
+                        : (resultado || 'El correo o la contraseña son incorrectos.');
+
+                    alert('❌ Error: ' + mensajeError);
                 }
 
             } catch (error) {
                 console.error('Error de conexión:', error);
-                alert('⚠️ No se pudo conectar con el servidor. Revisa que la aplicación esté en ejecución.');
+                alert('⚠️ No se pudo conectar con el servidor. Revisa que la aplicación en el puerto 8081 esté en ejecución.');
             }
         });
     }

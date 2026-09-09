@@ -131,7 +131,7 @@ body {
     display: block;
 }
 
-/* --- FORMATOS LARGOS CON UN POCO MÁS DE ANCHO --- */
+/* --- FORMATOS LARGOS --- */
 
 /* FORMATO 1: IMÁGENES DESFASADAS */
 .editorial-staggered {
@@ -142,7 +142,7 @@ body {
 }
 
 .staggered-item {
-    width: 68%; /* Subió de 50% a 68% para ganar presencia */
+    width: 68%;
     height: 130vh;
     min-height: 950px;
     overflow: hidden;
@@ -167,7 +167,7 @@ body {
 
 .editorial-image-wrapper.full-width {
     grid-column: span 2;
-    width: 75%; /* Subió de 60% a 75% */
+    width: 75%;
     margin: 0 auto;
     height: 140vh;
     min-height: 1000px;
@@ -232,7 +232,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    width: 95%; /* Subió de 85% a 95% para llenar mejor el espacio */
+    width: 95%;
     margin: 0 auto;
 }
 
@@ -245,22 +245,24 @@ body {
 
 /* SECCIÓN ZAPATOS */
 #zapatos .single-shoe-wrapper {
-    width: 65%; /* Subió de 50% a 65% */
+    width: 75%;
     margin: 0 auto;
     height: 120vh !important;
     min-height: 850px;
     overflow: hidden;
     background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* ENCUADRE Y EFECTO HOVER */
+/* ENCUADRE DE ROPA GENERAL */
 .editorial-image-wrapper img, 
 .staggered-item img, 
 .asymmetric-main img, 
 .asymmetric-sub img,
 .triptych-item img,
-.duo-item img,
-.single-shoe-wrapper img {
+.duo-item img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -268,6 +270,17 @@ body {
     transition: transform 0.6s ease;
 }
 
+/* ENCUADRE ESPECÍFICO PARA ZAPATOS (NO RECORTA Y MUESTRA IMAGEN COMPLETA) */
+.single-shoe-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 30px;
+    transition: transform 0.6s ease;
+}
+
+/* EFECTO HOVER GENERAL */
 .editorial-image-wrapper:hover img, 
 .staggered-item:hover img, 
 .asymmetric-main:hover img, 
