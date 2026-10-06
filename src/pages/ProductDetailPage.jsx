@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCart } from "../components/cart/CartContext.jsx";
 import {
@@ -22,6 +22,18 @@ export default function ProductDetailPage() {
   const [notice, setNotice] = useState("");
   const { addItem } = useCart();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [id]);
+
+  useEffect(() => {
+    if (sizes.length === 0) return;
+    if (!sizes.includes(selectedSize)) {
+      setSelectedSize(sizes[0]);
+      setQuantity(1);
+    }
+  }, [sizes, selectedSize]);
+
   if (!product) {
     return <section className="page-shell"><h1>Producto no encontrado</h1><Link className="text-link" to="/tienda/productos">Volver a productos</Link></section>;
   }
@@ -31,11 +43,11 @@ export default function ProductDetailPage() {
     ...(product.colorOptions ?? []),
   ];
   const activeColor = colorOptions[selectedColor] ?? colorOptions[0];
-  const stock = getProductSizeStock(product, selectedSize);
+  const stock = getProductSizeStock(product, selectedSize, activeColor.name);
 
   function addToCart() {
     try {
-      addItem({ ...product, image: activeColor.thumb || product.image, color: activeColor.name }, selectedSize, quantity);
+      addItem({ ...product, image: activeColor.thumb || product.image }, selectedSize, quantity, activeColor.name);
       setNotice("Producto añadido a la cesta.");
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "No se pudo añadir el producto.");

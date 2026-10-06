@@ -9,7 +9,7 @@ export default function CartPage() {
 
   function changeQuantity(item, amount) {
     try {
-      updateQuantity(item.id, item.size, item.quantity + amount);
+      updateQuantity(item.id, item.size, item.quantity + amount, item.color);
       setError("");
     } catch (changeError) {
       setError(changeError instanceof Error ? changeError.message : "No se pudo actualizar la cantidad.");
@@ -23,7 +23,7 @@ export default function CartPage() {
       {cart.length === 0 ? <p>Tu cesta está vacía.</p> : (
         <div id="lista-carrito">
           {cart.map((item) => (
-            <article className="cart-item" key={`${item.id}-${item.size}`}>
+            <article className="cart-item" key={`${item.id}-${item.color}-${item.size}`}>
               {item.image && <img src={imageUrl(item.image)} alt={item.name} />}
               <div className="cart-item__description">
                 <strong>{item.name}</strong><br />
@@ -37,7 +37,7 @@ export default function CartPage() {
                 <button className="btn-qty" type="button" aria-label="Aumentar cantidad" disabled={item.quantity >= item.stock} onClick={() => changeQuantity(item, 1)}>+</button>
               </div>
               <strong>{formatPrice(item.price * item.quantity)}</strong>
-              <button className="btn-qty cart-remove" type="button" aria-label={`Eliminar ${item.name}`} onClick={() => removeItem(item.id, item.size)}>X</button>
+              <button className="btn-qty cart-remove" type="button" aria-label={`Eliminar ${item.name}`} onClick={() => removeItem(item.id, item.size, item.color)}>X</button>
             </article>
           ))}
         </div>

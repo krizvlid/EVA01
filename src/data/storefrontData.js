@@ -6,7 +6,7 @@ const initialCategories = [
 ];
 
 const initialProducts = [
-  { id: "vestido-midi", name: "Vestido midi combinado drapeado", category: "mujer", price: 45990, image: "vestiodaudifonos.jpg", thumbImage: "referenciaprimerversitdo.jpg", images: ["vestiodaudifonos.jpg", "vestiodaudifonos2.jpg", "vestiodaudifonos.jpg"], color: "Marfil", stockName: "VESTIDO MIDI COMBINADO DRAPEADO" },
+  { id: "vestido-midi", name: "Vestido midi combinado drapeado", category: "mujer", price: 45990, image: "vestiodaudifonos.jpg", thumbImage: "referenciaprimervesitdo.jpg", images: ["vestiodaudifonos.jpg", "vestiodaudifonos2.jpg", "vestiodaudifonos.jpg"], color: "Marfil", stockName: "VESTIDO MIDI COMBINADO DRAPEADO" },
   { id: "vestido-satinado", name: "Vestido largo satinado", category: "mujer", price: 69990, image: "vestidoestampado3.jpg", thumbImage: "referenciavestidoestampado.jpg", images: ["vestidoestampado3.jpg", "vestidoestampado.jpg", "vestidoestampado2.jpg"], color: "Estampado", sku: "SKU-009", stockName: "VESTIDO LARGO SATINADO", catalogSku: "SKU-013" },
   { id: "camisa-lino", name: "Camisa oversized lino", category: "mujer", price: 29990, image: "camisapuntos.jpg", thumbImage: "referenciacamisapuntos.jpg", images: ["camisapuntos.jpg", "camisapuntos2.jpg", "camisapuntos3.jpg"], color: "Azul", sku: "SKU-010", stockName: "CAMISA OVERSIZED LINO", catalogName: "CAMISA ENTALLADA FRUNCES" },
   { id: "blusa-bordada", name: "Blusa cuello bobo bordado", category: "mujer", price: 32990, image: "camisanudoderecha.jpg", thumbImage: "referenciacamisanudo.jpg", images: ["camisanudoderecha.jpg", "camisanudo1.jpg", "camisanudoizquierda.jpg"], color: "Blanco", sku: "SKU-011", stockName: "BLUSA CUELLO BOBO BORDADO", catalogSku: "SKU-015", catalogName: "CAMISA NUDOS" },
@@ -21,7 +21,7 @@ const initialProducts = [
   { id: "guantes", name: "Guantes efecto piel punto", category: "accesorios", price: 23990, image: "guantespuestos.jpg", thumbImage: "referenciaguantes.jpg", images: ["guantespuestos.jpg", "guantes.jpg"], color: "Negro", stockName: "GUANTES EFECTO PIEL PUNTO" },
   { id: "perfume", name: "Brûlante Violette Parfum 100ml", category: "accesorios", price: 45990, image: "perfume.jpg", thumbImage: "perfume.jpg", images: ["perfume.jpg"], color: "Violette", stockName: "BRÛLANTE VIOLETTE PARFUM 100ML" },
   { id: "top-estructurado", name: "Top estructurado blanco", category: "mujer", price: 29990, image: "topbodies.jpg", thumbImage: "referenciatopnegro.jpg", catalogImages: ["topbodies.jpg", "topbodies3.jpg"], images: ["topbodies.jpg", "topbodies3.jpg", "topboides2.jpg"], color: "Blanco", sku: "SKU-012", stockName: "TOP ESTRUCTURADO BLANCO", catalogSku: "SKU-016", catalogName: "TOP ALAMARES MANGA CORTA" },
-  { id: "polera-cotton-graphic", name: "Polera cotton graphic", category: "mujer", price: 25990, image: "Polera1.jpg", thumbImage: "referenciacamisetablanca.jpg", catalogImages: ["Polera2.jpg", "Polera1.jpg"], sourceImage: "04424819250-p.jpg", images: ["Polera1.jpg", "Polera2.jpg", "Polera3.jpg"], color: "Blanco", sku: "SKU-013", stockName: "POLERA COTTON GRAPHIC", catalogSku: "SKU-017", catalogName: "CAMISETA CUELLO REDONDO", catalogPrice: 14990 },
+  { id: "polera-cotton-graphic", name: "Polera cotton graphic", category: "mujer", price: 25990, image: "Polera1.jpg", thumbImage: "referenciacamisetablanca.jpg", catalogImages: ["Polera2.jpg", "Polera1.jpg"], sourceImage: "Polera1.jpg", images: ["Polera1.jpg", "Polera2.jpg", "Polera4.webp"], color: "Blanco", sku: "SKU-013", stockName: "POLERA COTTON GRAPHIC", catalogSku: "SKU-017", catalogName: "CAMISETA CUELLO REDONDO", catalogPrice: 14990 },
   { id: "chaqueta-oversized-women", name: "Chaqueta oversized structural", category: "mujer", price: 89990, image: "04391810800-a1.jpg", thumbImage: "referenciachaquetanegra.jpg", images: ["04391810800-a1.jpg", "04391810800-p.jpg"], color: "Negro", sku: "SKU-014", stockName: "CHAQUETA OVERSIZED STRUCTURAL", catalogSku: "SKU-018" },
   { id: "jeans-high-waist", name: "Jeans high waist straight", category: "mujer", price: 54990, image: "02569210400-p.jpg", thumbImage: "referenciapantalon.jpg", images: ["02569210400-p.jpg", "02569210400-a1.jpg", "02569210400-a5.jpg"], color: "Denim", sku: "SKU-015", stockName: "JEANS HIGH WAIST STRAIGHT", sizeType: "pants", catalogSku: "SKU-019" },
   { id: "mocasines-minimal", name: "Mocasines de cuero minimal", category: "mujer", price: 65990, image: "13595610709-p.jpg", thumbImage: "referenciazapato.jpg", images: ["13595610709-p.jpg"], color: "Negro", sku: "SKU-016", stockName: "MOCASINES DE CUERO MINIMAL", sizeType: "shoes", catalogSku: "SKU-020" },
@@ -31,32 +31,33 @@ const initialProducts = [
   { id: "mocasines-derby", name: "Mocasines de cuero Derby", category: "hombre", price: 75990, image: "ZapatosH1.webp", thumbImage: "ZapatosH2.webp", images: ["ZapatosH1.webp", "ZapatosH3L.webp"], color: "Negro", sku: "SKU-007", stockName: "MOCASINES DE CUERO DERBY", sizeType: "shoes" },
   { id: "zapatillas-kids", name: "Zapatillas urbanas kids", category: "ninos", price: 34990, image: "ZapatillaNino1.jpg", thumbImage: "ZapatillaNino4.jpg", catalogImages: ["ZapatillaNino1.jpg"], images: ["ZapatillaNino2.jpg", "ZapatillaNino3.jpg"], color: "Negro", sku: "SKU-020", stockName: "ZAPATILLAS URBANAS KIDS", sizeType: "kidsShoes" },
   { id: "vestido-boho", name: "Vestido boho chic borlas", category: "mujer", price: 79990, image: "vestidojaponm.jpg", images: ["vestidojaponm.jpg", "mcpeter-5FdfBNJXo3k-unsplash.jpg"], color: "Estampado", sku: "SKU-008", stockName: "VESTIDO BOHO CHIC BORLAS" },
-  { id: "camisa-lino-essential", name: "Camisa lino essential", category: "hombre", price: 42990, image: "CamisaB1.webp", sourceImage: "CamisaHombre1.webp", images: ["CamisaB1.webp"], color: "Blanco", catalogSku: "SKU-009" },
-  { id: "polera-basica-heavyweight", name: "Polera básica heavyweight", category: "hombre", price: 29990, image: "Polera1.webp", sourceImage: "PoleraNegra1.jpg", images: ["Polera1.webp"], color: "Negro", catalogSku: "SKU-001" },
-  { id: "polera-oversized-graphic", name: "Polera oversized graphic", category: "hombre", price: 32990, image: "Polera2.webp", sourceImage: "PoleraBlanca1.jpg", images: ["Polera2.webp"], color: "Blanco", catalogSku: "SKU-002" },
-  { id: "pantalon-cargo-tailored", name: "Pantalón cargo tailored", category: "hombre", price: 59990, image: "Pantalon5.jpg", sourceImage: "CargoHombre1.webp", images: ["Pantalon5.jpg", "Pantalon6.jpg"], color: "Camel", catalogSku: "SKU-003", sizeType: "pants" },
-  { id: "pantalon-chino-straight", name: "Pantalón chino straight", category: "hombre", price: 49990, image: "Pantalon1.jpg", sourceImage: "PantalonLino1.webp", images: ["Pantalon1.jpg", "Pantalon2.jpg"], color: "Camel", catalogSku: "SKU-004", sizeType: "pants" },
-  { id: "chaqueta-denim-vintage", name: "Chaqueta denim vintage wash", category: "hombre", price: 79990, image: "Chaqueta1.jpg", sourceImage: "ChaquetaHombre1.webp", images: ["Chaqueta1.jpg", "Chaqueta2.jpg"], color: "Denim", catalogSku: "SKU-005" },
-  { id: "bomber-jacket", name: "Bomber jacket minimal", category: "hombre", price: 89990, image: "Chaqueta2.jpg", sourceImage: "ChaquetaCuero1.webp", images: ["Chaqueta2.jpg", "Chaqueta3.jpg"], color: "Negro", catalogSku: "SKU-006" },
-  { id: "hoodie-heavy-cotton", name: "Polerón hoodie heavy cotton", category: "hombre", price: 45990, image: "AbrigoH1.jpg", sourceImage: "PoleronGris1.webp", images: ["AbrigoH1.jpg", "AbrigoH2.jpg"], color: "Gris", catalogSku: "SKU-007" },
-  { id: "crewneck-essential", name: "Polerón crewneck essential", category: "hombre", price: 39990, image: "Polera1.webp", sourceImage: "PoleronNegro1.jpg", images: ["Polera1.webp", "Polera2.webp"], color: "Negro", catalogSku: "SKU-008" },
-  { id: "zapatillas-leather-urban", name: "Zapatillas leather urban", category: "hombre", price: 69990, image: "ZapatosH1.webp", sourceImage: "ZapatoHombre1.jpg", images: ["ZapatosH1.webp", "ZapatosH3L.webp"], color: "Negro", catalogSku: "SKU-010", sizeType: "shoes" },
-  { id: "botas-leather-chelsea", name: "Botas leather Chelsea", category: "hombre", price: 89990, image: "ZapatosH3L.webp", sourceImage: "BotaHombre1.jpg", images: ["ZapatosH3L.webp", "ZapatosH4.png"], color: "Negro", catalogSku: "SKU-011", sizeType: "shoes" },
+  { id: "camisa-lino-essential", name: "Camisa lino essential", category: "hombre", price: 42990, image: "CamisaB1.webp", sourceImage: "camisa1.jpg", images: ["CamisaB1.webp"], color: "Blanco", catalogSku: "SKU-009" },
+  { id: "polera-basica-heavyweight", name: "Polera básica heavyweight", category: "hombre", price: 29990, image: "Polera1.webp", sourceImage: "Polera1.webp", images: ["Polera1.webp"], color: "Negro", catalogSku: "SKU-001" },
+  { id: "polera-oversized-graphic", name: "Polera oversized graphic", category: "hombre", price: 32990, image: "Polera2.webp", sourceImage: "Polera2.webp", images: ["Polera2.webp"], color: "Blanco", catalogSku: "SKU-002" },
+  { id: "pantalon-cargo-tailored", name: "Pantalón cargo tailored", category: "hombre", price: 59990, image: "Pantalon5.jpg", sourceImage: "Pantalon5.jpg", images: ["Pantalon5.jpg", "Pantalon6.jpg"], color: "Camel", catalogSku: "SKU-003", sizeType: "pants" },
+  { id: "pantalon-chino-straight", name: "Pantalón chino straight", category: "hombre", price: 49990, image: "Pantalon1.jpg", sourceImage: "Pantalon1.jpg", images: ["Pantalon1.jpg", "Pantalon2.jpg"], color: "Camel", catalogSku: "SKU-004", sizeType: "pants" },
+  { id: "chaqueta-denim-vintage", name: "Chaqueta denim vintage wash", category: "hombre", price: 79990, image: "Chaqueta1.jpg", sourceImage: "Chaqueta1.jpg", images: ["Chaqueta1.jpg", "Chaqueta2.jpg"], color: "Denim", catalogSku: "SKU-005" },
+  { id: "bomber-jacket", name: "Bomber jacket minimal", category: "hombre", price: 89990, image: "Chaqueta2.jpg", sourceImage: "Chaqueta2.jpg", images: ["Chaqueta2.jpg", "Chaqueta3.jpg"], color: "Negro", catalogSku: "SKU-006" },
+  { id: "hoodie-heavy-cotton", name: "Polerón hoodie heavy cotton", category: "hombre", price: 45990, image: "AbrigoH1.jpg", sourceImage: "AbrigoH1.jpg", images: ["AbrigoH1.jpg", "AbrigoH2.jpg"], color: "Gris", catalogSku: "SKU-007" },
+  { id: "crewneck-essential", name: "Polerón crewneck essential", category: "hombre", price: 39990, image: "Polera1.webp", sourceImage: "Polera1.webp", images: ["Polera1.webp", "Polera2.webp"], color: "Negro", catalogSku: "SKU-008" },
+  { id: "zapatillas-leather-urban", name: "Zapatillas leather urban", category: "hombre", price: 69990, image: "ZapatosH1.webp", sourceImage: "ZapatosH1.webp", images: ["ZapatosH1.webp", "ZapatosH3L.webp"], color: "Negro", catalogSku: "SKU-010", sizeType: "shoes" },
+  { id: "botas-leather-chelsea", name: "Botas leather Chelsea", category: "hombre", price: 89990, image: "ZapatosH3L.webp", sourceImage: "ZapatosH3L.webp", images: ["ZapatosH3L.webp", "ZapatosH4.png"], color: "Negro", catalogSku: "SKU-011", sizeType: "shoes" },
   { id: "camisa-lino-essential-mujer", name: "Camisa oversized lino essential", category: "mujer", price: 49990, image: "amin-naderloei-Mg2chTCMzhk-unsplash.jpg", images: ["amin-naderloei-Mg2chTCMzhk-unsplash.jpg", "amin-naderloei-aLHw5V2HTUo-unsplash.jpg", "amin-naderloei-hoczaAFmSf4-unsplash.jpg"], color: "Natural", catalogSku: "SKU-014" },
-  { id: "bolso-cuero-minimalist", name: "Bolso de cuero minimalist", category: "accesorios", price: 89990, image: "bolsoverded.jpg", sourceImage: "Bolso1.jpg", images: ["bolsoverded.jpg"], color: "Negro", catalogSku: "SKU-025" },
-  { id: "collar-plated-gold", name: "Collar plated gold", category: "accesorios", price: 24990, image: "collares.jpg", sourceImage: "Collar1.jpg", images: ["collares.jpg", "collares2.jpg"], color: "Oro", catalogSku: "SKU-026" },
-  { id: "gafas-retro-black", name: "Gafas de sol retro black", category: "accesorios", price: 32990, image: "trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg", sourceImage: "Gafas1.jpg", images: ["trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg"], color: "Negro", catalogSku: "SKU-027" },
-  { id: "bucket-hat-cotton", name: "Bucket hat cotton", category: "accesorios", price: 18990, image: "guantes.jpg", sourceImage: "Gorro1.jpg", images: ["guantes.jpg"], color: "Negro", catalogSku: "SKU-028" },
+  { id: "bolso-cuero-minimalist", name: "Bolso de cuero minimalist", category: "accesorios", price: 89990, image: "bolsoverded.jpg", sourceImage: "bolsoverded.jpg", images: ["bolsoverded.jpg"], color: "Negro", catalogSku: "SKU-025" },
+  { id: "collar-plated-gold", name: "Collar plated gold", category: "accesorios", price: 24990, image: "collares.jpg", sourceImage: "collares.jpg", images: ["collares.jpg", "collares2.jpg"], color: "Oro", catalogSku: "SKU-026" },
+  { id: "gafas-retro-black", name: "Gafas de sol retro black", category: "accesorios", price: 32990, image: "trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg", sourceImage: "trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg", images: ["trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg"], color: "Negro", catalogSku: "SKU-027" },
+  { id: "bucket-hat-cotton", name: "Bucket hat cotton", category: "accesorios", price: 18990, image: "guantes.jpg", sourceImage: "guantes.jpg", images: ["guantes.jpg"], color: "Negro", catalogSku: "SKU-028" },
 ];
 
 const storagePrefix = "sake-d-binks";
 const collectionNames = ["productos", "categorias", "ordenes", "usuarios"];
 const initialCollections = {
-  productos: initialProducts.map((product) => ({ ...product, stock: 10, estado: "Activo" })),
+  productos: initialProducts.map((product) => ({ ...product, estado: "Activo" })),
   categorias: initialCategories,
   ordenes: [],
   usuarios: [],
 };
+const perSizeStockProductIds = new Set(initialProducts.map((product) => product.id));
 const listeners = new Set();
 let dataVersion = 0;
 
@@ -275,18 +276,40 @@ export function getProductStockCode(product) {
   return product.sku ?? product.catalogSku ?? generateSku(product.stockName ?? product.name);
 }
 
-export function getProductSizeStock(product, size) {
-  if (Number.isInteger(Number(product.stock)) && product.stock !== undefined) return Number(product.stock);
-  const key = `sake_stock_${getProductStockCode(product)}_${encodeURIComponent(size)}`;
-  const savedStock = localStorage.getItem(key);
-  if (savedStock !== null && Number.isInteger(Number(savedStock))) return Number(savedStock);
+export function usesPerSizeStock(product) {
+  return perSizeStockProductIds.has(product.id);
+}
 
-  const stockKey = `${getProductStockCode(product)}-${size}`;
-  let hash = 0;
-  for (let index = 0; index < stockKey.length; index += 1) {
-    hash = (hash * 31 + stockKey.charCodeAt(index)) % 15;
+export function getProductSizeStockKey(product, size, color = product.color) {
+  const stockCode = getProductStockCode(product);
+  const colorKey = color && color !== product.color ? `_${encodeURIComponent(color)}` : "";
+  return `sake_stock_${stockCode}${colorKey}_${encodeURIComponent(size)}`;
+}
+
+export function getProductSizeStock(product, size, color = product.color) {
+  const stockCode = getProductStockCode(product);
+  if (!usesPerSizeStock(product) && Number.isInteger(Number(product.stock)) && product.stock !== undefined) {
+    return Number(product.stock);
   }
-  const initialStock = hash + 1;
+
+  const key = getProductSizeStockKey(product, size, color);
+  const savedStock = localStorage.getItem(key);
+  if (savedStock !== null && Number.isInteger(Number(savedStock))) {
+    const stock = Number(savedStock);
+    if (!usesPerSizeStock(product) || stock <= 15) return stock;
+    localStorage.setItem(key, "15");
+    return 15;
+  }
+
+  let hash = 0;
+  for (let index = 0; index < stockCode.length; index += 1) {
+    hash = (hash * 31 + stockCode.charCodeAt(index)) % 15;
+  }
+  const sizeIndex = getProductSizes(product).indexOf(String(size));
+  const colorIndex = color === product.color
+    ? 0
+    : (product.colorOptions ?? []).findIndex((option) => option.name === color) + 1;
+  const initialStock = ((hash + Math.max(0, sizeIndex) * 7 + Math.max(0, colorIndex) * 5) % 15) + 1;
   localStorage.setItem(key, String(initialStock));
   return initialStock;
 }
