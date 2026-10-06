@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { formatPrice, imageUrl, products } from "../data/storefrontData.js";
+import { formatPrice, imageUrl, products, useStoreData } from "../data/storefrontData.js";
 
 export default function OffersPage() {
+  useStoreData();
   const offers = products.filter((product) => ["vestido-midi", "camisa-negra", "polera-kids", "collares"].includes(product.id));
 
   return (

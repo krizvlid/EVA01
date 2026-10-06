@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { createRecord, listRecords } from "../data/mockStore.js";
 
 export default function RegisterPage() {
   const [message, setMessage] = useState("");
@@ -45,6 +45,9 @@ export default function RegisterPage() {
         result = { mensaje: body };
       }
       if (!response.ok) throw new Error(result.mensaje || `Error del servidor (${response.status}).`);
+      if (!listRecords("usuarios").some((user) => user.email === email)) {
+        createRecord("usuarios", { nombre: name, email, direccion: address, rol: "cliente", estado: "Activo" });
+      }
       setMessage(result.mensaje || "Cuenta creada correctamente.");
       formElement.reset();
     } catch (requestError) {
@@ -58,21 +61,20 @@ export default function RegisterPage() {
   return (
     <section className="page-shell">
       <div className="register-layout">
-        <header className="store-intro">
+        <header className="intro">
           <span className="eyebrow">Tu cuenta</span>
           <h1>Hazlo tuyo.</h1>
           <p className="lead">Regístrate para guardar tus datos y seguir de cerca tus próximas compras.</p>
-          <p className="register-login">¿Ya tienes cuenta? <Link to="/tienda/login">Inicia sesión</Link></p>
         </header>
         <form className="form-panel" onSubmit={handleSubmit}>
-          <label className="form-field"><span>Nombre completo</span><input name="nombre" autoComplete="name" required /></label>
-          <label className="form-field"><span>RUT</span><input name="rut" maxLength="10" placeholder="12345678-9" required /></label>
-          <label className="form-field"><span>Correo electrónico</span><input name="email" type="email" maxLength="100" autoComplete="email" required /></label>
-          <label className="form-field"><span>Dirección</span><input name="direccion" maxLength="200" autoComplete="street-address" required /></label>
-          <label className="form-field"><span>Contraseña</span><input name="password" type="password" minLength="4" maxLength="10" autoComplete="new-password" required /></label>
-          <label className="form-field"><span>Confirmación de contraseña</span><input name="confirm" type="password" autoComplete="new-password" required /></label>
+          <div className="form-group"><label htmlFor="register-name">Nombre completo</label><input id="register-name" name="nombre" autoComplete="name" required /></div>
+          <div className="form-group"><label htmlFor="register-run">RUT</label><input id="register-run" name="rut" maxLength="10" placeholder="ej: 12345678-9" required /></div>
+          <div className="form-group"><label htmlFor="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" maxLength="100" autoComplete="email" required /></div>
+          <div className="form-group"><label htmlFor="register-address">Dirección</label><input id="register-address" name="direccion" maxLength="200" autoComplete="street-address" required /></div>
+          <div className="form-group"><label htmlFor="register-password">Contraseña</label><input id="register-password" name="password" type="password" minLength="4" maxLength="10" autoComplete="new-password" required /></div>
+          <div className="form-group"><label htmlFor="register-confirm">Confirmación de contraseña</label><input id="register-confirm" name="confirm" type="password" autoComplete="new-password" required /></div>
           {message && <p className={error ? "form-error" : "form-success"} role={error ? "alert" : "status"}>{message}</p>}
-          <button className="store-button" type="submit" disabled={busy}>{busy ? "Creando cuenta..." : "Crear cuenta"}</button>
+          <button className="btn-submit" type="submit" disabled={busy}>{busy ? "Creando cuenta..." : "Crear cuenta"}</button>
         </form>
       </div>
     </section>

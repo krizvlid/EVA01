@@ -1,7 +1,8 @@
 import CategoryCard from "../components/storefront/CategoryCard.jsx";
-import { categories } from "../data/storefrontData.js";
+import { categories, useStoreData } from "../data/storefrontData.js";
 
 export default function CategoriesPage() {
+  useStoreData();
   return (
     <section className="page-shell">
       <header className="store-intro">

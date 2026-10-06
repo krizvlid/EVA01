@@ -16,6 +16,39 @@ export default function LoginPage() {
     const password = String(form.get("password"));
 
     try {
+      if (email.toLowerCase() === "admin" && password === "123") {
+        const user = {
+          id: "admin-demo",
+          correo: "admin@sake.cl",
+          email: "admin@sake.cl",
+          nombre: "Admin",
+          rol: "admin",
+          logueado: true,
+        };
+        localStorage.setItem("sake_sesion", JSON.stringify(user));
+        localStorage.setItem("usuario_actual", JSON.stringify(user));
+        localStorage.setItem("usuarioCorreo", user.email);
+        navigate("/admin", { replace: true });
+        return;
+      }
+
+      if (email.toLowerCase() === "usuario 1" && password === "123") {
+        const user = {
+          id: "usuario-demo-1",
+          correo: "usuario1@sake.cl",
+          email: "usuario1@sake.cl",
+          nombre: "Usuario 1",
+          rol: "cliente",
+          logueado: true,
+        };
+        localStorage.setItem("sake_sesion", JSON.stringify(user));
+        localStorage.setItem("usuario_actual", JSON.stringify(user));
+        localStorage.setItem("usuarioCorreo", user.email);
+        const returnTo = location.state?.from === "/tienda/checkout" ? location.state.from : "/";
+        navigate(returnTo, { replace: true });
+        return;
+      }
+
       const response = await fetch("http://localhost:8081/api/usuarios/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,12 +72,17 @@ export default function LoginPage() {
         direccion: result.direccion || "",
         region: result.region || "",
         comuna: result.comuna || "",
+        rol: result.rol || result.role || "cliente",
         logueado: true,
       };
       localStorage.setItem("sake_sesion", JSON.stringify(user));
       localStorage.setItem("usuario_actual", JSON.stringify(user));
       localStorage.setItem("usuarioCorreo", user.email);
-      const returnTo = location.state?.from === "/tienda/checkout" ? location.state.from : "/";
+      const returnTo = location.state?.from === "/tienda/checkout"
+        ? location.state.from
+        : ["admin", "administrador"].includes(String(user.rol).toLowerCase())
+          ? "/admin"
+          : "/";
       navigate(returnTo, { replace: true });
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "No se pudo iniciar sesión.");
@@ -55,16 +93,15 @@ export default function LoginPage() {
 
   return (
     <section className="auth-page">
-      <div className="auth-card">
-        <span className="eyebrow">Tu cuenta</span>
-        <h1>Iniciar sesión</h1>
-        <form onSubmit={handleSubmit}>
-          <label className="form-field"><span>Correo electrónico</span><input name="email" type="email" placeholder="ejemplo@duoc.cl" autoComplete="email" required /></label>
-          <label className="form-field"><span>Contraseña</span><input name="password" type="password" minLength="4" maxLength="10" autoComplete="current-password" required /></label>
+      <div className="login-card">
+        <h2>Sake D. Binks</h2>
+        <form id="form-login" onSubmit={handleSubmit}>
+          <div className="form-group"><label htmlFor="login-email">Usuario o correo electrónico</label><input id="login-email" name="email" type="text" placeholder="admin o ejemplo@duoc.cl" autoComplete="username" required /></div>
+          <div className="form-group"><label htmlFor="login-password">Contraseña</label><input id="login-password" name="password" type="password" minLength="3" maxLength="10" placeholder="Ingresa tu contraseña" autoComplete="current-password" required /></div>
           {error && <p className="form-error" role="alert">{error}</p>}
-          <button className="store-button" type="submit" disabled={busy}>{busy ? "Ingresando..." : "Ingresar"}</button>
+          <button type="submit" disabled={busy}>{busy ? "Ingresando..." : "Ingresar"}</button>
         </form>
-        <p className="auth-card__links"><Link to="/tienda/registro">Crear una cuenta</Link><Link to="/">Volver a la tienda</Link></p>
+        <p className="login-links"><Link to="/tienda/registro">Crear una cuenta</Link> | <Link to="/">Volver a la tienda</Link></p>
       </div>
     </section>
   );

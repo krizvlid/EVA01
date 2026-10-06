@@ -16,7 +16,7 @@ export default function BlogDetailPage() {
         <h1>{article.title}</h1>
         <img src={imageUrl(article.image)} alt={article.title} />
         <div className="article-body">{article.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
-        <Link className="store-text-link" to="/tienda/blogs">Volver a los blogs</Link>
+        <Link className="text-link" to="/tienda/blogs">Volver a los Blogs</Link>
       </article>
     </section>
   );

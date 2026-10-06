@@ -11,3 +11,4 @@ Reglas: componentes pequeños (Single Responsibility), comentarios claros, no in
 Mínimo 10 pruebas unitarias con mocks y reporte de cobertura.
 Debo poder explicar todo en una presentación oral individual: explica brevemente lo que hagas.
 Mantener la identidad visual de la versión vanilla (colores, tipografía, imágenes).
+REGLA DE FIDELIDAD: la versión vanilla es la fuente de verdad visual. Portar su HTML y CSS casi literal a JSX (mismas clases, estructura, textos, iconos y orden de elementos). No rediseñar ni "mejorar" nada. Solo se agregan elementos nuevos cuando la EP2 los exige (nuevas vistas y links de navbar).

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../components/cart/CartContext.jsx";
 import { reduceCartStock, validateCartStock } from "../components/cart/CartContext.jsx";
 import { formatPrice, imageUrl } from "../data/storefrontData.js";
+import { createRecord } from "../data/mockStore.js";
 
 const regions = [
   "Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "Valparaíso",
@@ -33,6 +34,18 @@ function readSavedAddress(key) {
 
 function saveOrder(order) {
   localStorage.setItem("sake_ultima_orden", JSON.stringify(order));
+  createRecord("ordenes", {
+    id: order.numero,
+    numero: order.numero,
+    nombre: order.nombre,
+    correo: order.correo,
+    direccion: order.direccion,
+    estado: order.estado,
+    total: order.total,
+    items: order.items,
+    tarjetaUltimos4: order.tarjetaUltimos4,
+    creadoEn: new Date().toISOString(),
+  });
 }
 
 export default function CheckoutPage() {
@@ -160,7 +173,7 @@ export default function CheckoutPage() {
         </div>
       ) : (
         <div className="checkout-layout">
-          <form className="checkout-panel form-panel" onSubmit={handleSubmit}>
+          <form className="checkout-panel" onSubmit={handleSubmit}>
             {session?.logueado && <p className="saved-data">Datos completados desde tu sesión. Puedes actualizarlos para este pedido.</p>}
             <label className="form-field"><span>Nombre completo</span><input name="nombre" autoComplete="name" defaultValue={session?.nombre || ""} required /></label>
             <label className="form-field"><span>Correo electrónico</span><input name="correo" type="email" autoComplete="email" defaultValue={session?.correo || session?.email || ""} required /></label>

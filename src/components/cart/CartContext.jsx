@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { getProductSizeStock, getProductStockCode, products } from "../../data/storefrontData.js";
+import { getProductSizeStock, getProductStockCode, products, updateRecord, useStoreData } from "../../data/storefrontData.js";
 
 const CartContext = createContext(null);
-const productById = new Map(products.map((product) => [product.id, product]));
+const getProductById = (id) => products.find((product) => product.id === id);
 
 function readCart() {
   const savedCart = localStorage.getItem("cart");
@@ -12,15 +12,16 @@ function readCart() {
   if (!Array.isArray(parsedCart)) throw new TypeError("Los datos guardados del carrito no son una lista.");
 
   return parsedCart.map((item) => {
-    const product = productById.get(item.id);
+    const product = getProductById(item.id);
     return {
       ...item,
       code: product ? getProductStockCode(product) : item.code ?? item.codigo ?? item.id,
       name: item.name ?? item.nombre ?? product?.name ?? "Producto",
       price: product?.price ?? Number(String(item.price ?? item.precio ?? 0).replace(/[^0-9]/g, "")),
-      image: item.image ?? item.imagen ?? item.img ?? "",
+      image: product?.thumbImage ?? item.image ?? item.imagen ?? item.img ?? "",
       quantity: Number(item.quantity) || 1,
       size: item.size ?? "Única",
+      stock: product ? getProductSizeStock(product, item.size ?? "Única") : Number(item.stock),
     };
   });
 }
@@ -30,6 +31,7 @@ function stockKey(item) {
 }
 
 export function CartProvider({ children }) {
+  useStoreData();
   const [cart, setCart] = useState(() => {
     try {
       return readCart();
@@ -82,7 +84,7 @@ export function CartProvider({ children }) {
     const requested = Number(quantity);
     const item = cart.find((entry) => entry.id === id && entry.size === size);
     if (!item) throw new Error("El producto ya no está en el carrito.");
-    const product = productById.get(id);
+    const product = getProductById(id);
     const available = product ? getProductSizeStock(product, size) : Number(item.stock);
     if (!Number.isInteger(requested) || requested < 1 || requested > available) {
       throw new RangeError(`La cantidad debe estar entre 1 y ${available} para la talla ${size}.`);
@@ -137,11 +139,12 @@ export function validateCartStock(items) {
   const stockByKey = new Map();
 
   for (const item of items) {
-    const product = productById.get(item.id);
+    const product = getProductById(item.id);
     if (!product) throw new Error(`No se encontró el producto "${item.name}".`);
-    const key = stockKey(item);
+    const managedStock = product.stock !== undefined;
+    const key = managedStock ? `product:${product.id}` : stockKey(item);
     quantitiesByStockKey.set(key, (quantitiesByStockKey.get(key) ?? 0) + item.quantity);
-    stockByKey.set(key, getProductSizeStock(product, item.size));
+    stockByKey.set(key, managedStock ? Number(product.stock) : getProductSizeStock(product, item.size));
   }
 
   for (const [key, quantity] of quantitiesByStockKey) {
@@ -153,10 +156,20 @@ export function validateCartStock(items) {
 }
 
 export function reduceCartStock(items) {
+  const quantitiesByProduct = new Map();
   const quantitiesByStockKey = new Map();
   for (const item of items) {
+    if (getProductById(item.id)?.stock !== undefined) {
+      quantitiesByProduct.set(item.id, (quantitiesByProduct.get(item.id) ?? 0) + item.quantity);
+      continue;
+    }
     const key = stockKey(item);
     quantitiesByStockKey.set(key, (quantitiesByStockKey.get(key) ?? 0) + item.quantity);
+  }
+
+  for (const [id, quantity] of quantitiesByProduct) {
+    const product = getProductById(id);
+    if (product) updateRecord("productos", id, { stock: Math.max(0, Number(product.stock) - quantity) });
   }
 
   for (const [key, quantity] of quantitiesByStockKey) {

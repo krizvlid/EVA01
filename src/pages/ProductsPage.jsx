@@ -1,8 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/storefront/ProductCard.jsx";
-import { categories, products } from "../data/storefrontData.js";
+import { categories, products, useStoreData } from "../data/storefrontData.js";
 
 export default function ProductsPage() {
+  useStoreData();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get("categoria") ?? "todas";
   const visibleProducts = activeCategory === "todas"
