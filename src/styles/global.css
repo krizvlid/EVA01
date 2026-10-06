@@ -1,0 +1,32 @@
+body {
+  min-width: 320px;
+  background: #f8f7f5;
+  color: #181818;
+}
+
+.store-brand {
+  letter-spacing: 0.16em;
+  font-size: 0.95rem;
+}
+
+.navbar .nav-link {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+}
+
+.navbar .nav-link.active {
+  color: #fff;
+}
+
+.store-home {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(115deg, #e8e3dc, #f8f7f5 65%);
+}
+
+.tracking-wide {
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+}
