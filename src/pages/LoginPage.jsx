@@ -32,12 +32,12 @@ export default function LoginPage() {
         return;
       }
 
-      if (email.toLowerCase() === "usuario 1" && password === "123") {
+      if (email.toLowerCase() === "cliente" && password === "123") {
         const user = {
           id: "usuario-demo-1",
           correo: "usuario1@sake.cl",
           email: "usuario1@sake.cl",
-          nombre: "Usuario 1",
+          nombre: "Cliente",
           rol: "cliente",
           logueado: true,
         };

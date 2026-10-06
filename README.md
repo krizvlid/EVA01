@@ -51,4 +51,4 @@ instaladas localmente; no contienen el código fuente que se debe editar.
 ## Datos de demostración
 
 - Administrador: `admin` / `123`
-- Cliente: `usuario 1` / `123`
+- Cliente: `cliente` / `123`

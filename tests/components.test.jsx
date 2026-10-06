@@ -202,7 +202,7 @@ describe("componentes React de la tienda", () => {
       </Routes>,
       "/login",
     ));
-    setFieldValue(container.querySelector("#login-email"), "usuario 1");
+    setFieldValue(container.querySelector("#login-email"), "cliente");
     setFieldValue(container.querySelector("#login-password"), "123");
 
     await submit(container.querySelector("form"));

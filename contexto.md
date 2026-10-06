@@ -1,7 +1,7 @@
 # Proyecto: SAKE D. BINKS (tienda de moda) - migración a React (EP2 DSY1104)
 Stack: Vite + React 18 + React Router + Bootstrap 5. Tests: Karma + Jasmine (ChromeHeadless, karma-coverage).
 Pruebas: `npm test` (una corrida con cobertura HTML/texto) y `npm run test:watch`.
-Accesos demo: administrador `admin` / `123`; cliente `usuario 1` / `123`.
+Accesos demo: administrador `admin` / `123`; cliente `cliente` / `123`.
 Origen: versión vanilla (HTML/CSS/JS) en este mismo repo: Inicio.html, css/, js/, Imagenes/.
 Backend ya hecho (REST/JSON):
 - ms-usuarios :8081 -> POST /api/usuarios/registro, POST /api/usuarios/login, GET /api/usuarios/{id}
