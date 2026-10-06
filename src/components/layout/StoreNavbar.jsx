@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-
-function getCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  return cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
-}
+import { useCart } from "../cart/CartContext.jsx";
 
 const links = [
   { to: "/tienda/productos", label: "Productos" },
@@ -22,6 +18,7 @@ const links = [
 export default function StoreNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const { count } = useCart();
 
   return (
     <header className="store-header">
@@ -51,7 +48,7 @@ export default function StoreNavbar() {
           <NavLink to="/tienda/login" onClick={() => setMenuOpen(false)}>Iniciar sesión</NavLink>
           <NavLink to="/tienda/registro" onClick={() => setMenuOpen(false)}>Registro</NavLink>
           <NavLink to="/tienda/productos">Buscar</NavLink>
-          <NavLink to="/carrito">Cesta ({getCartCount()})</NavLink>
+          <NavLink to="/carrito">Cesta ({count})</NavLink>
         </nav>
       </div>
     </header>

@@ -12,6 +12,11 @@ import BlogsPage from "./pages/BlogsPage.jsx";
 import BlogDetailPage from "./pages/BlogDetailPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import PlaceholderPage from "./pages/PlaceholderPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage.jsx";
+import PaymentErrorPage from "./pages/PaymentErrorPage.jsx";
+import ProtectedRoute from "./components/cart/ProtectedRoute.jsx";
 
 export default function App() {
   return (
@@ -28,6 +33,12 @@ export default function App() {
         <Route path="tienda/blogs" element={<BlogsPage />} />
         <Route path="tienda/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="tienda/contacto" element={<ContactPage />} />
+        <Route path="carrito" element={<CartPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="tienda/checkout" element={<CheckoutPage />} />
+        </Route>
+        <Route path="tienda/pago-correcto" element={<PaymentSuccessPage />} />
+        <Route path="tienda/pago-error" element={<PaymentErrorPage />} />
         <Route path="*" element={<PlaceholderPage />} />
       </Route>
     </Routes>

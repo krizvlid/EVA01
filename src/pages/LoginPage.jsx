@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -36,12 +37,15 @@ export default function LoginPage() {
         email: result.email || email,
         nombre: result.nombre || "Cliente",
         direccion: result.direccion || "",
+        region: result.region || "",
+        comuna: result.comuna || "",
         logueado: true,
       };
       localStorage.setItem("sake_sesion", JSON.stringify(user));
       localStorage.setItem("usuario_actual", JSON.stringify(user));
       localStorage.setItem("usuarioCorreo", user.email);
-      navigate("/");
+      const returnTo = location.state?.from === "/tienda/checkout" ? location.state.from : "/";
+      navigate(returnTo, { replace: true });
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "No se pudo iniciar sesión.");
     } finally {

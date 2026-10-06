@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useCart } from "../components/cart/CartContext.jsx";
 import { formatPrice, getProductSizeStock, getProductSizes, imageUrl, products } from "../data/storefrontData.js";
 
 export default function ProductDetailPage() {
@@ -9,6 +10,7 @@ export default function ProductDetailPage() {
   const [selectedSize, setSelectedSize] = useState(sizes[0] ?? "");
   const [quantity, setQuantity] = useState(1);
   const [notice, setNotice] = useState("");
+  const { addItem } = useCart();
 
   if (!product) {
     return <section className="page-shell"><h1>Producto no encontrado</h1><Link className="store-text-link" to="/tienda/productos">Volver a productos</Link></section>;
@@ -17,34 +19,12 @@ export default function ProductDetailPage() {
   const stock = getProductSizeStock(product, selectedSize);
 
   function addToCart() {
-    if (!selectedSize || stock < 1 || quantity > stock) {
-      setNotice("La cantidad solicitada supera el stock disponible para esta talla.");
-      return;
+    try {
+      addItem(product, selectedSize, quantity);
+      setNotice("Producto añadido a la cesta.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "No se pudo añadir el producto.");
     }
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existing = cart.find((item) => item.id === product.id && item.size === selectedSize);
-    if (existing) {
-      if ((Number(existing.quantity) || 1) + quantity > stock) {
-        setNotice("La cantidad total supera el stock disponible para esta talla.");
-        return;
-      }
-      existing.quantity += quantity;
-      existing.stock = stock;
-    } else {
-      cart.push({
-        id: product.id,
-        code: product.sku ?? product.catalogSku ?? product.id,
-        name: product.name,
-        price: formatPrice(product.price),
-        image: imageUrl(product.image),
-        color: product.color,
-        size: selectedSize,
-        quantity,
-        stock,
-      });
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setNotice("Producto añadido a la cesta.");
   }
 
   return (

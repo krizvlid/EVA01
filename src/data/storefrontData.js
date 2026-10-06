@@ -102,13 +102,16 @@ function generateSku(name) {
   return `SKU-${String(hash + 100).padStart(3, "0")}`;
 }
 
+export function getProductStockCode(product) {
+  return product.sku ?? product.catalogSku ?? generateSku(product.stockName ?? product.name);
+}
+
 export function getProductSizeStock(product, size) {
-  const sku = product.sku ?? product.catalogSku ?? generateSku(product.stockName ?? product.name);
-  const key = `sake_stock_${sku}_${encodeURIComponent(size)}`;
+  const key = `sake_stock_${getProductStockCode(product)}_${encodeURIComponent(size)}`;
   const savedStock = localStorage.getItem(key);
   if (savedStock !== null && Number.isInteger(Number(savedStock))) return Number(savedStock);
 
-  const stockKey = `${sku}-${size}`;
+  const stockKey = `${getProductStockCode(product)}-${size}`;
   let hash = 0;
   for (let index = 0; index < stockKey.length; index += 1) {
     hash = (hash * 31 + stockKey.charCodeAt(index)) % 15;
