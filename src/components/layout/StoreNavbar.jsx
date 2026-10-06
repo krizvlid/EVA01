@@ -1,51 +1,59 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-const links = [
-  { to: "/productos", label: "Productos" },
-  { to: "/categorias", label: "Categorías" },
-  { to: "/ofertas", label: "Ofertas" },
-  { to: "/nosotros", label: "Nosotros" },
-  { to: "/blogs", label: "Blogs" },
-  { to: "/contacto", label: "Contacto" },
-];
-
-function navLinkClass({ isActive }) {
-  return `nav-link${isActive ? " active" : ""}`;
+function getCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  return cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
 }
 
+const links = [
+  { to: "/tienda/productos", label: "Productos" },
+  { to: "/tienda/categorias", label: "Categorías" },
+  { to: "/tienda/ofertas", label: "Ofertas" },
+  { to: "/tienda/productos?categoria=mujer", label: "Mujer" },
+  { to: "/tienda/productos?categoria=hombre", label: "Hombre" },
+  { to: "/tienda/productos?categoria=ninos", label: "Niños" },
+  { to: "/tienda/productos?categoria=accesorios", label: "Accesorios" },
+  { to: "/tienda/nosotros", label: "Nosotros" },
+  { to: "/tienda/blogs", label: "Blogs" },
+  { to: "/tienda/contacto", label: "Contacto" },
+];
+
 export default function StoreNavbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid px-lg-4">
-        <NavLink className="navbar-brand store-brand" to="/">
-          SAKE D. BINKS
-        </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#store-navbar"
-          aria-controls="store-navbar"
-          aria-expanded="false"
-          aria-label="Abrir menú"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="store-navbar">
-          <div className="navbar-nav me-auto">
-            {links.map(({ to, label }) => (
-              <NavLink className={navLinkClass} key={to} to={to}>
-                {label}
-              </NavLink>
-            ))}
-          </div>
-          <div className="navbar-nav">
-            <NavLink className={navLinkClass} to="/login">Iniciar sesión</NavLink>
-            <NavLink className={navLinkClass} to="/registro">Registro</NavLink>
-            <NavLink className={navLinkClass} to="/carrito">Cesta (0)</NavLink>
-          </div>
-        </div>
+    <header className="store-header">
+      <NavLink className="store-logo" to="/" onClick={() => setMenuOpen(false)}>SAKE D. BINKS</NavLink>
+      <button className="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+        <span /><span />
+      </button>
+      <div className={`store-header__content${menuOpen ? " is-open" : ""}`}>
+        <nav className="store-nav" aria-label="Navegación principal">
+          {links.map(({ to, label }) => (
+            <NavLink
+              className={({ isActive }) => {
+                const selectedCategory = new URLSearchParams(location.search).get("categoria");
+                const categoryLink = to.match(/\?categoria=(.+)$/)?.[1];
+                const selected = categoryLink ? selectedCategory === categoryLink : to !== "/tienda/productos" || !selectedCategory;
+                return `store-nav__link${isActive && selected ? " active" : ""}`;
+              }}
+              key={label}
+              to={to}
+              onClick={() => setMenuOpen(false)}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+        <nav className="store-account" aria-label="Cuenta">
+          <NavLink to="/tienda/login" onClick={() => setMenuOpen(false)}>Iniciar sesión</NavLink>
+          <NavLink to="/tienda/registro" onClick={() => setMenuOpen(false)}>Registro</NavLink>
+          <NavLink to="/tienda/productos">Buscar</NavLink>
+          <NavLink to="/carrito">Cesta ({getCartCount()})</NavLink>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
