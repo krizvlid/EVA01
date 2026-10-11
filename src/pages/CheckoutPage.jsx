@@ -12,6 +12,10 @@ const regions = [
   "Magallanes y de la Antártica Chilena",
 ];
 
+function formatCardNumber(value) {
+  return String(value).replace(/\D/g, "").slice(0, 16).match(/.{1,4}/g)?.join(" ") || "";
+}
+
 function readSession() {
   try {
     return JSON.parse(localStorage.getItem("sake_sesion") || "null");
@@ -62,6 +66,7 @@ export default function CheckoutPage() {
   const initialAddress = { ...sessionAddress, ...savedAddress };
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -69,9 +74,8 @@ export default function CheckoutPage() {
       setError("Agrega productos antes de confirmar el pedido.");
       return;
     }
-
     setError("");
-    setBusy(true);
+    setError("");
     const form = new FormData(event.currentTarget);
     const nombre = String(form.get("nombre") || "").trim();
     const correo = String(form.get("correo") || "").trim();
@@ -79,6 +83,11 @@ export default function CheckoutPage() {
     const region = String(form.get("region") || "").trim();
     const comuna = String(form.get("comuna") || "").trim();
     const tarjeta = String(form.get("tarjeta") || "").replace(/\D/g, "");
+    if (tarjeta.length !== 16) {
+      setError("Ingresa un número de tarjeta de 16 dígitos.");
+      return;
+    }
+    setBusy(true);
     const direccion = `${calle}, ${comuna}, ${region}`;
     const payload = {
       nombre,
@@ -185,7 +194,7 @@ export default function CheckoutPage() {
               </select>
             </label>
             <label className="form-field"><span>Comuna</span><input name="comuna" autoComplete="address-level2" defaultValue={initialAddress.comuna || ""} required /></label>
-            <label className="form-field"><span>Número de tarjeta</span><input name="tarjeta" inputMode="numeric" autoComplete="cc-number" minLength="12" maxLength="19" placeholder="1111 2222 3333 4444" required /></label>
+            <label className="form-field"><span>Número de tarjeta</span><input name="tarjeta" inputMode="numeric" autoComplete="cc-number" maxLength="19" placeholder="1111 2222 3333 4444" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} required /></label>
             <p className="saved-data">La tarjeta solo se envía para procesar el pago. Guardaremos únicamente sus últimos cuatro dígitos.</p>
             {error && <p className="form-error" role="alert">{error}</p>}
             <button className="store-button" type="submit" disabled={busy}>{busy ? "Procesando..." : "Confirmar pedido"}</button>

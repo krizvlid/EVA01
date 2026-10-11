@@ -370,7 +370,8 @@ describe("componentes React de la tienda", () => {
     setFieldValue(container.querySelector('[name="direccion"]'), "Calle 1");
     setFieldValue(container.querySelector('[name="region"]'), "Metropolitana de Santiago");
     setFieldValue(container.querySelector('[name="comuna"]'), "Santiago");
-    setFieldValue(container.querySelector('[name="tarjeta"]'), "4111111111111234");
+    await act(async () => setFieldValue(container.querySelector('[name="tarjeta"]'), "41111111111112345"));
+    expect(container.querySelector('[name="tarjeta"]').value).toBe("4111 1111 1111 1234");
 
     await submit(container.querySelector("form"));
 
@@ -378,6 +379,7 @@ describe("componentes React de la tienda", () => {
       "http://localhost:8082/api/pagos",
       jasmine.objectContaining({ method: "POST" }),
     );
+    expect(JSON.parse(fetchSpy.calls.mostRecent().args[1].body).tarjeta).toBe("4111111111111234");
     expect(JSON.parse(localStorage.getItem("sake_ultima_orden")).tarjetaUltimos4).toBe("1234");
     expect(container.textContent).toContain("Pago confirmado");
   });
