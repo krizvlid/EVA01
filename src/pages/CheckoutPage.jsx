@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../components/cart/CartContext.jsx";
 import { reduceCartStock, validateCartStock } from "../components/cart/CartContext.jsx";
@@ -67,6 +67,39 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
+  const [savedCards, setSavedCards] = useState([]);
+  const [selectedCardToken, setSelectedCardToken] = useState("");
+  const [saveCard, setSaveCard] = useState(true);
+  const [cardsLoading, setCardsLoading] = useState(Boolean(session?.logueado));
+  const [cardsError, setCardsError] = useState("");
+
+  useEffect(() => {
+    const legacyCardsKey = `sake_tarjetas_${session?.id || session?.correo || session?.email || "invitado"}`;
+    localStorage.removeItem(legacyCardsKey);
+    if (!session?.logueado) return undefined;
+
+    let active = true;
+    fetch(`http://localhost:8082/api/pagos/tarjetas?correo=${encodeURIComponent(session.correo || session.email || "")}`)
+      .then(async (response) => {
+        const body = await response.text();
+        const cards = body ? JSON.parse(body) : [];
+        if (!response.ok) throw new Error(cards.mensaje || `No se pudieron cargar las tarjetas (${response.status}).`);
+        if (!Array.isArray(cards)) throw new TypeError("La respuesta de tarjetas guardadas no es válida.");
+        return cards;
+      })
+      .then((cards) => {
+        if (!active) return;
+        setSavedCards(cards);
+        setSelectedCardToken(cards[0]?.token || "");
+      })
+      .catch((loadError) => {
+        if (active) setCardsError(loadError instanceof Error ? loadError.message : "No se pudieron cargar las tarjetas guardadas.");
+      })
+      .finally(() => {
+        if (active) setCardsLoading(false);
+      });
+    return () => { active = false; };
+  }, [session?.id, session?.correo, session?.email, session?.logueado]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -82,8 +115,8 @@ export default function CheckoutPage() {
     const calle = String(form.get("direccion") || "").trim();
     const region = String(form.get("region") || "").trim();
     const comuna = String(form.get("comuna") || "").trim();
-    const tarjeta = String(form.get("tarjeta") || "").replace(/\D/g, "");
-    if (tarjeta.length !== 16) {
+    const tarjeta = selectedCardToken ? "" : String(form.get("tarjeta") || "").replace(/\D/g, "");
+    if (!selectedCardToken && tarjeta.length !== 16) {
       setError("Ingresa un número de tarjeta de 16 dígitos.");
       return;
     }
@@ -95,7 +128,9 @@ export default function CheckoutPage() {
       direccion,
       region,
       comuna,
-      tarjeta,
+      ...(selectedCardToken
+        ? { tokenTarjeta: selectedCardToken }
+        : { tarjeta, guardarTarjeta: Boolean(session?.logueado && saveCard) }),
       items: cart.map((item) => ({
         id: item.id,
         nombre: item.name,
@@ -134,7 +169,9 @@ export default function CheckoutPage() {
         direccion,
         total,
         items: cart,
-        tarjetaUltimos4: tarjeta.slice(-4),
+        tarjetaUltimos4: selectedCardToken
+          ? savedCards.find((card) => card.token === selectedCardToken)?.ultimos4
+          : tarjeta.slice(-4),
         respaldoLocal: false,
       };
       saveOrder(order);
@@ -175,6 +212,7 @@ export default function CheckoutPage() {
       <span className="eyebrow">Checkout</span>
       <h1 className="store-page-title">Proceder al pago.</h1>
       {storageError && <p className="form-error" role="alert">{storageError}</p>}
+      {cardsError && <p className="form-error" role="alert">{cardsError}</p>}
       {cart.length === 0 ? (
         <div className="cart-empty">
           <p>Tu cesta está vacía.</p>
@@ -194,10 +232,19 @@ export default function CheckoutPage() {
               </select>
             </label>
             <label className="form-field"><span>Comuna</span><input name="comuna" autoComplete="address-level2" defaultValue={initialAddress.comuna || ""} required /></label>
-            <label className="form-field"><span>Número de tarjeta</span><input name="tarjeta" inputMode="numeric" autoComplete="cc-number" maxLength="19" placeholder="1111 2222 3333 4444" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} required /></label>
-            <p className="saved-data">La tarjeta solo se envía para procesar el pago. Guardaremos únicamente sus últimos cuatro dígitos.</p>
+            {session?.logueado && savedCards.length > 0 && (
+              <label className="form-field"><span>Tarjeta guardada</span>
+                <select value={selectedCardToken} onChange={(event) => setSelectedCardToken(event.target.value)}>
+                  {savedCards.map((card) => <option key={card.token} value={card.token}>Terminada en ···· {card.ultimos4}</option>)}
+                  <option value="">Ingresar una tarjeta nueva</option>
+                </select>
+              </label>
+            )}
+            {cardsLoading && <p className="saved-data">Buscando tarjetas guardadas...</p>}
+            {!selectedCardToken && (!session?.logueado || !cardsLoading) && <label className="form-field"><span>Número de tarjeta</span><input name="tarjeta" inputMode="numeric" autoComplete="cc-number" maxLength="19" placeholder="1111 2222 3333 4444" value={cardNumber} onChange={(event) => setCardNumber(formatCardNumber(event.target.value))} required /></label>}
+            {session?.logueado && !selectedCardToken && !cardsLoading && <label className="saved-data"><input type="checkbox" checked={saveCard} onChange={(event) => setSaveCard(event.target.checked)} /> Guardar esta tarjeta para próximas compras</label>}
             {error && <p className="form-error" role="alert">{error}</p>}
-            <button className="store-button" type="submit" disabled={busy}>{busy ? "Procesando..." : "Confirmar pedido"}</button>
+            <button className="store-button" type="submit" disabled={busy || cardsLoading}>{busy ? "Procesando..." : "Confirmar pedido"}</button>
           </form>
           <aside className="cart-summary checkout-summary">
             <h2>Resumen</h2>

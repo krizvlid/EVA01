@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../components/admin/admin.css";
 import { formatPrice, imageUrl, listRecords, useStoreData } from "../data/storefrontData.js";
@@ -16,8 +16,11 @@ export default function CustomerProfilePage() {
   const [session, setSession] = useState(readSession);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [savedCards, setSavedCards] = useState([]);
+  const [cardsError, setCardsError] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const email = session?.correo || session?.email || "";
   const activeView = pathname.endsWith("/datos") ? "datos" : pathname.endsWith("/compras") ? "compras" : "dashboard";
   const role = String(session?.rol ?? session?.role ?? "").toLowerCase();
   const orders = useMemo(() => {
@@ -28,6 +31,27 @@ export default function CustomerProfilePage() {
       .reverse();
   }, [session]);
   const totalSpent = orders.reduce((total, order) => total + Number(order.total || 0), 0);
+
+  useEffect(() => {
+    if (!session?.logueado || !email) return undefined;
+    localStorage.removeItem(`sake_tarjetas_${session.id || email}`);
+    let active = true;
+    fetch(`http://localhost:8082/api/pagos/tarjetas?correo=${encodeURIComponent(email)}`)
+      .then(async (response) => {
+        const body = await response.text();
+        const cards = body ? JSON.parse(body) : [];
+        if (!response.ok) throw new Error(cards.mensaje || `No se pudieron cargar las tarjetas (${response.status}).`);
+        if (!Array.isArray(cards)) throw new TypeError("La respuesta de tarjetas guardadas no es válida.");
+        return cards;
+      })
+      .then((cards) => {
+        if (active) setSavedCards(cards);
+      })
+      .catch((loadError) => {
+        if (active) setCardsError(loadError instanceof Error ? loadError.message : "No se pudieron cargar las tarjetas guardadas.");
+      });
+    return () => { active = false; };
+  }, [email, session?.logueado]);
 
   if (!session?.logueado) return <Navigate to="/tienda/login" replace />;
   if (["admin", "administrador"].includes(role)) return <Navigate to="/admin/perfil" replace />;
@@ -59,15 +83,6 @@ export default function CustomerProfilePage() {
     }
   }
 
-  const email = session.email ?? session.correo ?? "";
-  let savedCards = [];
-  try {
-    const parsedCards = JSON.parse(localStorage.getItem(`sake_tarjetas_${session.id || email}`) || "[]");
-    if (Array.isArray(parsedCards)) savedCards = parsedCards;
-  } catch {
-    savedCards = [];
-  }
-
   function signOut() {
     localStorage.removeItem("sake_sesion");
     localStorage.removeItem("usuario_actual");
@@ -90,7 +105,7 @@ export default function CustomerProfilePage() {
             <div className="col-md-6 mb-3"><label className="form-label" htmlFor="customer-city">Comuna</label><input className="form-control" id="customer-city" name="comuna" defaultValue={session.comuna ?? ""} maxLength="100" /></div>
             <div className="col-md-6 mb-3"><label className="form-label" htmlFor="customer-region">Región</label><input className="form-control" id="customer-region" name="region" defaultValue={session.region ?? ""} maxLength="100" /></div>
           </div>
-          <div className="mb-4"><span className="form-label d-block">Tarjetas</span><span className="text-secondary">{savedCards.length ? savedCards.map((card, index) => <span key={`${card}-${index}`}>Terminada en ···· {String(card).slice(-4)}{index < savedCards.length - 1 ? " · " : ""}</span>) : "No hay tarjetas guardadas"}</span></div>
+          <div className="mb-4"><span className="form-label d-block">Tarjetas de prueba guardadas</span><span className="text-secondary">{savedCards.length ? savedCards.map((card, index) => <span key={card.token}>Terminada en ···· {card.ultimos4}{index < savedCards.length - 1 ? " · " : ""}</span>) : "No hay tarjetas guardadas"}</span>{cardsError && <p className="text-danger small mt-2" role="alert">{cardsError}</p>}</div>
           <button className="btn btn-dark" type="submit">Guardar cambios</button>
         </form>
       </section>

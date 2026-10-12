@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import CartPage from "../src/pages/CartPage.jsx";
 import CheckoutPage from "../src/pages/CheckoutPage.jsx";
 import ContactPage from "../src/pages/ContactPage.jsx";
+import CustomerProfilePage from "../src/pages/CustomerProfilePage.jsx";
 import LoginPage from "../src/pages/LoginPage.jsx";
 import PaymentErrorPage from "../src/pages/PaymentErrorPage.jsx";
 import ProductsPage from "../src/pages/ProductsPage.jsx";
@@ -382,5 +383,120 @@ describe("componentes React de la tienda", () => {
     expect(JSON.parse(fetchSpy.calls.mostRecent().args[1].body).tarjeta).toBe("4111111111111234");
     expect(JSON.parse(localStorage.getItem("sake_ultima_orden")).tarjetaUltimos4).toBe("1234");
     expect(container.textContent).toContain("Pago confirmado");
+  });
+
+  it("guarda una tarjeta de prueba como token para un cliente con sesión", async () => {
+    cartFixture(1, 5);
+    localStorage.setItem("sake_sesion", JSON.stringify({
+      id: "cliente-1",
+      correo: "cliente@sake.cl",
+      nombre: "Cliente de prueba",
+      rol: "cliente",
+      logueado: true,
+    }));
+    const fetchSpy = spyOn(window, "fetch").and.callFake((url) => Promise.resolve(
+      String(url).includes("/tarjetas?")
+        ? { ok: true, status: 200, text: async () => "[]" }
+        : {
+          ok: true,
+          status: 200,
+          text: async () => JSON.stringify({
+            correoEnviado: true,
+            pedidoId: "pedido-token",
+            tarjetaGuardada: { token: "token-prueba", ultimos4: "1234" },
+          }),
+        },
+    ));
+    const container = await render(router(
+      <CartProvider>
+        <Routes>
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/tienda/pago-correcto" element={<p>Pago confirmado</p>} />
+        </Routes>
+      </CartProvider>,
+      "/checkout",
+    ));
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
+    setFieldValue(container.querySelector('[name="nombre"]'), "Cliente de prueba");
+    setFieldValue(container.querySelector('[name="correo"]'), "cliente@sake.cl");
+    setFieldValue(container.querySelector('[name="direccion"]'), "Calle 1");
+    setFieldValue(container.querySelector('[name="region"]'), "Metropolitana de Santiago");
+    setFieldValue(container.querySelector('[name="comuna"]'), "Santiago");
+    await act(async () => setFieldValue(container.querySelector('[name="tarjeta"]'), "4111111111111234"));
+
+    await submit(container.querySelector("form"));
+
+    const paymentCall = fetchSpy.calls.allArgs().find(([url]) => String(url) === "http://localhost:8082/api/pagos");
+    const paymentBody = JSON.parse(paymentCall[1].body);
+    expect(paymentBody.guardarTarjeta).toBeTrue();
+    expect(paymentBody.tarjeta).toBe("4111111111111234");
+    expect(localStorage.getItem("sake_tarjetas_cliente-1")).toBeNull();
+    expect(container.textContent).toContain("Pago confirmado");
+  });
+
+  it("permite pagar con una tarjeta recordada usando su token, sin pedir el número", async () => {
+    cartFixture(1, 5);
+    localStorage.setItem("sake_sesion", JSON.stringify({
+      id: "cliente-1",
+      correo: "cliente@sake.cl",
+      nombre: "Cliente de prueba",
+      rol: "cliente",
+      logueado: true,
+    }));
+    const fetchSpy = spyOn(window, "fetch").and.callFake((url) => Promise.resolve(
+      String(url).includes("/tarjetas?")
+        ? { ok: true, status: 200, text: async () => JSON.stringify([{ token: "token-prueba", ultimos4: "1234" }]) }
+        : { ok: true, status: 200, text: async () => JSON.stringify({ correoEnviado: true, pedidoId: "pedido-token" }) },
+    ));
+    const container = await render(router(
+      <CartProvider>
+        <Routes>
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/tienda/pago-correcto" element={<p>Pago confirmado</p>} />
+        </Routes>
+      </CartProvider>,
+      "/checkout",
+    ));
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(container.querySelector('[name="tarjeta"]')).toBeNull();
+    expect(container.textContent).toContain("1234");
+    setFieldValue(container.querySelector('[name="nombre"]'), "Cliente de prueba");
+    setFieldValue(container.querySelector('[name="correo"]'), "cliente@sake.cl");
+    setFieldValue(container.querySelector('[name="direccion"]'), "Calle 1");
+    setFieldValue(container.querySelector('[name="region"]'), "Metropolitana de Santiago");
+    setFieldValue(container.querySelector('[name="comuna"]'), "Santiago");
+
+    await submit(container.querySelector("form"));
+
+    const paymentCall = fetchSpy.calls.allArgs().find(([url]) => String(url) === "http://localhost:8082/api/pagos");
+    const paymentBody = JSON.parse(paymentCall[1].body);
+    expect(paymentBody.tokenTarjeta).toBe("token-prueba");
+    expect(paymentBody.tarjeta).toBeUndefined();
+  });
+
+  it("muestra en el perfil únicamente los últimos cuatro dígitos de las tarjetas de prueba", async () => {
+    localStorage.setItem("sake_sesion", JSON.stringify({
+      id: "cliente-1",
+      correo: "cliente@sake.cl",
+      nombre: "Cliente de prueba",
+      rol: "cliente",
+      logueado: true,
+    }));
+    spyOn(window, "fetch").and.resolveTo({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify([{ token: "token-prueba", ultimos4: "1234" }]),
+    });
+
+    const container = await render(router(
+      <Routes>
+        <Route path="/tienda/perfil/datos" element={<CustomerProfilePage />} />
+      </Routes>,
+      "/tienda/perfil/datos",
+    ));
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
+
+    expect(container.textContent).toContain("Tarjetas de prueba guardadas");
+    expect(container.textContent).toContain("1234");
   });
 });
