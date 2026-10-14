@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   categories,
@@ -40,14 +40,15 @@ function productCategoryName(product) {
   return categories.find((category) => category.id === product.category)?.name ?? "Sin categoría";
 }
 
-function ProductTable({ records, onDelete }) {
+function ProductTable({ records, onDelete, productToDelete, onCancelDelete, onConfirmDelete }) {
   if (records.length === 0) return <div className="admin-card"><EmptyTable>No hay productos que coincidan.</EmptyTable></div>;
   return (
     <div className="admin-table-wrap">
       <table className="table admin-table">
         <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr></thead>
         <tbody>{records.map((product) => (
-          <tr key={product.id}>
+          <Fragment key={product.id}>
+          <tr>
             <td><strong>{product.name}</strong><div className="small text-secondary">{product.id}</div></td>
             <td>{productCategoryName(product)}</td>
             <td>{formatPrice(product.price)}</td>
@@ -58,6 +59,18 @@ function ProductTable({ records, onDelete }) {
               <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => onDelete?.(product)}>Eliminar</button>
             </div></td>
           </tr>
+          {productToDelete?.id === product.id && <tr>
+            <td colSpan="6">
+              <div className="alert alert-warning d-flex flex-wrap align-items-center justify-content-between gap-3 mb-0" role="alertdialog" aria-label={`Confirmar eliminación de ${product.name}`}>
+                <span>¿Estás seguro de que quieres eliminar “{product.name}”? Esta acción no se puede deshacer.</span>
+                <div className="admin-action-row">
+                  <button className="btn btn-sm btn-outline-dark" type="button" onClick={onCancelDelete}>No, conservar producto</button>
+                  <button className="btn btn-sm btn-danger" type="button" onClick={() => onConfirmDelete(product)}>Sí, eliminar</button>
+                </div>
+              </div>
+            </td>
+          </tr>}
+          </Fragment>
         ))}</tbody>
       </table>
     </div>
@@ -137,15 +150,24 @@ export function ReceiptPage() {
 export function ProductsAdminPage() {
   useStoreData();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [productToDelete, setProductToDelete] = useState(null);
 
   function removeProduct(product) {
-    if (!window.confirm(`¿Eliminar "${product.name}"?`)) return;
     try {
       deleteRecord("productos", product.id);
       setError("");
+      setSuccess(`"${product.name}" se eliminó correctamente.`);
+      setProductToDelete(null);
     } catch (deleteError) {
       setError(deleteError instanceof Error ? deleteError.message : "No se pudo eliminar el producto.");
     }
+  }
+
+  function requestProductDeletion(product) {
+    setError("");
+    setSuccess("");
+    setProductToDelete(product);
   }
 
   return <>
@@ -154,8 +176,14 @@ export function ProductsAdminPage() {
       <Link className="btn btn-outline-dark" to="/admin/productos/reportes">Reportes</Link>
       <Link className="btn btn-dark" to="/admin/productos/nuevo">Nuevo producto</Link>
     </PageHeading>
-    <Notice error={error} />
-    <ProductTable records={products} onDelete={removeProduct} />
+    <Notice error={error} success={success} />
+    <ProductTable
+      records={products}
+      onDelete={requestProductDeletion}
+      productToDelete={productToDelete}
+      onCancelDelete={() => setProductToDelete(null)}
+      onConfirmDelete={removeProduct}
+    />
   </>;
 }
 

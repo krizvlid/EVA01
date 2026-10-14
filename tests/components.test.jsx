@@ -288,7 +288,7 @@ describe("componentes React de la tienda", () => {
       .toBe("Inténtalo nuevamente. Tu carrito sigue guardado.");
   });
 
-  it("renderiza filas de productos en el panel admin y elimina al confirmar", async () => {
+  it("permite cancelar la advertencia en la página o confirmar la eliminación del producto", async () => {
     const product = createRecord("productos", {
       id: "admin-test-delete",
       name: "Producto admin de prueba",
@@ -298,7 +298,7 @@ describe("componentes React de la tienda", () => {
       image: "prueba.jpg",
     });
     const initialProductCount = products.length;
-    const confirmSpy = spyOn(window, "confirm").and.returnValue(true);
+    const confirmSpy = spyOn(window, "confirm");
     const container = await render(router(<ProductsAdminPage />));
 
     expect(container.querySelectorAll("tbody tr").length).toBe(initialProductCount);
@@ -308,9 +308,33 @@ describe("componentes React de la tienda", () => {
 
     await act(async () => row.querySelector("button").click());
 
-    expect(confirmSpy).toHaveBeenCalledWith(`¿Eliminar "${product.name}"?`);
+    expect(confirmSpy).not.toHaveBeenCalled();
+    const confirmation = container.querySelector('[role="alertdialog"]');
+    expect(confirmation.textContent).toContain(product.name);
+    expect(confirmation.closest("tr").previousElementSibling).toBe(row);
+    expect(container.querySelectorAll("tbody tr").length).toBe(initialProductCount + 1);
+
+    await act(async () => {
+      [...confirmation.querySelectorAll("button")]
+        .find((button) => button.textContent.includes("conservar"))
+        .click();
+    });
+    expect(container.querySelector('[role="alertdialog"]')).toBeNull();
+    expect(container.querySelectorAll("tbody tr").length).toBe(initialProductCount);
+
+    const productRow = [...container.querySelectorAll("tbody tr")]
+      .find((tableRow) => tableRow.textContent.includes(product.name));
+    await act(async () => productRow.querySelector("button").click());
+    const deleteConfirmation = container.querySelector('[role="alertdialog"]');
+    await act(async () => {
+      [...deleteConfirmation.querySelectorAll("button")]
+        .find((button) => button.textContent === "Sí, eliminar")
+        .click();
+    });
+
     expect(container.querySelectorAll("tbody tr").length).toBe(initialProductCount - 1);
     expect(container.textContent).not.toContain(product.name);
+    expect(container.querySelector('[role="status"]').textContent).toContain("se eliminó correctamente");
   });
 
   it("rechaza agregar un producto cuando supera el stock disponible", async () => {
