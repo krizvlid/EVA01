@@ -550,7 +550,7 @@ describe("componentes React de la tienda", () => {
     expect(paymentBody.tarjeta).toBeUndefined();
   });
 
-  it("muestra en el perfil únicamente los últimos cuatro dígitos de las tarjetas de prueba", async () => {
+  it("no muestra tarjetas de prueba ni consulta tarjetas guardadas en el perfil", async () => {
     localStorage.setItem("sake_sesion", JSON.stringify({
       id: "cliente-1",
       correo: "cliente@sake.cl",
@@ -558,11 +558,7 @@ describe("componentes React de la tienda", () => {
       rol: "cliente",
       logueado: true,
     }));
-    spyOn(window, "fetch").and.resolveTo({
-      ok: true,
-      status: 200,
-      text: async () => JSON.stringify([{ token: "token-prueba", ultimos4: "1234" }]),
-    });
+    const fetchSpy = spyOn(window, "fetch");
 
     const container = await render(router(
       <Routes>
@@ -572,7 +568,8 @@ describe("componentes React de la tienda", () => {
     ));
     await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
 
-    expect(container.textContent).toContain("Tarjetas de prueba guardadas");
-    expect(container.textContent).toContain("1234");
+    expect(container.textContent).not.toContain("Tarjetas de prueba guardadas");
+    expect(container.textContent).not.toContain("Failed to fetch");
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 });
