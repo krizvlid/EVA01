@@ -5,6 +5,9 @@ const initialCategories = [
   { id: "accesorios", name: "Accesorios", image: "trung-nhan-tran-BfSTSfEVWfA-unsplash.jpg", description: "Detalles que completan cada look." },
 ];
 
+export const defaultProductDescription = "Prenda confeccionada con tejidos seleccionados de alta calidad. Diseño de la colección actual de SAKE D. BINKS.";
+export const defaultProductMaterials = "100% materiales de primera selección. Lavar a mano o ciclo delicado en agua fría.";
+
 const initialProducts = [
   { id: "vestido-midi", name: "Vestido midi combinado drapeado", category: "mujer", price: 45990, image: "vestiodaudifonos.jpg", thumbImage: "referenciaprimervesitdo.jpg", images: ["vestiodaudifonos.jpg", "vestiodaudifonos2.jpg", "vestiodaudifonos.jpg"], color: "Marfil", stockName: "VESTIDO MIDI COMBINADO DRAPEADO" },
   { id: "vestido-satinado", name: "Vestido largo satinado", category: "mujer", price: 69990, image: "vestidoestampado3.jpg", thumbImage: "referenciavestidoestampado.jpg", images: ["vestidoestampado3.jpg", "vestidoestampado.jpg", "vestidoestampado2.jpg"], color: "Estampado", sku: "SKU-009", stockName: "VESTIDO LARGO SATINADO", catalogSku: "SKU-013" },

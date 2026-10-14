@@ -10,9 +10,9 @@ import ProductsPage from "../src/pages/ProductsPage.jsx";
 import RegisterPage from "../src/pages/RegisterPage.jsx";
 import ProductCard from "../src/components/storefront/ProductCard.jsx";
 import { CartProvider, useCart } from "../src/components/cart/CartContext.jsx";
-import { createRecord, getProductStockCode, products } from "../src/data/storefrontData.js";
+import { createRecord, getProductStockCode, getRecord, products } from "../src/data/storefrontData.js";
 import { cleanUp, mockLocalStorage, render, setFieldValue } from "./testHelpers.js";
-import { ProductsAdminPage } from "../src/pages/admin/AdminPages.jsx";
+import { ProductFormPage, ProductsAdminPage } from "../src/pages/admin/AdminPages.jsx";
 
 function router(element, initialEntry = "/") {
   return <MemoryRouter initialEntries={[initialEntry]}>{element}</MemoryRouter>;
@@ -335,6 +335,58 @@ describe("componentes React de la tienda", () => {
     expect(container.querySelectorAll("tbody tr").length).toBe(initialProductCount - 1);
     expect(container.textContent).not.toContain(product.name);
     expect(container.querySelector('[role="status"]').textContent).toContain("se eliminó correctamente");
+  });
+
+  it("permite editar y guardar la descripción de un producto", async () => {
+    const product = createRecord("productos", {
+      id: "admin-test-description",
+      name: "Producto con descripción",
+      category: "mujer",
+      price: 12000,
+      stock: 8,
+      image: "prueba.jpg",
+      description: "Descripción anterior",
+    });
+    const container = await render(router(
+      <Routes>
+        <Route path="/admin/productos/:id/editar" element={<ProductFormPage />} />
+        <Route path="/admin/productos" element={<p>Productos</p>} />
+      </Routes>,
+      `/admin/productos/${product.id}/editar`,
+    ));
+    const description = container.querySelector("#product-description");
+
+    expect(description.value).toBe("Descripción anterior");
+    await act(async () => setFieldValue(description, "Descripción actualizada"));
+    await submit(container.querySelector("form"));
+
+    expect(getRecord("productos", product.id).description).toBe("Descripción actualizada");
+  });
+
+  it("permite editar y guardar los materiales de un producto", async () => {
+    const product = createRecord("productos", {
+      id: "admin-test-materials",
+      name: "Producto con materiales",
+      category: "mujer",
+      price: 12000,
+      stock: 8,
+      image: "prueba.jpg",
+      materials: "Materiales anteriores",
+    });
+    const container = await render(router(
+      <Routes>
+        <Route path="/admin/productos/:id/editar" element={<ProductFormPage />} />
+        <Route path="/admin/productos" element={<p>Productos</p>} />
+      </Routes>,
+      `/admin/productos/${product.id}/editar`,
+    ));
+    const materials = container.querySelector("#product-materials");
+
+    expect(materials.value).toBe("Materiales anteriores");
+    await act(async () => setFieldValue(materials, "Algodón orgánico y lino"));
+    await submit(container.querySelector("form"));
+
+    expect(getRecord("productos", product.id).materials).toBe("Algodón orgánico y lino");
   });
 
   it("rechaza agregar un producto cuando supera el stock disponible", async () => {

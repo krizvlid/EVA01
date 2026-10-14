@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   categories,
   createRecord,
+  defaultProductDescription,
+  defaultProductMaterials,
   deleteRecord,
   formatPrice,
   getRecord,
@@ -210,6 +212,8 @@ export function ProductFormPage() {
       price: Number(form.get("price")),
       stock: Number(form.get("stock")),
       estado: String(form.get("estado")),
+      description: String(form.get("description") || "").trim(),
+      materials: String(form.get("materials") || "").trim(),
       image,
       thumbImage: image,
       images: [image],
@@ -242,6 +246,8 @@ export function ProductFormPage() {
         <div className="col-md-6 mb-3"><label className="form-label" htmlFor="product-stock">Stock</label><input className="form-control" id="product-stock" name="stock" type="number" min="0" step="1" defaultValue={product?.stock ?? 0} required /></div>
         <div className="col-md-6 mb-3"><label className="form-label" htmlFor="product-state">Estado</label><select className="form-select" id="product-state" name="estado" defaultValue={product?.estado ?? "Activo"}><option>Activo</option><option>Inactivo</option></select></div>
       </div>
+      <div className="mb-3"><label className="form-label" htmlFor="product-description">Descripción</label><textarea className="form-control" id="product-description" name="description" rows="4" maxLength="1000" defaultValue={product?.description ?? (isEditing ? defaultProductDescription : "")} /></div>
+      <div className="mb-3"><label className="form-label" htmlFor="product-materials">Materiales</label><textarea className="form-control" id="product-materials" name="materials" rows="3" maxLength="1000" defaultValue={product?.materials ?? (isEditing ? defaultProductMaterials : "")} /></div>
       <div className="mb-4"><label className="form-label" htmlFor="product-image">Archivo de imagen (en /Imagenes)</label><input className="form-control" id="product-image" name="image" defaultValue={product?.image ?? ""} placeholder="ejemplo.webp" required /><div className="form-text">Escribe el nombre de una imagen disponible en la carpeta Imagenes.</div></div>
       <div className="admin-action-row"><button className="btn btn-dark" type="submit" disabled={saving}>{saving ? "Guardando…" : "Guardar producto"}</button><Link className="btn btn-outline-secondary" to="/admin/productos">Cancelar</Link></div>
     </form>

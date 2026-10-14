@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCart } from "../components/cart/CartContext.jsx";
 import {
   formatPrice,
+  defaultProductDescription,
+  defaultProductMaterials,
   getProductSizeStock,
   getProductSizes,
   getProductStockCode,
@@ -104,11 +106,11 @@ export default function ProductDetailPage() {
         <div className="product-accordions">
           <details className="accordion-item">
             <summary className="accordion-button">DESCRIPCIÓN <span aria-hidden="true">˅</span></summary>
-            <div className="accordion-body">Prenda confeccionada con tejidos seleccionados de alta calidad. Diseño de la colección actual de SAKE D. BINKS.</div>
+            <div className="accordion-body">{product.description || defaultProductDescription}</div>
           </details>
           <details className="accordion-item">
             <summary className="accordion-button">MATERIALES <span aria-hidden="true">˅</span></summary>
-            <div className="accordion-body">100% materiales de primera selección. Lavar a mano o ciclo delicado en agua fría.</div>
+            <div className="accordion-body">{product.materials || defaultProductMaterials}</div>
           </details>
         </div>
       </div>
